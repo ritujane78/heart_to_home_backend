@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2b518428-8738-4058-ba64-f28d45ef8032" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/rituj/Documents/Codex/2026-06-17/hearttohome" value="3Fr1lYvRrvjX2SRS9jwtGA42lhH" />
+    </persistenceIdMap>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.003262062185267" />
+      <entry key="MS500" value="1.3181987338189858" />
+      <entry key="S2" value="1.7510599653179333" />
+      <entry key="S5" value="1.8922063454974993" />
+      <entry key="S10" value="1.9766654124784668" />
+      <entry key="S30" value="2.736421108657587" />
+      <entry key="S60" value="3.714679701328775" />
+      <entry key="M2" value="4.616042560129159" />
+      <entry key="M5" value="5.374045957022738" />
+      <entry key="M10" value="5.673498196954522" />
+      <entry key="M15" value="5.779207414583298" />
+      <entry key="M30" value="5.8880104124849515" />
+      <entry key="H1" value="5.9436009720214855" />
+      <entry key="H2" value="5.971698678858027" />
+      <entry key="H4" value="5.985823793447682" />
+      <entry key="D1" value="5.997633742831276" />
+      <entry key="W1" value="5.999661876069194" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.006243037202768156" />
+      <entry key="MS500" value="0.6307143094652881" />
+      <entry key="S2" value="1.4987436721562504" />
+      <entry key="S5" value="1.7824048210855792" />
+      <entry key="S10" value="1.9201419676073828" />
+      <entry key="S30" value="2.716996057025952" />
+      <entry key="S60" value="3.7047681997772743" />
+      <entry key="M2" value="4.6110030340700146" />
+      <entry key="M5" value="5.37200274302423" />
+      <entry key="M10" value="5.672471229376479" />
+      <entry key="M15" value="5.778521511380258" />
+      <entry key="M30" value="5.8876668142082424" />
+      <entry key="H1" value="5.9434290078290894" />
+      <entry key="H2" value="5.971612655067536" />
+      <entry key="H4" value="5.985780771074534" />
+      <entry key="D1" value="5.997626570975852" />
+      <entry key="W1" value="5.9996608514826075" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3Fr1lYvRrvjX2SRS9jwtGA42lhH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.HearttohomeApplication.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rituj/Documents/Codex/2026-06-17/hearttohome/hearttohome/src/main/java/com/chillies/hearttohome&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rituj\Documents\Codex\2026-06-17\hearttohome\hearttohome\src\main\java\com\chillies\hearttohome" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="HearttohomeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="hearttohome" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.chillies.hearttohome.HearttohomeApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2b518428-8738-4058-ba64-f28d45ef8032" name="Changes" comment="" />
+      <created>1782818525499</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1782818525499</updated>
+      <workItem from="1782818526770" duration="2140000" />
+      <workItem from="1782873724476" duration="3504000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
