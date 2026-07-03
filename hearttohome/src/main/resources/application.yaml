@@ -1,6 +1,18 @@
 spring:
   application:
     name: hearttohome
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: test.ritujane78@gmail.com
+    password: ${GMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
   datasource:
     url: jdbc:mysql://localhost:3306/hearttohome
     username: root
