@@ -2,7 +2,7 @@ package com.chillies.hearttohome.services;
 
 
 
-import com.chillies.hearttohome.DTOs.UserDTO;
+import com.chillies.hearttohome.DTO.UserDTO;
 import com.chillies.hearttohome.models.AppRole;
 import com.chillies.hearttohome.models.PasswordResetToken;
 import com.chillies.hearttohome.models.Role;

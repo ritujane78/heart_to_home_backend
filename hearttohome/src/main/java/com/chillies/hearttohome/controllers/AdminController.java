@@ -1,21 +1,28 @@
 package com.chillies.hearttohome.controllers;
 
 
-import com.chillies.hearttohome.DTOs.UserDTO;
+import com.chillies.hearttohome.DTO.UserDTO;
 import com.chillies.hearttohome.models.Role;
+import com.chillies.hearttohome.models.Service;
 import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
-//@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequiredArgsConstructor
 public class AdminController {
+
+    private final ServiceRepository serviceRepository;
 
     @Autowired
     UserService userService;
@@ -27,7 +34,7 @@ public class AdminController {
     }
 
     @PutMapping("/update-role")
-    public ResponseEntity<String> updateUserRole(@RequestParam Long userId, 
+    public ResponseEntity<String> updateUserRole(@RequestParam Long userId,
                                                  @RequestParam String roleName) {
         userService.updateUserRole(userId, roleName);
         return ResponseEntity.ok("User role updated");
@@ -54,5 +61,14 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @PostMapping("/add-service")
+    public ResponseEntity<Service> addService(@RequestBody Service service) {
+
+        Service saved = serviceRepository.save(service);
+
+        return ResponseEntity.ok(saved);
+
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package com.chillies.hearttohome.DTOs;
+package com.chillies.hearttohome.DTO;
 
 import com.chillies.hearttohome.models.Role;
 import lombok.AllArgsConstructor;
