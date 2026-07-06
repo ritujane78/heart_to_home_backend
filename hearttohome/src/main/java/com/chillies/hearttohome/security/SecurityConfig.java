@@ -8,6 +8,7 @@ import com.chillies.hearttohome.repositories.RoleRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.security.jwt.AuthEntryPointJwt;
 import com.chillies.hearttohome.security.jwt.AuthTokenFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,7 +29,7 @@ import java.time.LocalDate;
 
 @Configuration
 @EnableWebSecurity
-//@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -44,11 +46,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/csrf-token").permitAll()
                         .requestMatchers("/api/auth/public/**").permitAll()
+                        .requestMatchers("/api/services").permitAll()
                         .anyRequest().authenticated());
         http.csrf((csrf) -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                                                     .ignoringRequestMatchers("/api/auth/public/**"));
         http.cors(Customizer.withDefaults());
-//        http.addFilterAfter(new RequestValidationFilter(), AuthorizationFilter.class);
         http.exceptionHandling(exception
                 -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.addFilterBefore(authenticationJwtTokenFilter(),
@@ -59,6 +61,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
     @Bean
     public CommandLineRunner initData(RoleRepository roleRepository,

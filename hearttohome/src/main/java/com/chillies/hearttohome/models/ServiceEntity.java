@@ -1,27 +1,20 @@
 package com.chillies.hearttohome.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Table(name = "services")
 @Data
-public class Service {
+public class ServiceEntity {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String code;
-
     private String providerId;
-
     private String title;
-
-    @Column(length = 2000)
     private String description;
-
     private Double price;
 }

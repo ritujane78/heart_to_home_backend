@@ -1,11 +1,13 @@
 package com.chillies.hearttohome.controllers;
 
 
+import com.chillies.hearttohome.DTO.ServiceDTO;
 import com.chillies.hearttohome.DTO.UserDTO;
 import com.chillies.hearttohome.models.Role;
-import com.chillies.hearttohome.models.Service;
+import com.chillies.hearttohome.models.ServiceEntity;
 import com.chillies.hearttohome.models.User;
 import com.chillies.hearttohome.repositories.ServiceRepository;
+import com.chillies.hearttohome.services.Services;
 import com.chillies.hearttohome.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final ServiceRepository serviceRepository;
+    private final Services services;
 
     @Autowired
     UserService userService;
@@ -62,12 +63,17 @@ public class AdminController {
         }
     }
     @PostMapping("/add-service")
-    public ResponseEntity<Service> addService(@RequestBody Service service) {
+    public ResponseEntity<ServiceEntity> addService(@RequestBody ServiceDTO serviceDTO) {
+        System.out.println("serviceDTO: " + serviceDTO);
+        return services.addService(serviceDTO);
+    }
 
-        Service saved = serviceRepository.save(service);
+    @DeleteMapping("/delete-service/{id}")
+    public ResponseEntity<Void> deleteService(@PathVariable String id) {
 
-        return ResponseEntity.ok(saved);
+        services.deleteService(id);
 
+        return ResponseEntity.noContent().build();
     }
 
 
