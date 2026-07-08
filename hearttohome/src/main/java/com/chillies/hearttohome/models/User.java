@@ -14,6 +14,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -72,6 +74,9 @@ public class User {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GiftOrder> giftOrders = new ArrayList<>();
 
     public User(String username, String email, String password) {
         this.username = username;
