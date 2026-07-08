@@ -18,4 +18,6 @@ public interface OrdersService {
     List<GiftOrder> getAllOrders();
 
     GiftOrder updateStatus(Long id, OrderStatus status);
+
+    List<GiftOrder> getOrdersByUser(Long userId);
 }

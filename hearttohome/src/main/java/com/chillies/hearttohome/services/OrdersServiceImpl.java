@@ -11,7 +11,6 @@ import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,4 +77,9 @@ public class OrdersServiceImpl implements OrdersService {
 
         return ordersRepository.save(order);
     }
+    @Override
+    public List<GiftOrder> getOrdersByUser(Long userId) {
+        return ordersRepository.findByUserIdOrderByIdAsc(userId);
+    }
+
 }

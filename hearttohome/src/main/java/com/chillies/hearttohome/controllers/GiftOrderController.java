@@ -40,6 +40,7 @@ public class GiftOrderController {
         return ResponseEntity.ok(ordersService.getAllOrders());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}/status")
     public ResponseEntity<GiftOrder> updateStatus(
             @PathVariable Long id,
@@ -50,6 +51,16 @@ public class GiftOrderController {
         GiftOrder updatedOrder = ordersService.updateStatus(id, status);
 
         return ResponseEntity.ok(updatedOrder);
+    }
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/my-orders")
+    public ResponseEntity<List<GiftOrder>> getMyOrders(
+            @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.findByUsername(userDetails.getUsername());
+
+        return ResponseEntity.ok(
+                ordersService.getOrdersByUser(user.getId())
+        );
     }
 
 }
