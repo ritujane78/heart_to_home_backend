@@ -11,9 +11,9 @@ import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -40,6 +40,12 @@ public class OrdersServiceImpl implements OrdersService {
         order.setRelationship(giftOrderRequest.getRelationship());
         order.setMessage(giftOrderRequest.getMessage());
         order.setUser(user);
+
+        List<ServiceEntity> services =
+                serviceRepository.findAllById(giftOrderRequest.getServiceIds());
+
+        order.setServiceIds(services);
+
         order.setTotalPrice(giftOrderRequest.getTotalPrice());
         order.setCurrency(giftOrderRequest.getCurrency());
         // don't trust frontend
@@ -54,5 +60,22 @@ public class OrdersServiceImpl implements OrdersService {
         );
 
         return response;
+    }
+    @Override
+    public List<GiftOrder> getAllOrders() {
+        return ordersRepository.findAll();
+    }
+
+    @Override
+    public GiftOrder updateStatus(Long id, OrderStatus status) {
+
+        GiftOrder order = ordersRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        System.out.println("order = " + order);
+
+        order.setOrderStatus(status);
+
+        return ordersRepository.save(order);
     }
 }
