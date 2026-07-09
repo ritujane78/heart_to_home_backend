@@ -54,6 +54,12 @@ public class OrdersServiceImpl implements OrdersService {
         order.setOrderStatus(OrderStatus.IN_PROCESS);
 
         GiftOrder saved = ordersRepository.save(order);
+        if (saved.getId() != null &&
+                saved.getSenderEmail() != null &&
+                !saved.getSenderEmail().isBlank()) {
+
+            emailService.sendEmailForOrderInitiation(saved.getSenderEmail());
+        }
 
         GiftOrderResponse response = new GiftOrderResponse(
                 saved.getId(),
@@ -80,11 +86,11 @@ public class OrdersServiceImpl implements OrdersService {
         GiftOrder updatedOrder = ordersRepository.save(order);
 
         if (updatedOrder.getId() != null &&
-                updatedOrder.getRecipientEmail() != null &&
-                !updatedOrder.getRecipientEmail().isBlank()) {
+                updatedOrder.getSenderEmail() != null &&
+                !updatedOrder.getSenderEmail().isBlank()) {
 
             emailService.sendEmailForOrderStatus(
-                    updatedOrder.getRecipientEmail(),
+                    updatedOrder.getSenderEmail(),
                     updatedOrder.getOrderStatus()
             );
         }

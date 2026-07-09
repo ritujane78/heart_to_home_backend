@@ -101,5 +101,25 @@ public class EmailService {
 
         mailSender.send(message);
     }
+    public void sendEmailForOrderInitiation(String to) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject("Your Heart to Home Order is Being Processed");
+        String text = """
+                    Dear Customer,
+
+                    Thank you for choosing Heart to Home.
+
+                    Your order has been received and is currently being processed. We will notify you once it is ready for the clinic.
+
+                    Thank you for your patience.
+
+                    Kind regards,
+                    Heart to Home Team
+                    """;
+        message.setText(text);
+
+        mailSender.send(message);
+    }
 
 }
