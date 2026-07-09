@@ -4,6 +4,7 @@ package com.chillies.hearttohome.services;
 import com.chillies.hearttohome.DTO.ServiceDTO;
 import com.chillies.hearttohome.models.ServiceEntity;
 import com.chillies.hearttohome.repositories.ServiceRepository;
+import com.chillies.hearttohome.util.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class ServicesImpl implements Services {
 
     private final ObjectMapper objectMapper;
     private final ServiceRepository serviceRepository;
+    private final EmailService emailService;
 
     @Override
     public ResponseEntity<ServiceEntity> addService(ServiceDTO serviceDTO) {

@@ -9,6 +9,7 @@ import com.chillies.hearttohome.models.User;
 import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
+import com.chillies.hearttohome.util.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class OrdersServiceImpl implements OrdersService {
     private final UserRepository userRepository;
     private final ServiceRepository serviceRepository;
     private final UserService userService;
+    private final EmailService emailService;
 
     @Override
     public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) {
@@ -75,8 +77,19 @@ public class OrdersServiceImpl implements OrdersService {
         System.out.println("order = " + order);
 
         order.setOrderStatus(status);
+        GiftOrder updatedOrder = ordersRepository.save(order);
 
-        return ordersRepository.save(order);
+        if (updatedOrder.getId() != null &&
+                updatedOrder.getRecipientEmail() != null &&
+                !updatedOrder.getRecipientEmail().isBlank()) {
+
+            emailService.sendEmailForOrderStatus(
+                    updatedOrder.getRecipientEmail(),
+                    updatedOrder.getOrderStatus()
+            );
+        }
+
+        return updatedOrder;
     }
     @Override
     public List<GiftOrder> getOrdersByUser(Long userId) {

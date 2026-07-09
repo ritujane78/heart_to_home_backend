@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
 
         String resetUrl = frontendUrl + "/reset-password?token=" + token;
         // Send email to user
-        emailService.sendEmail(user.getEmail(), resetUrl);
+        emailService.sendEmailForPasswordReset(user.getEmail(), resetUrl);
     }
 
     @Override
