@@ -71,6 +71,9 @@ public class GiftOrder {
     @Column(nullable = false)
     private String currency;
 
+    @Column(nullable = false)
+    private BigDecimal exchangeRate;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderStatus orderStatus;

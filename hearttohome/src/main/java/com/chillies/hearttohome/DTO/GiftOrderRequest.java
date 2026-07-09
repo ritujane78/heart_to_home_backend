@@ -27,4 +27,6 @@ public class GiftOrderRequest {
     private BigDecimal totalPrice;
     private String currency;
 
+    private BigDecimal exchangeRate;
+
 }

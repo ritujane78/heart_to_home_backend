@@ -39,6 +39,7 @@ public class OrdersServiceImpl implements OrdersService {
         order.setRelationship(giftOrderRequest.getRelationship());
         order.setMessage(giftOrderRequest.getMessage());
         order.setUser(user);
+        order.setExchangeRate(giftOrderRequest.getExchangeRate());
 
         List<ServiceEntity> services =
                 serviceRepository.findAllById(giftOrderRequest.getServiceIds());
