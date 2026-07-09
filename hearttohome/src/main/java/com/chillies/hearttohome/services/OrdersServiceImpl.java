@@ -12,9 +12,7 @@ import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -73,9 +71,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public List<GiftOrder> getAllOrders() {
-        return ordersRepository.findAll(
-                Sort.by(Sort.Direction.DESC, "orderedAt")
-        );
+        return ordersRepository.findAllByOrderByIdDesc();
     }
 
     @Override
@@ -103,7 +99,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
     @Override
     public List<GiftOrder> getOrdersByUser(Long userId) {
-        return ordersRepository.findByUserIdOrderByIdAsc(userId);
+        return ordersRepository.findByUserIdOrderByIdDesc(userId);
     }
 
 }
