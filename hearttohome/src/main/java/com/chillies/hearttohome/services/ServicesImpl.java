@@ -8,6 +8,10 @@ import com.chillies.hearttohome.util.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +24,12 @@ public class ServicesImpl implements Services {
     private final ObjectMapper objectMapper;
     private final ServiceRepository serviceRepository;
     private final EmailService emailService;
+
+    @Override
+    public Page<ServiceEntity> getServices(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        return serviceRepository.findAll(pageable);
+    }
 
     @Override
     public ResponseEntity<ServiceEntity> addService(ServiceDTO serviceDTO) {
