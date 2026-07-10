@@ -99,7 +99,9 @@ public class OrdersServiceImpl implements OrdersService {
     }
     @Override
     public List<GiftOrder> getOrdersByUser(Long userId) {
-        return ordersRepository.findByUserIdOrderByIdDesc(userId);
+        List<GiftOrder> userOrders = ordersRepository.findByUserIdOrderByIdDesc(userId);
+        System.out.println("userOrders = " + userOrders);
+        return userOrders;
     }
 
 }

@@ -52,7 +52,7 @@ public class GiftOrderController {
 
         return ResponseEntity.ok(updatedOrder);
     }
-    @PreAuthorize("hasRole('ROLE_USER')")
+
     @GetMapping("/my-orders")
     public ResponseEntity<List<GiftOrder>> getMyOrders(
             @AuthenticationPrincipal UserDetails userDetails) {
