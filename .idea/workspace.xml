@@ -5,15 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b518428-8738-4058-ba64-f28d45ef8032" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/exceptions/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/GiftOrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/GiftOrderRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/ProviderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/ProviderEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/ProviderRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/ProviderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/ProviderServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/ServiceDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/ServiceDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/ServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/ServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/GiftOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/GiftOrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/ServiceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/ServiceEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/ServiceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/ServiceRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/jwt/AuthEntryPointJwt.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/jwt/AuthEntryPointJwt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/jwt/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/jwt/JwtUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/Services.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/Services.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,8 +35,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Record" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -64,61 +69,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="1.4741548374042696E-85" />
-      <entry key="S5" value="1.1679314712765221E-34" />
-      <entry key="S10" value="1.0812941216516128E-17" />
-      <entry key="S30" value="2.4444780466651375E-6" />
-      <entry key="S60" value="0.0021440806963506083" />
-      <entry key="M2" value="0.07444700447771821" />
-      <entry key="M5" value="0.7545071502105191" />
-      <entry key="M10" value="3.414019592015569" />
-      <entry key="M15" value="7.672797527880819" />
-      <entry key="M30" value="19.67863571469234" />
-      <entry key="H1" value="36.26014769689232" />
-      <entry key="H2" value="72.23984825500885" />
-      <entry key="H4" value="149.6586073870867" />
-      <entry key="D1" value="543.9245576781955" />
-      <entry key="W1" value="811.5433027432623" />
+      <entry key="MS100" value="1.0000000000000608" />
+      <entry key="MS500" value="1.002274870286071" />
+      <entry key="S2" value="1.2183932950089902" />
+      <entry key="S5" value="1.5455034379852988" />
+      <entry key="S10" value="1.7748239097975858" />
+      <entry key="S30" value="2.2386342612837007" />
+      <entry key="S60" value="2.601169762497742" />
+      <entry key="M2" value="3.274793297726715" />
+      <entry key="M5" value="4.716877811808262" />
+      <entry key="M10" value="6.400139875327722" />
+      <entry key="M15" value="8.240130790024912" />
+      <entry key="M30" value="13.606687908516193" />
+      <entry key="H1" value="25.001823556594488" />
+      <entry key="H2" value="49.48644846977258" />
+      <entry key="H4" value="106.70783542121531" />
+      <entry key="D1" value="532.0351073327595" />
+      <entry key="W1" value="880.770266827523" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.0000022216145843" />
-      <entry key="S60" value="1.0021703227754934" />
-      <entry key="M2" value="1.0849892243658268" />
-      <entry key="M5" value="1.8756955348131927" />
-      <entry key="M10" value="3.34619541958011" />
-      <entry key="M15" value="4.651984063502724" />
-      <entry key="M30" value="7.3119593439796144" />
-      <entry key="H1" value="10.423590879134485" />
-      <entry key="H2" value="15.43046083256771" />
-      <entry key="H4" value="24.5015928109361" />
-      <entry key="D1" value="105.65499977018773" />
-      <entry key="W1" value="178.84810200633444" />
+      <entry key="MS100" value="7.882000810064491E-20" />
+      <entry key="MS500" value="1.5112186167449284E-4" />
+      <entry key="S2" value="0.11087542397792355" />
+      <entry key="S5" value="0.41965337376762474" />
+      <entry key="S10" value="0.7373158724895857" />
+      <entry key="S30" value="1.5752784947478515" />
+      <entry key="S60" value="2.1206297114873203" />
+      <entry key="M2" value="2.5070343917396736" />
+      <entry key="M5" value="2.8077168302456847" />
+      <entry key="M10" value="3.354457661461686" />
+      <entry key="M15" value="4.333596871836463" />
+      <entry key="M30" value="7.7756068172363895" />
+      <entry key="H1" value="13.127345951333" />
+      <entry key="H2" value="19.829649814370317" />
+      <entry key="H4" value="29.888710302618037" />
+      <entry key="D1" value="113.49739991913593" />
+      <entry key="W1" value="201.66868102803707" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.0491936265151361E-10" />
-      <entry key="MS500" value="0.010096506489355403" />
-      <entry key="S2" value="0.31698797113280797" />
-      <entry key="S5" value="0.6315636309228996" />
-      <entry key="S10" value="0.7947097777949504" />
-      <entry key="S30" value="0.9262714442701397" />
-      <entry key="S60" value="0.9666421847238899" />
-      <entry key="M2" value="1.138569182995653" />
-      <entry key="M5" value="2.6150046351499348" />
-      <entry key="M10" value="6.746798060256313" />
-      <entry key="M15" value="12.312579003569558" />
-      <entry key="M30" value="26.981230161858015" />
-      <entry key="H1" value="46.67705898625245" />
-      <entry key="H2" value="87.66490092062698" />
-      <entry key="H4" value="174.15521977660208" />
-      <entry key="D1" value="649.5753747910405" />
-      <entry key="W1" value="990.3903867625405" />
+      <entry key="MS100" value="0.25173888751417967" />
+      <entry key="MS500" value="0.7590659706104371" />
+      <entry key="S2" value="1.090137898980577" />
+      <entry key="S5" value="1.6835949518516327" />
+      <entry key="S10" value="2.2811789911562554" />
+      <entry key="S30" value="3.663888216264429" />
+      <entry key="S60" value="4.621736474980057" />
+      <entry key="M2" value="5.719501105473491" />
+      <entry key="M5" value="7.492852218220137" />
+      <entry key="M10" value="9.733580222778496" />
+      <entry key="M15" value="12.554527478587424" />
+      <entry key="M30" value="21.364028875957093" />
+      <entry key="H1" value="38.113427145366444" />
+      <entry key="H2" value="69.30435012736075" />
+      <entry key="H4" value="136.5880981178262" />
+      <entry key="D1" value="645.5276788139037" />
+      <entry key="W1" value="1082.4377510721508" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -233,7 +238,8 @@
       <workItem from="1783690306207" duration="516000" />
       <workItem from="1783735833219" duration="6696000" />
       <workItem from="1783821332112" duration="3821000" />
-      <workItem from="1783906785643" duration="4852000" />
+      <workItem from="1783906785643" duration="13657000" />
+      <workItem from="1783939454285" duration="836000" />
     </task>
     <servers />
   </component>

@@ -90,7 +90,6 @@ public class AdminController {
     }
     @PostMapping("/add-service")
     public ResponseEntity<ServiceEntity> addService(@RequestBody ServiceDTO serviceDTO) {
-        System.out.println("serviceDTO: " + serviceDTO);
         return services.addService(serviceDTO);
     }
 

@@ -26,6 +26,6 @@ public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
 
     List<ServiceEntity> findByIsEnabledTrueOrderByCodeAsc();
 
-    boolean existsByCodeIgnoreCase(String code);
+    boolean existsByTitleIgnoreCase(String title);
 
 }

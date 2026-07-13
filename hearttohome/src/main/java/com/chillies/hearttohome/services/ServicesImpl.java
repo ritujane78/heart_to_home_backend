@@ -2,7 +2,9 @@ package com.chillies.hearttohome.services;
 
 
 import com.chillies.hearttohome.DTO.ServiceDTO;
+import com.chillies.hearttohome.models.ProviderEntity;
 import com.chillies.hearttohome.models.ServiceEntity;
+import com.chillies.hearttohome.repositories.ProviderRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.util.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,8 +23,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ServicesImpl implements Services {
 
-    private final ObjectMapper objectMapper;
     private final ServiceRepository serviceRepository;
+    private final ProviderRepository providerRepository;
     private final EmailService emailService;
 
     @Override
@@ -33,15 +35,43 @@ public class ServicesImpl implements Services {
 
     @Override
     public ResponseEntity<ServiceEntity> addService(ServiceDTO serviceDTO) {
-        System.out.println("add service = " + serviceDTO);
-        String code = serviceDTO.getCode().trim().toUpperCase();
 
-        if (serviceRepository.existsByCodeIgnoreCase(code)) {
-            throw new RuntimeException("A service with this code already exists.");
+        String title = serviceDTO.getTitle().trim();
+
+        if (serviceRepository.existsByTitleIgnoreCase(title)) {
+            throw new RuntimeException("A service with this title already exists.");
         }
-        ServiceEntity serviceEntity = objectMapper.convertValue(serviceDTO, ServiceEntity.class);
+        StringBuilder codeBuilder = new StringBuilder("HS");
+
+        String[] words = title.split("\\s+");
+
+        if (words.length == 1) {
+            codeBuilder.append(
+                    Character.toUpperCase(words[0].charAt(0))
+            );
+        } else {
+            for (String word : words) {
+                codeBuilder.append(
+                        Character.toUpperCase(word.charAt(0))
+                );
+            }
+        }
+
+        String code = codeBuilder.toString();
+
+
+        ServiceEntity serviceEntity = new ServiceEntity();
+        serviceEntity.setCode(code);
+        serviceEntity.setEnabled(serviceDTO.isEnabled());
+        serviceEntity.setDescription(serviceDTO.getDescription());
+        serviceEntity.setPrice(serviceDTO.getPrice());
+        serviceEntity.setTitle(serviceDTO.getTitle());
+
+        ProviderEntity provider = providerRepository.findById(serviceDTO.getProviderId())
+                .orElseThrow(() -> new RuntimeException("Provider not found"));
+
+        serviceEntity.setProvider(provider);
         ServiceEntity saved = serviceRepository.save(serviceEntity);
-        System.out.println(saved);
 
         return ResponseEntity.ok(saved);
     }

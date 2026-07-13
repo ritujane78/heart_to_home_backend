@@ -21,7 +21,9 @@ public class ServiceEntity {
     @Column(nullable = false, unique = true)
     private String code;
 
-    private String providerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id", nullable = false)
+    private ProviderEntity provider;
 
     @Column(nullable = false)
     private String title;

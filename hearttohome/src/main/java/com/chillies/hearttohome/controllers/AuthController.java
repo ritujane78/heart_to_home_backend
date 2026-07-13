@@ -60,7 +60,6 @@ public class AuthController {
 
     @PostMapping("/public/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        System.out.println("=== SIGNIN CALLED ===");
 
         Authentication authentication;
         try {
@@ -181,7 +180,6 @@ public class AuthController {
     @PostMapping("/public/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam String token,
                                            @RequestParam String newPassword) {
-        System.out.println("RESET PASSWORD ENDPOINT HIT");
         try {
             userService.resetPassword(token, newPassword);
             return ResponseEntity.ok(new MessageResponse("Password reset successful"));

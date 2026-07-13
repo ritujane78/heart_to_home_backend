@@ -85,8 +85,6 @@ public class OrdersServiceImpl implements OrdersService {
         GiftOrder order = ordersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        System.out.println("order = " + order);
-
         order.setOrderStatus(status);
         GiftOrder updatedOrder = ordersRepository.save(order);
 
@@ -105,7 +103,6 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public List<GiftOrder> getOrdersByUser(Long userId) {
         List<GiftOrder> userOrders = ordersRepository.findByUserIdOrderByIdDesc(userId);
-        System.out.println("userOrders = " + userOrders);
         return userOrders;
     }
 }

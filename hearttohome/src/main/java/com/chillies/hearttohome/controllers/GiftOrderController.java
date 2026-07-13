@@ -29,7 +29,6 @@ public class GiftOrderController {
     @PostMapping
     public ResponseEntity<GiftOrderResponse> create(@AuthenticationPrincipal UserDetails userDetails, @RequestBody GiftOrderRequest  giftOrderRequest) {
         User user = userService.findByUsername(userDetails.getUsername());
-        System.out.println("GiftOrderController create");
         GiftOrderResponse giftOrderResponse = ordersService.create(user, giftOrderRequest);
         return ResponseEntity.ok(giftOrderResponse);
     }
