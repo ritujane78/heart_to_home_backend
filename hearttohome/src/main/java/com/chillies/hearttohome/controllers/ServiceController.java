@@ -24,12 +24,6 @@ public class ServiceController {
 
     private final ServiceRepository serviceRepository;
 
-//    @GetMapping
-//    public List<ServiceEntity> getAllServices() {
-//        return serviceRepository.findAll();
-//    }
-//}
-
     @GetMapping
     public Page<ServiceEntity> getServices(
             @RequestParam(defaultValue = "") String keyword,
@@ -39,9 +33,12 @@ public class ServiceController {
         Pageable pageable = PageRequest.of(page, size);
 
         if (keyword.isBlank()) {
-            return serviceRepository.findAll(pageable);
+            return serviceRepository.findByIsEnabledTrue(pageable);
         }
 
-        return serviceRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+        return serviceRepository.findByIsEnabledTrueAndTitleContainingIgnoreCase(
+                keyword,
+                pageable
+        );
     }
 }

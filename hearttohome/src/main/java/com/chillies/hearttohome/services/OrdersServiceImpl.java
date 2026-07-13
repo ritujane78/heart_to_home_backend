@@ -43,7 +43,12 @@ public class OrdersServiceImpl implements OrdersService {
         order.setExchangeRate(giftOrderRequest.getExchangeRate());
 
         List<ServiceEntity> services =
-                serviceRepository.findAllById(giftOrderRequest.getServiceIds());
+                serviceRepository.findByIdInAndIsEnabledTrue(
+                        giftOrderRequest.getServiceIds());
+
+        if (services.size() != giftOrderRequest.getServiceIds().size()) {
+            throw new RuntimeException("One or more selected services are no longer available.");
+        }
 
         order.setServiceIds(services);
 
@@ -103,5 +108,4 @@ public class OrdersServiceImpl implements OrdersService {
         System.out.println("userOrders = " + userOrders);
         return userOrders;
     }
-
 }

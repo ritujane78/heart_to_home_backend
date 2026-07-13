@@ -22,7 +22,7 @@ public class GiftOrderRequest {
 
     private String message;
 
-    private List<String> serviceIds;
+    private List<Long> serviceIds;
 
     private BigDecimal totalPrice;
     private String currency;

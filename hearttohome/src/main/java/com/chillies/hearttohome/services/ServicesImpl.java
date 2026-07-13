@@ -33,36 +33,43 @@ public class ServicesImpl implements Services {
 
     @Override
     public ResponseEntity<ServiceEntity> addService(ServiceDTO serviceDTO) {
+        System.out.println("add service = " + serviceDTO);
+        String code = serviceDTO.getCode().trim().toUpperCase();
+
+        if (serviceRepository.existsByCodeIgnoreCase(code)) {
+            throw new RuntimeException("A service with this code already exists.");
+        }
         ServiceEntity serviceEntity = objectMapper.convertValue(serviceDTO, ServiceEntity.class);
-
-        int next =(int) serviceRepository.count() + 1;
-
-
-        serviceEntity.setCode("HS" + next);
-
-        System.out.println("serviceEntity: " + serviceEntity);
-
         ServiceEntity saved = serviceRepository.save(serviceEntity);
+        System.out.println(saved);
 
         return ResponseEntity.ok(saved);
     }
     @Transactional
     @Override
-    public void deleteService(String id) {
+    public void deleteService(Long id) {
 
-        serviceRepository.deleteById(id);
+        ServiceEntity service = serviceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Service not found"));
 
-        List<ServiceEntity> services = serviceRepository.findAllByOrderByCodeAsc();
+        service.setEnabled(false);
 
-        int i = 1;
+        serviceRepository.save(service);
+    }
+    @Override
+    public List<ServiceEntity> getDisabledServices() {
+        return serviceRepository.findByIsEnabledFalseOrderByCodeAsc();
+    }
 
-        for(ServiceEntity serviceItem : services){
+    @Override
+    @Transactional
+    public void enableService(Long id) {
 
-            serviceItem.setCode("HS" + i);
+        ServiceEntity service = serviceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Service not found"));
 
-            i++;
-        }
+        service.setEnabled(true);
 
-        serviceRepository.saveAll(services);
+        serviceRepository.save(service);
     }
 }

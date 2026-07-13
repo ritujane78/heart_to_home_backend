@@ -6,12 +6,19 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface Services {
+
+    Page<ServiceEntity> getServices(int page, int size);
 
     ResponseEntity<ServiceEntity> addService(ServiceDTO serviceDTO);
 
     @Transactional
-    void deleteService(String id);
+    void deleteService(Long id);
 
-    Page<ServiceEntity> getServices(int page, int size);
+    List<ServiceEntity> getDisabledServices();
+
+    void enableService(Long id);
+
 }

@@ -95,12 +95,23 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete-service/{id}")
-    public ResponseEntity<Void> deleteService(@PathVariable String id) {
+    public ResponseEntity<Void> deleteService(@PathVariable Long id) {
 
         services.deleteService(id);
 
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/disabled-services")
+    public List<ServiceEntity> getDisabledServices() {
+        return services.getDisabledServices();
+    }
+    @PutMapping("/enable-service/{id}")
+    public ResponseEntity<Void> enableService(@PathVariable Long id) {
+
+        services.enableService(id);
+
+        return ResponseEntity.ok().build();
+    }
 
 }
