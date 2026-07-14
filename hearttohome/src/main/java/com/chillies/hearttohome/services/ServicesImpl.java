@@ -41,7 +41,7 @@ public class ServicesImpl implements Services {
         if (serviceRepository.existsByTitleIgnoreCase(title)) {
             throw new RuntimeException("A service with this title already exists.");
         }
-        StringBuilder codeBuilder = new StringBuilder("HS");
+        StringBuilder codeBuilder = new StringBuilder("HS_");
 
         String[] words = title.split("\\s+");
 
