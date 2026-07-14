@@ -7,7 +7,6 @@ import com.chillies.hearttohome.models.ServiceEntity;
 import com.chillies.hearttohome.repositories.ProviderRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.util.EmailService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,9 +37,6 @@ public class ServicesImpl implements Services {
 
         String title = serviceDTO.getTitle().trim();
 
-        if (serviceRepository.existsByTitleIgnoreCase(title)) {
-            throw new RuntimeException("A service with this title already exists.");
-        }
         StringBuilder codeBuilder = new StringBuilder("HS_");
 
         String[] words = title.split("\\s+");
@@ -74,6 +70,15 @@ public class ServicesImpl implements Services {
         ServiceEntity saved = serviceRepository.save(serviceEntity);
 
         return ResponseEntity.ok(saved);
+    }
+    @Override
+    public boolean titleExists(String title){
+
+        if (serviceRepository.existsByTitleIgnoreCase(title)) {
+            return true;
+        }
+        return false;
+
     }
     @Transactional
     @Override

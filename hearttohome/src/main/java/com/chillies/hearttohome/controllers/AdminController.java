@@ -93,6 +93,12 @@ public class AdminController {
         return services.addService(serviceDTO);
     }
 
+    @GetMapping("/title-exists")
+    public boolean titleExists(@RequestParam String title) {
+        System.out.println("title: " + title);
+        return services.titleExists(title);
+    }
+
     @DeleteMapping("/delete-service/{id}")
     public ResponseEntity<Void> deleteService(@PathVariable Long id) {
 

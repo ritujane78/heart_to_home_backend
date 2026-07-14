@@ -23,6 +23,7 @@ import java.util.List;
 public class ServiceController {
 
     private final ServiceRepository serviceRepository;
+    private final Services services;
 
     @GetMapping
     public Page<ServiceEntity> getServices(

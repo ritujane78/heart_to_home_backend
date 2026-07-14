@@ -14,6 +14,8 @@ public interface Services {
 
     ResponseEntity<ServiceEntity> addService(ServiceDTO serviceDTO);
 
+    boolean titleExists(String title);
+
     @Transactional
     void deleteService(Long id);
 

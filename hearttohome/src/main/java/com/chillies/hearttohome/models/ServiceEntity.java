@@ -18,7 +18,7 @@ public class ServiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String code;
 
     @ManyToOne(fetch = FetchType.LAZY)
