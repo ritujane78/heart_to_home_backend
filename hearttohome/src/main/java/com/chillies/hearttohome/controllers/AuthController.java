@@ -1,7 +1,10 @@
 package com.chillies.hearttohome.controllers;
 
 
+import com.chillies.hearttohome.DTO.TokenRefreshRequest;
+import com.chillies.hearttohome.DTO.TokenRefreshResponse;
 import com.chillies.hearttohome.models.AppRole;
+import com.chillies.hearttohome.models.RefreshToken;
 import com.chillies.hearttohome.models.Role;
 import com.chillies.hearttohome.models.User;
 import com.chillies.hearttohome.repositories.RoleRepository;
@@ -13,7 +16,9 @@ import com.chillies.hearttohome.security.response.LoginResponse;
 import com.chillies.hearttohome.security.response.MessageResponse;
 import com.chillies.hearttohome.security.response.UserInfoResponse;
 import com.chillies.hearttohome.security.services.UserDetailsImpl;
+import com.chillies.hearttohome.services.RefreshTokenService;
 import com.chillies.hearttohome.services.UserService;
+import com.chillies.hearttohome.util.AuthUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +34,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -57,40 +59,12 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    RefreshTokenService refreshTokenService;
 
-    @PostMapping("/public/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    @Autowired
+    AuthUtil authUtil;
 
-        Authentication authentication;
-        try {
-            authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-        } catch (AuthenticationException exception) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("message", "Bad credentials");
-            map.put("status", false);
-            return new ResponseEntity<Object>(map, HttpStatus.NOT_FOUND);
-        }
-
-//      Set the authentication
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
-
-        // Collect roles from the UserDetails
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-        // Prepare the response body, now including the JWT token directly in the body
-        LoginResponse response = new LoginResponse(userDetails.getUsername(),
-                roles, jwtToken);
-
-        // Return the response entity with the JWT token included in the response body
-        return ResponseEntity.ok(response);
-    }
     @PostMapping("/public/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -136,6 +110,7 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
     @GetMapping("/user")
     public ResponseEntity<?> getUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
         User user = userService.findByUsername(userDetails.getUsername());
@@ -163,8 +138,9 @@ public class AuthController {
 
     @GetMapping("/username")
     public String getUsername(@AuthenticationPrincipal UserDetails userDetails) {
-        return (userDetails != null? userDetails.getUsername() : "");
+        return (userDetails != null ? userDetails.getUsername() : "");
     }
+
     @PostMapping("/public/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestParam String email) {
 
@@ -177,6 +153,7 @@ public class AuthController {
                     .body(new MessageResponse("Error sending password reset email to " + email));
         }
     }
+
     @PostMapping("/public/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam String token,
                                            @RequestParam String newPassword) {
@@ -188,5 +165,71 @@ public class AuthController {
                     .body(new MessageResponse(e.getMessage()));
         }
     }
-}
 
+    @PostMapping("/public/signin")
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+        Authentication authentication;
+        try {
+            authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()));
+        } catch (AuthenticationException exception) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("message", "Bad credentials");
+            map.put("status", false);
+            return new ResponseEntity<Object>(map, HttpStatus.NOT_FOUND);
+        }
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
+
+        // Generate refresh token
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        LoginResponse response = new LoginResponse(
+                userDetails.getUsername(),
+                roles,
+                jwtToken,
+                refreshToken.getToken()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    // Add new endpoint for token refresh
+    @PostMapping("/public/refresh-token")
+    public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String newAccessToken = jwtUtils.generateTokenFromUsername(user.getUsername());
+                    // Optional: Generate a new refresh token (rotation)
+                    RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(user.getId());
+
+                    return ResponseEntity.ok(new TokenRefreshResponse(
+                            newAccessToken,
+                            newRefreshToken.getToken()
+                    ));
+                })
+                .orElseThrow(() -> new RuntimeException("Refresh token not found!"));
+    }
+
+    // Add logout endpoint to revoke refresh token
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutUser() {
+        Long userId = authUtil.loggedInUserId();
+        refreshTokenService.deleteByUserId(userId);
+        return ResponseEntity.ok(new MessageResponse("Logout successful!"));
+    }
+}

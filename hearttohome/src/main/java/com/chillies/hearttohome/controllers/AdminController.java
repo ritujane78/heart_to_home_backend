@@ -95,7 +95,6 @@ public class AdminController {
 
     @GetMapping("/title-exists")
     public boolean titleExists(@RequestParam String title) {
-        System.out.println("title: " + title);
         return services.titleExists(title);
     }
 
