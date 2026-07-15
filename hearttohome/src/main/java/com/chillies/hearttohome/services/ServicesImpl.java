@@ -42,19 +42,19 @@ public class ServicesImpl implements Services {
         String[] words = title.split("\\s+");
 
         if (words.length == 1) {
-            codeBuilder.append(
-                    Character.toUpperCase(words[0].charAt(0))
-            );
+            codeBuilder.append(Character.toUpperCase(words[0].charAt(0)));
         } else {
             for (String word : words) {
-                codeBuilder.append(
-                        Character.toUpperCase(word.charAt(0))
-                );
+                codeBuilder.append(Character.toUpperCase(word.charAt(0)));
             }
         }
 
         String code = codeBuilder.toString();
 
+        // Keep appending "1" until a unique code is found
+        while (serviceRepository.existsByCode(code)) {
+            code += "1";
+        }
 
         ServiceEntity serviceEntity = new ServiceEntity();
         serviceEntity.setCode(code);
@@ -67,6 +67,7 @@ public class ServicesImpl implements Services {
                 .orElseThrow(() -> new RuntimeException("Provider not found"));
 
         serviceEntity.setProvider(provider);
+
         ServiceEntity saved = serviceRepository.save(serviceEntity);
 
         return ResponseEntity.ok(saved);
