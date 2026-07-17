@@ -65,13 +65,13 @@ public class GiftOrder {
     @Builder.Default
     private List<ServiceEntity> serviceIds = new ArrayList<>();
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal totalPrice;
+    @Column(nullable = false)
+    private String totalPrice;
 
     @Column(nullable = false)
     private String currency;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 38, scale = 6)
     private BigDecimal exchangeRate;
 
     @Enumerated(EnumType.STRING)

@@ -24,7 +24,7 @@ public class GiftOrderRequest {
 
     private List<Long> serviceIds;
 
-    private BigDecimal totalPrice;
+    private String totalPrice;
     private String currency;
 
     private BigDecimal exchangeRate;

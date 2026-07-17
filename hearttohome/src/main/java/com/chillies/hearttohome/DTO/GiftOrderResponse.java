@@ -7,5 +7,5 @@ import java.math.BigDecimal;
 public record GiftOrderResponse(
         Long id,
         OrderStatus orderStatus,
-        BigDecimal totalPrice
+        String totalPrice
 ) {}
