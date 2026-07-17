@@ -8,7 +8,6 @@ import com.chillies.hearttohome.repositories.RoleRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.security.jwt.AuthEntryPointJwt;
 import com.chillies.hearttohome.security.jwt.AuthTokenFilter;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +24,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.http.HttpMethod;
 
 import java.time.LocalDate;
@@ -68,10 +66,6 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
     }
     @Bean
     public CommandLineRunner initData(RoleRepository roleRepository,

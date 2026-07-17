@@ -10,7 +10,6 @@ import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrdersServiceImpl implements OrdersService {
 
-    private final ObjectMapper objectMapper;
     private final OrdersRepository ordersRepository;
     private final UserRepository userRepository;
     private final ServiceRepository serviceRepository;
@@ -47,7 +45,8 @@ public class OrdersServiceImpl implements OrdersService {
                         giftOrderRequest.getServiceIds());
 
         if (services.size() != giftOrderRequest.getServiceIds().size()) {
-            throw new RuntimeException("One or more selected services are no longer available.");
+            throw new RuntimeException("One or more selected services are no longer available. " +
+                    "Please refresh the page and try selecting services again.");
         }
 
         order.setServiceIds(services);
