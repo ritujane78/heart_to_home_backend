@@ -1,36 +1,3 @@
 spring:
-  application:
-    name: hearttohome
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: test.ritujane78@gmail.com
-    password: ${GMAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
-  datasource:
-    url: jdbc:mysql://localhost:3306/hearttohome
-    username: root
-    password: root
-  app:
-    jwtSecret: VGhpc0lzQVN1cGVyU2VjcmV0S2V5Rm9ySldUU2lnbmluZzEyMzQ1Njc4OTA=
-    jwtExpirationMs: 900000
-    jwtRefreshExpirationMs: 604800000
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-logging:
-  level:
-    org:
-      springframework:
-        security: TRACE
-frontend:
-  url: http://localhost:5173
+  profiles:
+    active: dev

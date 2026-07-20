@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME}
+
+  security:
+    user:
+      name: ${SPRING_SECURITY_USER_NAME}
+      password: ${SPRING_SECURITY_USER_PASSWORD}
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  app:
+    jwtSecret: ${SPRING_APP_JWT_SECRET}
+    jwtExpirationMs: ${SPRING_APP_JWT_EXPIRATION_MS}
+    jwtRefreshExpirationMs: ${SPRING_APP_JWT_REFRESH_EXPIRATION_MS}
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+frontend:
+  url: ${FRONTEND_URL}

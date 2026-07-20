@@ -9,6 +9,7 @@ import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.security.jwt.AuthEntryPointJwt;
 import com.chillies.hearttohome.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,11 @@ import java.time.LocalDate;
 public class SecurityConfig {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
+
+    @Value("${spring.security.user.name}")
+    private String username;
+    @Value("${spring.security.user.password}")
+    private String password;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -78,22 +84,22 @@ public class SecurityConfig {
             Role adminRole = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
                     .orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_ADMIN)));
 
-            if (!userRepository.existsByUsername("user1")) {
-                User user1 = new User("user1", "user1@example.com", passwordEncoder.encode("password1"));
-                user1.setAccountNonLocked(false);
-                user1.setAccountNonExpired(true);
-                user1.setCredentialsNonExpired(true);
-                user1.setEnabled(true);
-                user1.setCredentialsExpiryDate(LocalDate.now().plusYears(1));
-                user1.setAccountExpiryDate(LocalDate.now().plusYears(1));
-                user1.setTwoFactorEnabled(false);
-                user1.setSignupMethod("email");
-                user1.setRole(userRole);
-                userRepository.save(user1);
-            }
+//            if (!userRepository.existsByUsername("user1")) {
+//                User user1 = new User("user1", "user1@example.com", passwordEncoder.encode("password1"));
+//                user1.setAccountNonLocked(false);
+//                user1.setAccountNonExpired(true);
+//                user1.setCredentialsNonExpired(true);
+//                user1.setEnabled(true);
+//                user1.setCredentialsExpiryDate(LocalDate.now().plusYears(1));
+//                user1.setAccountExpiryDate(LocalDate.now().plusYears(1));
+//                user1.setTwoFactorEnabled(false);
+//                user1.setSignupMethod("email");
+//                user1.setRole(userRole);
+//                userRepository.save(user1);
+//            }
 
-            if (!userRepository.existsByUsername("admin")) {
-                User admin = new User("admin", "admin@example.com", passwordEncoder.encode("adminPass"));
+            if (!userRepository.existsByUsername(username)) {
+                User admin = new User(username, "hth@admin.com", passwordEncoder.encode(password));
                 admin.setAccountNonLocked(true);
                 admin.setAccountNonExpired(true);
                 admin.setCredentialsNonExpired(true);
