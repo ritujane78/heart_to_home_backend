@@ -54,7 +54,7 @@ public class EmailService {
 
                     Good news!
 
-                    Your order has been prepared and is now ready for the clinic. Our team will proceed with the next steps shortly.
+                    Your order has been processed and is now ready for the clinic. Our team will proceed with the next steps shortly.
 
                     Thank you for choosing Heart to Home.
 
