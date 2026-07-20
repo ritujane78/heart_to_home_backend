@@ -6,7 +6,6 @@ import com.chillies.hearttohome.models.ProviderEntity;
 import com.chillies.hearttohome.models.ServiceEntity;
 import com.chillies.hearttohome.repositories.ProviderRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
-import com.chillies.hearttohome.util.EmailService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +23,6 @@ public class ServicesImpl implements Services {
 
     private final ServiceRepository serviceRepository;
     private final ProviderRepository providerRepository;
-    private final EmailService emailService;
 
     @Override
     public Page<ServiceEntity> getServices(int page, int size) {

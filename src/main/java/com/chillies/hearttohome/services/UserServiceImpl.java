@@ -11,11 +11,13 @@ import com.chillies.hearttohome.repositories.PasswordResetTokenRepository;
 import com.chillies.hearttohome.repositories.RoleRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -120,7 +122,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void generatePasswordResetToken(String email) {
+    public void generatePasswordResetToken(String email) throws MessagingException, UnsupportedEncodingException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 

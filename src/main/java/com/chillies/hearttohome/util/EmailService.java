@@ -1,10 +1,17 @@
 package com.chillies.hearttohome.util;
 
 import com.chillies.hearttohome.models.OrderStatus;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
+import java.io.UnsupportedEncodingException;
 
 @Service
 public class EmailService {
@@ -12,19 +19,33 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendEmailForPasswordReset(String to, String resetUrl) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Password Reset Request");
-        message.setText("Click the link to reset your password: " + resetUrl);
+    public void sendEmailForPasswordReset(String to, String resetUrl) throws UnsupportedEncodingException, MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(new InternetAddress(
+                "teamhearttohome@gmail.com",
+                "Heart to Home"
+        ));
+
+        helper.setTo(new InternetAddress(to, "Customer"));
+
+        helper.setSubject("Password Reset Request");
+        helper.setText("Click the link to reset your password: " + resetUrl);
 
         mailSender.send(message);
     }
 
-    public void sendEmailForOrderStatus(String to, OrderStatus status) {
+    public void sendEmailForOrderStatus(String to, OrderStatus status) throws UnsupportedEncodingException, MessagingException {
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(new InternetAddress(
+                "teamhearttohome@gmail.com",
+                "Heart to Home"
+        ));
+        helper.setTo(to);
 
         String subject;
         String text;
@@ -96,15 +117,21 @@ public class EmailService {
                 text = "Your order status has been updated.";
         }
 
-        message.setSubject(subject);
-        message.setText(text);
+        helper.setSubject(subject);
+        helper.setText(text);
 
         mailSender.send(message);
     }
-    public void sendEmailForOrderInitiation(String to) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Your Heart to Home Order is Being Processed");
+    public void sendEmailForOrderInitiation(String to) throws UnsupportedEncodingException, MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(new InternetAddress(
+                "teamhearttohome@gmail.com",
+                "Heart to Home"
+        ));
+        helper.setTo(to);
+        helper.setSubject("Your Heart to Home Order is Being Processed");
         String text = """
                     Dear Customer,
 
@@ -117,7 +144,7 @@ public class EmailService {
                     Kind regards,
                     Heart to Home Team
                     """;
-        message.setText(text);
+        helper.setText(text);
 
         mailSender.send(message);
     }

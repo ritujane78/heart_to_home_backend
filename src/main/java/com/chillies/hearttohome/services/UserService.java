@@ -5,7 +5,9 @@ package com.chillies.hearttohome.services;
 import com.chillies.hearttohome.DTO.UserDTO;
 import com.chillies.hearttohome.models.Role;
 import com.chillies.hearttohome.models.User;
+import jakarta.mail.MessagingException;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,7 @@ public interface UserService {
 
     User registerUser(User user);
 
-    void generatePasswordResetToken(String email);
+    void generatePasswordResetToken(String email) throws MessagingException, UnsupportedEncodingException;
 
     void resetPassword(String token, String newPassword);
 

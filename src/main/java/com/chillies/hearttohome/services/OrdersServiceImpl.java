@@ -10,9 +10,11 @@ import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service
@@ -26,7 +28,7 @@ public class OrdersServiceImpl implements OrdersService {
     private final EmailService emailService;
 
     @Override
-    public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) {
+    public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) throws MessagingException, UnsupportedEncodingException {
 
         GiftOrder order = new GiftOrder();
 
@@ -79,7 +81,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public GiftOrder updateStatus(Long id, OrderStatus status) {
+    public GiftOrder updateStatus(Long id, OrderStatus status) throws MessagingException, UnsupportedEncodingException {
 
         GiftOrder order = ordersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));

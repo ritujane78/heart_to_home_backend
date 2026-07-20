@@ -7,6 +7,7 @@ import com.chillies.hearttohome.models.OrderStatus;
 import com.chillies.hearttohome.models.User;
 import com.chillies.hearttohome.services.OrdersService;
 import com.chillies.hearttohome.services.UserService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +29,7 @@ public class GiftOrderController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<GiftOrderResponse> create(@AuthenticationPrincipal UserDetails userDetails, @RequestBody GiftOrderRequest  giftOrderRequest) {
+    public ResponseEntity<GiftOrderResponse> create(@AuthenticationPrincipal UserDetails userDetails, @RequestBody GiftOrderRequest  giftOrderRequest) throws MessagingException, UnsupportedEncodingException {
         User user = userService.findByUsername(userDetails.getUsername());
         GiftOrderResponse giftOrderResponse = ordersService.create(user, giftOrderRequest);
         return ResponseEntity.ok(giftOrderResponse);
@@ -43,7 +45,7 @@ public class GiftOrderController {
     @PutMapping("/{id}/status")
     public ResponseEntity<GiftOrder> updateStatus(
             @PathVariable Long id,
-            @RequestBody Map<String, String> body) {
+            @RequestBody Map<String, String> body) throws MessagingException, UnsupportedEncodingException {
 
         OrderStatus status = OrderStatus.valueOf(body.get("orderStatus"));
 

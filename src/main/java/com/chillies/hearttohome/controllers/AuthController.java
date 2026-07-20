@@ -19,6 +19,7 @@ import com.chillies.hearttohome.security.services.UserDetailsImpl;
 import com.chillies.hearttohome.services.RefreshTokenService;
 import com.chillies.hearttohome.services.UserService;
 import com.chillies.hearttohome.util.AuthUtil;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -151,6 +153,10 @@ public class AuthController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new MessageResponse("Error sending password reset email to " + email));
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
     }
 

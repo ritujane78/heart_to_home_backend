@@ -5,69 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b518428-8738-4058-ba64-f28d45ef8032" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/hearttohome/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/GiftOrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/GiftOrderRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/GiftOrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/GiftOrderResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/ServiceDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/ServiceDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/TokenRefreshRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/TokenRefreshRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/TokenRefreshResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/TokenRefreshResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/DTO/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/HearttohomeApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/HearttohomeApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/CsrfController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/CsrfController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/GiftOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/GiftOrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/ProviderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/ProviderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/controllers/ServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/ServiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/exceptions/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/AppRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/AppRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/GiftOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/GiftOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/OrderStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/OrderStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/PasswordResetToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/PasswordResetToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/ProviderEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/ProviderEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/RefreshToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/RefreshToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/ServiceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/ServiceEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/OrdersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/repositories/OrdersRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/PasswordResetTokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/repositories/PasswordResetTokenRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/ProviderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/repositories/ProviderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/RefreshTokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/repositories/RefreshTokenRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/repositories/RoleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/ServiceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/repositories/ServiceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/repositories/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/jwt/AuthEntryPointJwt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/jwt/AuthEntryPointJwt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/jwt/AuthTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/jwt/AuthTokenFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/jwt/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/jwt/JwtUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/request/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/request/LoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/request/SignupRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/request/SignupRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/response/LoginResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/response/LoginResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/response/MessageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/response/MessageResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/response/UserInfoResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/response/UserInfoResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/services/UserDetailsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/services/UserDetailsImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/security/services/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/security/services/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/ProviderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/ProviderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/ProviderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/ProviderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/RefreshTokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/RefreshTokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/RefreshTokenServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/RefreshTokenServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/Services.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/Services.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/util/AuthUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/AuthUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/java/com/chillies/hearttohome/util/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/resources/application-prod.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-prod.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hearttohome/src/test/java/com/chillies/hearttohome/HearttohomeApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/chillies/hearttohome/HearttohomeApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService_old.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,61 +61,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0421010492770528" />
-      <entry key="MS500" value="1.5307116044830127" />
-      <entry key="S2" value="1.8563342966891478" />
-      <entry key="S5" value="2.0831300503735095" />
-      <entry key="S10" value="2.5063736830473813" />
-      <entry key="S30" value="3.2801666223146007" />
-      <entry key="S60" value="3.6013854397065606" />
-      <entry key="M2" value="3.79856243677645" />
-      <entry key="M5" value="5.637792490019297" />
-      <entry key="M10" value="14.922691057276877" />
-      <entry key="M15" value="24.70913618640515" />
-      <entry key="M30" value="44.69043233767166" />
-      <entry key="H1" value="70.79415916259563" />
-      <entry key="H2" value="113.65811523419421" />
-      <entry key="H4" value="191.1639217426096" />
-      <entry key="D1" value="815.3504881246744" />
-      <entry key="W1" value="1462.205390718706" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="3.992533936864316E-260" />
+      <entry key="S2" value="1.4135531869837787E-65" />
+      <entry key="S5" value="1.1484837683360226E-26" />
+      <entry key="S10" value="1.071673349643455E-13" />
+      <entry key="S30" value="4.749936155449713E-5" />
+      <entry key="S60" value="0.00689765906921511" />
+      <entry key="M2" value="0.08545193028408325" />
+      <entry key="M5" value="0.5694652743647326" />
+      <entry key="M10" value="2.8326705483273824" />
+      <entry key="M15" value="7.212809143685177" />
+      <entry key="M30" value="24.226247204096538" />
+      <entry key="H1" value="54.37791132554423" />
+      <entry key="H2" value="102.52599353769466" />
+      <entry key="H4" value="184.25993528073613" />
+      <entry key="D1" value="815.6443668378766" />
+      <entry key="W1" value="1475.6606032354573" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="0.0" />
-      <entry key="S5" value="2.8476077569588004E-211" />
-      <entry key="S10" value="8.686226363036238E-106" />
-      <entry key="S30" value="2.3767110349776467E-35" />
-      <entry key="S60" value="1.1945666523308625E-17" />
-      <entry key="M2" value="9.898990553738963E-9" />
-      <entry key="M5" value="0.002432088848670598" />
-      <entry key="M10" value="0.1551811378041704" />
-      <entry key="M15" value="0.6215551838073666" />
-      <entry key="M30" value="2.505866768534967" />
-      <entry key="H1" value="5.161765378771628" />
-      <entry key="H2" value="7.834961170367674" />
-      <entry key="H4" value="12.57216060624555" />
-      <entry key="D1" value="94.13110601876676" />
-      <entry key="W1" value="220.88325437653606" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.000047688469249" />
+      <entry key="S2" value="1.083232918549917" />
+      <entry key="S5" value="1.3978025630848867" />
+      <entry key="S10" value="1.7756827125426238" />
+      <entry key="S30" value="2.398586847164463" />
+      <entry key="S60" value="2.6629920972014682" />
+      <entry key="M2" value="2.82111135928897" />
+      <entry key="M5" value="2.925766557870487" />
+      <entry key="M10" value="2.9693458088803117" />
+      <entry key="M15" value="3.053069293920349" />
+      <entry key="M30" value="3.8763691829496856" />
+      <entry key="H1" value="6.068142696837124" />
+      <entry key="H2" value="9.043595699612311" />
+      <entry key="H4" value="14.043091554702388" />
+      <entry key="D1" value="95.12038867392872" />
+      <entry key="W1" value="223.20301819432908" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.0066032619074061" />
-      <entry key="MS500" value="1.520138207090453" />
-      <entry key="S2" value="1.8531193271376902" />
-      <entry key="S5" value="2.081666615700627" />
-      <entry key="S10" value="2.5054679444228114" />
-      <entry key="S30" value="3.279757887474416" />
-      <entry key="S60" value="3.601158861686529" />
-      <entry key="M2" value="3.7984408070219446" />
-      <entry key="M5" value="5.639836768198516" />
-      <entry key="M10" value="15.07562518964265" />
-      <entry key="M15" value="25.326512713715836" />
-      <entry key="M30" value="47.18979408198897" />
-      <entry key="H1" value="75.94989315049386" />
-      <entry key="H2" value="121.48875892011266" />
-      <entry key="H4" value="203.73272780253123" />
-      <entry key="D1" value="909.4775704109328" />
-      <entry key="W1" value="1683.087325669836" />
+      <entry key="MS100" value="4.0830308678775364E-5" />
+      <entry key="MS500" value="0.1325026695486763" />
+      <entry key="S2" value="0.6575036341837134" />
+      <entry key="S5" value="1.150551244404556" />
+      <entry key="S10" value="1.6107801226644352" />
+      <entry key="S30" value="2.32020911145655" />
+      <entry key="S60" value="2.625557212320284" />
+      <entry key="M2" value="2.882842260455909" />
+      <entry key="M5" value="3.4852762342078947" />
+      <entry key="M10" value="5.796793710228625" />
+      <entry key="M15" value="10.261879379404563" />
+      <entry key="M30" value="28.098525863475093" />
+      <entry key="H1" value="60.441553041593046" />
+      <entry key="H2" value="111.56579753261146" />
+      <entry key="H4" value="198.2998485525364" />
+      <entry key="D1" value="910.7607789436984" />
+      <entry key="W1" value="1698.8623005225718" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -239,6 +183,7 @@
       <recent name="C:\Users\rituj\Documents\Codex\2026-06-17\hearttohome\hearttohome\src\main\java\com\chillies\hearttohome" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.chillies.hearttohome.util" />
       <recent name="com.chillies.hearttohome.models" />
       <recent name="com.chillies.hearttohome.repositories" />
     </key>
@@ -246,7 +191,7 @@
   <component name="RunManager">
     <configuration name="HearttohomeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="envFilePaths">
-        <option value="$PROJECT_DIR$/hearttohome/.env" />
+        <option value="$PROJECT_DIR$/.env" />
       </option>
       <module name="hearttohome" />
       <selectedOptions>
@@ -302,7 +247,7 @@
       <workItem from="1784252844278" duration="4296000" />
       <workItem from="1784291982545" duration="554000" />
       <workItem from="1784339460360" duration="230000" />
-      <workItem from="1784517430823" duration="4530000" />
+      <workItem from="1784517430823" duration="7221000" />
     </task>
     <servers />
   </component>
