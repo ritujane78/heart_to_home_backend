@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b518428-8738-4058-ba64-f28d45ef8032" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/GiftOrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/GiftOrderRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/GiftOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/GiftOrder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,7 +244,8 @@
       <workItem from="1784291982545" duration="554000" />
       <workItem from="1784339460360" duration="230000" />
       <workItem from="1784517430823" duration="9311000" />
-      <workItem from="1784600103012" duration="3428000" />
+      <workItem from="1784600103012" duration="3557000" />
+      <workItem from="1784626440962" duration="784000" />
     </task>
     <servers />
   </component>

@@ -13,7 +13,7 @@ public class GiftOrderRequest {
 
     private String recipientName;
     private String recipientPhone;
-    private String recipientEmail;
+//    private String recipientEmail;
 
     private String relationship;
 

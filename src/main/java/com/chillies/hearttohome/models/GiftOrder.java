@@ -40,7 +40,7 @@ public class GiftOrder {
     @Column(nullable = false)
     private String recipientPhone;
 
-    private String recipientEmail;
+//    private String recipientEmail;
 
     @Column(nullable = false)
     private String relationship;

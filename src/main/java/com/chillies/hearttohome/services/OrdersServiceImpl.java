@@ -35,7 +35,7 @@ public class OrdersServiceImpl implements OrdersService {
         order.setSenderName(giftOrderRequest.getSenderName());
         order.setSenderEmail(giftOrderRequest.getSenderEmail());
         order.setRecipientName(giftOrderRequest.getRecipientName());
-        order.setRecipientEmail(giftOrderRequest.getRecipientEmail());
+//        order.setRecipientEmail(giftOrderRequest.getRecipientEmail());
         order.setRecipientPhone(giftOrderRequest.getRecipientPhone());
         order.setRelationship(giftOrderRequest.getRelationship());
         order.setMessage(giftOrderRequest.getMessage());
