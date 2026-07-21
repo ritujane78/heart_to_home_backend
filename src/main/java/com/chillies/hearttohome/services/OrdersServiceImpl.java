@@ -63,7 +63,7 @@ public class OrdersServiceImpl implements OrdersService {
                 saved.getSenderEmail() != null &&
                 !saved.getSenderEmail().isBlank()) {
 
-            emailService.sendEmailForOrderInitiation(saved.getSenderEmail());
+            emailService.sendEmailForOrderInitiation(saved.getServiceIds(), saved.getSenderEmail());
         }
 
         GiftOrderResponse response = new GiftOrderResponse(
@@ -94,6 +94,7 @@ public class OrdersServiceImpl implements OrdersService {
                 !updatedOrder.getSenderEmail().isBlank()) {
 
             emailService.sendEmailForOrderStatus(
+                    updatedOrder.getServiceIds(),
                     updatedOrder.getSenderEmail(),
                     updatedOrder.getOrderStatus()
             );

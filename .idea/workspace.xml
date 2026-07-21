@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b518428-8738-4058-ba64-f28d45ef8032" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService_old.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,61 +56,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="3.992533936864316E-260" />
-      <entry key="S2" value="1.4135531869837787E-65" />
-      <entry key="S5" value="1.1484837683360226E-26" />
-      <entry key="S10" value="1.071673349643455E-13" />
-      <entry key="S30" value="4.749936155449713E-5" />
-      <entry key="S60" value="0.00689765906921511" />
-      <entry key="M2" value="0.08545193028408325" />
-      <entry key="M5" value="0.5694652743647326" />
-      <entry key="M10" value="2.8326705483273824" />
-      <entry key="M15" value="7.212809143685177" />
-      <entry key="M30" value="24.226247204096538" />
-      <entry key="H1" value="54.37791132554423" />
-      <entry key="H2" value="102.52599353769466" />
-      <entry key="H4" value="184.25993528073613" />
-      <entry key="D1" value="815.6443668378766" />
-      <entry key="W1" value="1475.6606032354573" />
+      <entry key="MS100" value="1.0634187152706498" />
+      <entry key="MS500" value="1.8290444943788304" />
+      <entry key="S2" value="4.352842946727357" />
+      <entry key="S5" value="8.995708032180538" />
+      <entry key="S10" value="15.464940605065664" />
+      <entry key="S30" value="27.417208798275986" />
+      <entry key="S60" value="33.10486594562345" />
+      <entry key="M2" value="36.715366482812065" />
+      <entry key="M5" value="39.26759161709453" />
+      <entry key="M10" value="41.09166610185382" />
+      <entry key="M15" value="44.0111182576191" />
+      <entry key="M30" value="57.869706523633944" />
+      <entry key="H1" value="86.63613073721496" />
+      <entry key="H2" value="135.00606331597177" />
+      <entry key="H4" value="217.47195473562468" />
+      <entry key="D1" value="850.818054476099" />
+      <entry key="W1" value="1515.1508846955742" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.000047688469249" />
-      <entry key="S2" value="1.083232918549917" />
-      <entry key="S5" value="1.3978025630848867" />
-      <entry key="S10" value="1.7756827125426238" />
-      <entry key="S30" value="2.398586847164463" />
-      <entry key="S60" value="2.6629920972014682" />
-      <entry key="M2" value="2.82111135928897" />
-      <entry key="M5" value="2.925766557870487" />
-      <entry key="M10" value="2.9693458088803117" />
-      <entry key="M15" value="3.053069293920349" />
-      <entry key="M30" value="3.8763691829496856" />
-      <entry key="H1" value="6.068142696837124" />
-      <entry key="H2" value="9.043595699612311" />
-      <entry key="H4" value="14.043091554702388" />
-      <entry key="D1" value="95.12038867392872" />
-      <entry key="W1" value="223.20301819432908" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="4.862291195310771E-135" />
+      <entry key="S5" value="2.5485518784770684E-54" />
+      <entry key="S10" value="2.3976687867327084E-27" />
+      <entry key="S30" value="2.6511240869489845E-9" />
+      <entry key="S60" value="8.853340783713482E-5" />
+      <entry key="M2" value="0.016266303888196516" />
+      <entry key="M5" value="0.372037855450465" />
+      <entry key="M10" value="1.0588501651650357" />
+      <entry key="M15" value="1.535273716440804" />
+      <entry key="M30" value="2.7488415646462965" />
+      <entry key="H1" value="5.109966739991319" />
+      <entry key="H2" value="8.29893346743747" />
+      <entry key="H4" value="13.452509250649554" />
+      <entry key="D1" value="94.44168163362849" />
+      <entry key="W1" value="222.9748039919507" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="4.0830308678775364E-5" />
-      <entry key="MS500" value="0.1325026695486763" />
-      <entry key="S2" value="0.6575036341837134" />
-      <entry key="S5" value="1.150551244404556" />
-      <entry key="S10" value="1.6107801226644352" />
-      <entry key="S30" value="2.32020911145655" />
-      <entry key="S60" value="2.625557212320284" />
-      <entry key="M2" value="2.882842260455909" />
-      <entry key="M5" value="3.4852762342078947" />
-      <entry key="M10" value="5.796793710228625" />
-      <entry key="M15" value="10.261879379404563" />
-      <entry key="M30" value="28.098525863475093" />
-      <entry key="H1" value="60.441553041593046" />
-      <entry key="H2" value="111.56579753261146" />
-      <entry key="H4" value="198.2998485525364" />
-      <entry key="D1" value="910.7607789436984" />
-      <entry key="W1" value="1698.8623005225718" />
+      <entry key="MS100" value="1.0276200331963945" />
+      <entry key="MS500" value="1.8093606758345167" />
+      <entry key="S2" value="4.3302314331855865" />
+      <entry key="S5" value="8.979891002872488" />
+      <entry key="S10" value="15.452876492427855" />
+      <entry key="S30" value="27.409956610960897" />
+      <entry key="S60" value="33.10041851970497" />
+      <entry key="M2" value="36.728922674778055" />
+      <entry key="M5" value="39.63724733354338" />
+      <entry key="M10" value="42.148080040070404" />
+      <entry key="M15" value="45.54399481606894" />
+      <entry key="M30" value="60.615452463360896" />
+      <entry key="H1" value="91.74220929068677" />
+      <entry key="H2" value="143.30146821540131" />
+      <entry key="H4" value="230.9213947981713" />
+      <entry key="D1" value="945.2557838166937" />
+      <entry key="W1" value="1738.1243685452437" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -142,37 +137,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found": "New/updated database configurations found",
-    "Notification.DoNotAsk-DatabaseConfigFileWatcher.found": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.HearttohomeApplication.executor": "Run",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "copilot.chat.legacySessionMetadata.migrated": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rituj/Documents/Codex/2026-06-17/hearttohome/hearttohome/src/main/resources",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;New/updated database configurations found&quot;,
+    &quot;Notification.DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.HearttohomeApplication.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rituj/Documents/Codex/2026-06-17/hearttohome/hearttohome/src/main/resources&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.chillies.hearttohome.services" />
@@ -247,7 +242,8 @@
       <workItem from="1784252844278" duration="4296000" />
       <workItem from="1784291982545" duration="554000" />
       <workItem from="1784339460360" duration="230000" />
-      <workItem from="1784517430823" duration="7221000" />
+      <workItem from="1784517430823" duration="9311000" />
+      <workItem from="1784600103012" duration="3428000" />
     </task>
     <servers />
   </component>
