@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b518428-8738-4058-ba64-f28d45ef8032" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/GiftOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/GiftOrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/GiftOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/GiftOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/ServiceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/ServiceEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/ServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/ServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/Services.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/Services.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/ServicesImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,61 +57,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0000000012187082" />
-      <entry key="S5" value="1.0002718691362156" />
-      <entry key="S10" value="1.0164884546339439" />
-      <entry key="S30" value="1.2545227759548607" />
-      <entry key="S60" value="1.5045025035464934" />
-      <entry key="M2" value="1.7103076385328824" />
-      <entry key="M5" value="2.0064392329566405" />
-      <entry key="M10" value="5.124392571025588" />
-      <entry key="M15" value="11.51369367794491" />
-      <entry key="M30" value="34.97192506926332" />
-      <entry key="H1" value="81.5138010948454" />
-      <entry key="H2" value="157.10253822773075" />
-      <entry key="H4" value="267.0490630404213" />
-      <entry key="D1" value="944.8716521949802" />
-      <entry key="W1" value="1655.679182226169" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="3.516637495796277E-118" />
+      <entry key="S60" value="1.446449019072698E-58" />
+      <entry key="M2" value="9.362922257104197E-29" />
+      <entry key="M5" value="7.234684154149582E-11" />
+      <entry key="M10" value="6.642279072823688E-5" />
+      <entry key="M15" value="0.006456213181398223" />
+      <entry key="M30" value="0.6296013832936391" />
+      <entry key="H1" value="6.81188441189332" />
+      <entry key="H2" value="33.181327017848965" />
+      <entry key="H4" value="113.44107424082137" />
+      <entry key="D1" value="826.7593000535719" />
+      <entry key="W1" value="1668.5373250468772" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="9.572670314140145E-15" />
-      <entry key="MS500" value="0.00157161273975971" />
-      <entry key="S2" value="0.2277039334039162" />
-      <entry key="S5" value="0.8828744689188108" />
-      <entry key="S10" value="1.80133035700722" />
-      <entry key="S30" value="3.943490670653422" />
-      <entry key="S60" value="5.38037065028306" />
-      <entry key="M2" value="6.485886188690156" />
-      <entry key="M5" value="7.5128531792056" />
-      <entry key="M10" value="8.812502720460664" />
-      <entry key="M15" value="10.137712379820217" />
-      <entry key="M30" value="13.019891916978057" />
-      <entry key="H1" value="16.368090142772285" />
-      <entry key="H2" value="20.689223746253205" />
-      <entry key="H4" value="26.922440494033154" />
-      <entry key="D1" value="107.09944604828198" />
-      <entry key="W1" value="239.81055205910295" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000000041271" />
+      <entry key="S2" value="1.0014253301504397" />
+      <entry key="S5" value="1.0733770922222543" />
+      <entry key="S10" value="1.2958443088429148" />
+      <entry key="S30" value="2.0077162944799563" />
+      <entry key="S60" value="2.6041459787239054" />
+      <entry key="M2" value="3.140428261628488" />
+      <entry key="M5" value="3.604294098229961" />
+      <entry key="M10" value="3.7920721121043894" />
+      <entry key="M15" value="3.859021490127736" />
+      <entry key="M30" value="3.929063757035325" />
+      <entry key="H1" value="4.089300145894695" />
+      <entry key="H2" value="5.793172090893022" />
+      <entry key="H4" value="11.956916405124288" />
+      <entry key="D1" value="91.42469518599206" />
+      <entry key="W1" value="236.95694511690712" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.8950250709279725" />
-      <entry key="MS500" value="0.9781449814516214" />
-      <entry key="S2" value="1.1069781614960938" />
-      <entry key="S5" value="1.6748612225497315" />
-      <entry key="S10" value="2.591676307573377" />
-      <entry key="S30" value="5.015818271598517" />
-      <entry key="S60" value="6.754604273716279" />
-      <entry key="M2" value="8.115473411109221" />
-      <entry key="M5" value="9.480813372554854" />
-      <entry key="M10" value="13.91212904371874" />
-      <entry key="M15" value="21.630466578479783" />
-      <entry key="M30" value="47.976136686817476" />
-      <entry key="H1" value="97.87090648174842" />
-      <entry key="H2" value="177.78420696766878" />
-      <entry key="H4" value="293.9661950717938" />
-      <entry key="D1" value="1051.9668175891852" />
-      <entry key="W1" value="1895.4883419438836" />
+      <entry key="MS100" value="1.896706780803008E-7" />
+      <entry key="MS500" value="0.045248067886904234" />
+      <entry key="S2" value="0.4616668048940206" />
+      <entry key="S5" value="0.7803241630479152" />
+      <entry key="S10" value="1.0935717733471548" />
+      <entry key="S30" value="1.8892474835551947" />
+      <entry key="S60" value="2.5232498265884744" />
+      <entry key="M2" value="3.0898078344793403" />
+      <entry key="M5" value="3.5804193555411707" />
+      <entry key="M10" value="3.7794556026417268" />
+      <entry key="M15" value="3.8568441548689516" />
+      <entry key="M30" value="4.554250185851461" />
+      <entry key="H1" value="10.898847936530126" />
+      <entry key="H2" value="38.97267963937891" />
+      <entry key="H4" value="125.3958247884837" />
+      <entry key="D1" value="918.1803980846092" />
+      <entry key="W1" value="1905.4929028098823" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -156,7 +152,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.HearttohomeApplication.executor": "Debug",
+    "Spring Boot.HearttohomeApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "copilot.chat.legacySessionMetadata.migrated": "true",
@@ -255,7 +251,7 @@
       <workItem from="1784698135701" duration="2942000" />
       <workItem from="1784771683563" duration="5833000" />
       <workItem from="1784810665434" duration="1928000" />
-      <workItem from="1784859779512" duration="3687000" />
+      <workItem from="1784859779512" duration="6038000" />
     </task>
     <servers />
   </component>

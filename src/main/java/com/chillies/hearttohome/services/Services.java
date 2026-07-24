@@ -23,4 +23,8 @@ public interface Services {
 
     void enableService(Long id);
 
+    @Transactional
+    ServiceEntity updateService(
+            Long id,
+            ServiceDTO request);
 }

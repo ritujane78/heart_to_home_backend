@@ -106,4 +106,29 @@ public class ServicesImpl implements Services {
 
         serviceRepository.save(service);
     }
+
+    @Override
+    public ServiceEntity updateService(
+            Long id,
+            ServiceDTO request) {
+
+        ServiceEntity service =
+                serviceRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException("Service not found"));
+
+        service.setCode(request.getCode());
+        service.setTitle(request.getTitle());
+        service.setDescription(request.getDescription());
+        service.setPrice(request.getPrice());
+
+        ProviderEntity provider =
+                providerRepository.findById(request.getProviderId())
+                        .orElseThrow(() ->
+                                new RuntimeException("Provider not found"));
+
+        service.setProvider(provider);
+
+        return serviceRepository.save(service);
+    }
 }

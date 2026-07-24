@@ -1,5 +1,6 @@
 package com.chillies.hearttohome.controllers;
 
+import com.chillies.hearttohome.DTO.ServiceDTO;
 import com.chillies.hearttohome.models.ServiceEntity;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.services.Services;
@@ -10,10 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +39,17 @@ public class ServiceController {
         return serviceRepository.findByIsEnabledTrueAndTitleContainingIgnoreCase(
                 keyword,
                 pageable
+        );
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/admin/update-service/{id}")
+    public ResponseEntity<?> updateService(
+            @PathVariable Long id,
+            @RequestBody ServiceDTO request) {
+
+        return ResponseEntity.ok(
+                services.updateService(id, request)
         );
     }
 }
