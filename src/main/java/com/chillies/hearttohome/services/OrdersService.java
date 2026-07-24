@@ -1,5 +1,6 @@
 package com.chillies.hearttohome.services;
 
+import com.chillies.hearttohome.DTO.AllOrdersDTO;
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
 import com.chillies.hearttohome.models.GiftOrder;
@@ -17,7 +18,9 @@ public interface OrdersService {
 
     GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) throws MessagingException, UnsupportedEncodingException;
 
-    List<GiftOrder> getAllOrders();
+    List<AllOrdersDTO> getAllOrders();
+
+    GiftOrder getOrder(Long id);
 
     GiftOrder updateStatus(Long id, OrderStatus status) throws MessagingException, UnsupportedEncodingException;
 

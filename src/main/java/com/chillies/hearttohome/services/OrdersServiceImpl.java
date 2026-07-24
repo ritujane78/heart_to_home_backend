@@ -1,5 +1,6 @@
 package com.chillies.hearttohome.services;
 
+import com.chillies.hearttohome.DTO.AllOrdersDTO;
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
 import com.chillies.hearttohome.models.*;
@@ -91,8 +92,14 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public List<GiftOrder> getAllOrders() {
+    public List<AllOrdersDTO> getAllOrders() {
         return ordersRepository.findAllByOrderByIdDesc();
+    }
+
+    @Override
+    public GiftOrder getOrder(Long id) {
+        return ordersRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
     }
 
     @Override

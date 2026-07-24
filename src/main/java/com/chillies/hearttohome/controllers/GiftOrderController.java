@@ -1,5 +1,6 @@
 package com.chillies.hearttohome.controllers;
 
+import com.chillies.hearttohome.DTO.AllOrdersDTO;
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
 import com.chillies.hearttohome.models.GiftOrder;
@@ -37,9 +38,16 @@ public class GiftOrderController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
-    public ResponseEntity<List<GiftOrder>> getAllOrders() {
+    public ResponseEntity<List<AllOrdersDTO>> getAllOrders() {
         return ResponseEntity.ok(ordersService.getAllOrders());
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/{id}")
+    public ResponseEntity<GiftOrder> getOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(ordersService.getOrder(id));
+    }
+
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}/status")
