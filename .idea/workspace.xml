@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b518428-8738-4058-ba64-f28d45ef8032" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/GiftOrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/DTO/GiftOrderRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/GiftOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/controllers/GiftOrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/GiftOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/GiftOrder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/ServiceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/models/ServiceEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/services/OrdersServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chillies/hearttohome/util/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,61 +61,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0634187152706498" />
-      <entry key="MS500" value="1.8290444943788304" />
-      <entry key="S2" value="4.352842946727357" />
-      <entry key="S5" value="8.995708032180538" />
-      <entry key="S10" value="15.464940605065664" />
-      <entry key="S30" value="27.417208798275986" />
-      <entry key="S60" value="33.10486594562345" />
-      <entry key="M2" value="36.715366482812065" />
-      <entry key="M5" value="39.26759161709453" />
-      <entry key="M10" value="41.09166610185382" />
-      <entry key="M15" value="44.0111182576191" />
-      <entry key="M30" value="57.869706523633944" />
-      <entry key="H1" value="86.63613073721496" />
-      <entry key="H2" value="135.00606331597177" />
-      <entry key="H4" value="217.47195473562468" />
-      <entry key="D1" value="850.818054476099" />
-      <entry key="W1" value="1515.1508846955742" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0000000012187082" />
+      <entry key="S5" value="1.0002718691362156" />
+      <entry key="S10" value="1.0164884546339439" />
+      <entry key="S30" value="1.2545227759548607" />
+      <entry key="S60" value="1.5045025035464934" />
+      <entry key="M2" value="1.7103076385328824" />
+      <entry key="M5" value="2.0064392329566405" />
+      <entry key="M10" value="5.124392571025588" />
+      <entry key="M15" value="11.51369367794491" />
+      <entry key="M30" value="34.97192506926332" />
+      <entry key="H1" value="81.5138010948454" />
+      <entry key="H2" value="157.10253822773075" />
+      <entry key="H4" value="267.0490630404213" />
+      <entry key="D1" value="944.8716521949802" />
+      <entry key="W1" value="1655.679182226169" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="4.862291195310771E-135" />
-      <entry key="S5" value="2.5485518784770684E-54" />
-      <entry key="S10" value="2.3976687867327084E-27" />
-      <entry key="S30" value="2.6511240869489845E-9" />
-      <entry key="S60" value="8.853340783713482E-5" />
-      <entry key="M2" value="0.016266303888196516" />
-      <entry key="M5" value="0.372037855450465" />
-      <entry key="M10" value="1.0588501651650357" />
-      <entry key="M15" value="1.535273716440804" />
-      <entry key="M30" value="2.7488415646462965" />
-      <entry key="H1" value="5.109966739991319" />
-      <entry key="H2" value="8.29893346743747" />
-      <entry key="H4" value="13.452509250649554" />
-      <entry key="D1" value="94.44168163362849" />
-      <entry key="W1" value="222.9748039919507" />
+      <entry key="MS100" value="9.572670314140145E-15" />
+      <entry key="MS500" value="0.00157161273975971" />
+      <entry key="S2" value="0.2277039334039162" />
+      <entry key="S5" value="0.8828744689188108" />
+      <entry key="S10" value="1.80133035700722" />
+      <entry key="S30" value="3.943490670653422" />
+      <entry key="S60" value="5.38037065028306" />
+      <entry key="M2" value="6.485886188690156" />
+      <entry key="M5" value="7.5128531792056" />
+      <entry key="M10" value="8.812502720460664" />
+      <entry key="M15" value="10.137712379820217" />
+      <entry key="M30" value="13.019891916978057" />
+      <entry key="H1" value="16.368090142772285" />
+      <entry key="H2" value="20.689223746253205" />
+      <entry key="H4" value="26.922440494033154" />
+      <entry key="D1" value="107.09944604828198" />
+      <entry key="W1" value="239.81055205910295" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.0276200331963945" />
-      <entry key="MS500" value="1.8093606758345167" />
-      <entry key="S2" value="4.3302314331855865" />
-      <entry key="S5" value="8.979891002872488" />
-      <entry key="S10" value="15.452876492427855" />
-      <entry key="S30" value="27.409956610960897" />
-      <entry key="S60" value="33.10041851970497" />
-      <entry key="M2" value="36.728922674778055" />
-      <entry key="M5" value="39.63724733354338" />
-      <entry key="M10" value="42.148080040070404" />
-      <entry key="M15" value="45.54399481606894" />
-      <entry key="M30" value="60.615452463360896" />
-      <entry key="H1" value="91.74220929068677" />
-      <entry key="H2" value="143.30146821540131" />
-      <entry key="H4" value="230.9213947981713" />
-      <entry key="D1" value="945.2557838166937" />
-      <entry key="W1" value="1738.1243685452437" />
+      <entry key="MS100" value="0.8950250709279725" />
+      <entry key="MS500" value="0.9781449814516214" />
+      <entry key="S2" value="1.1069781614960938" />
+      <entry key="S5" value="1.6748612225497315" />
+      <entry key="S10" value="2.591676307573377" />
+      <entry key="S30" value="5.015818271598517" />
+      <entry key="S60" value="6.754604273716279" />
+      <entry key="M2" value="8.115473411109221" />
+      <entry key="M5" value="9.480813372554854" />
+      <entry key="M10" value="13.91212904371874" />
+      <entry key="M15" value="21.630466578479783" />
+      <entry key="M30" value="47.976136686817476" />
+      <entry key="H1" value="97.87090648174842" />
+      <entry key="H2" value="177.78420696766878" />
+      <entry key="H4" value="293.9661950717938" />
+      <entry key="D1" value="1051.9668175891852" />
+      <entry key="W1" value="1895.4883419438836" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -138,37 +142,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;New/updated database configurations found&quot;,
-    &quot;Notification.DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Spring Boot.HearttohomeApplication.executor&quot;: &quot;Run&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/rituj/Documents/Codex/2026-06-17/hearttohome/hearttohome/src/main/resources&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found": "New/updated database configurations found",
+    "Notification.DoNotAsk-DatabaseConfigFileWatcher.found": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.HearttohomeApplication.executor": "Debug",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/rituj/Documents/Codex/2026-06-17/hearttohome/hearttohome/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.chillies.hearttohome.services" />
@@ -245,7 +249,13 @@
       <workItem from="1784339460360" duration="230000" />
       <workItem from="1784517430823" duration="9311000" />
       <workItem from="1784600103012" duration="3557000" />
-      <workItem from="1784626440962" duration="784000" />
+      <workItem from="1784626440962" duration="1227000" />
+      <workItem from="1784634434683" duration="618000" />
+      <workItem from="1784688183510" duration="1167000" />
+      <workItem from="1784698135701" duration="2942000" />
+      <workItem from="1784771683563" duration="5833000" />
+      <workItem from="1784810665434" duration="1928000" />
+      <workItem from="1784859779512" duration="3687000" />
     </task>
     <servers />
   </component>

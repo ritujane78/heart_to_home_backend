@@ -36,8 +36,4 @@ public class ServiceEntity {
 
     @Column(nullable = false)
     private boolean isEnabled = true;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "serviceIds")
-    private List<GiftOrder> orders = new ArrayList<>();
 }

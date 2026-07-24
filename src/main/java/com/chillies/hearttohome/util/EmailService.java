@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.util;
 
+import com.chillies.hearttohome.models.OrderService;
 import com.chillies.hearttohome.models.OrderStatus;
-import com.chillies.hearttohome.models.ServiceEntity;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -56,7 +56,7 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    private String getServices(List<ServiceEntity> services) {
+    private String getServices(List<OrderService> services) {
         if (services == null || services.isEmpty()) {
             return "";
         }
@@ -74,7 +74,7 @@ public class EmailService {
         return sb.toString();
     }
 
-    public void sendEmailForOrderStatus(List<ServiceEntity> services, String to, OrderStatus status) throws UnsupportedEncodingException, MessagingException {
+    public void sendEmailForOrderStatus(List<OrderService> services, String to, OrderStatus status) throws UnsupportedEncodingException, MessagingException {
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -184,7 +184,7 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public void sendEmailForOrderInitiation(List<ServiceEntity> services, String to) throws UnsupportedEncodingException, MessagingException {
+    public void sendEmailForOrderInitiation(List<OrderService> services, String to) throws UnsupportedEncodingException, MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 

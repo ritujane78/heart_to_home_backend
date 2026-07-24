@@ -2,10 +2,7 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
-import com.chillies.hearttohome.models.GiftOrder;
-import com.chillies.hearttohome.models.OrderStatus;
-import com.chillies.hearttohome.models.ServiceEntity;
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.models.*;
 import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
@@ -51,7 +48,25 @@ public class OrdersServiceImpl implements OrdersService {
                     "Please refresh the page and try selecting services again.");
         }
 
-        order.setServiceIds(services);
+        for (ServiceEntity service : services) {
+
+            OrderService orderService = new OrderService();
+
+            orderService.setGiftOrder(order);
+
+            orderService.setService(service);               // optional
+//            orderService.setOriginalServiceId(service.getId()); // if using a separate field
+
+            orderService.setCode(service.getCode());
+            orderService.setTitle(service.getTitle());
+            orderService.setDescription(service.getDescription());
+            orderService.setPrice(service.getPrice());
+            orderService.setProviderName(service.getProvider().getName());
+
+            order.getServices().add(orderService);
+        }
+
+//        order.setServiceIds(services);
 
         order.setTotalPrice(giftOrderRequest.getTotalPrice());
         order.setCurrency(giftOrderRequest.getCurrency());
@@ -63,7 +78,7 @@ public class OrdersServiceImpl implements OrdersService {
                 saved.getSenderEmail() != null &&
                 !saved.getSenderEmail().isBlank()) {
 
-            emailService.sendEmailForOrderInitiation(saved.getServiceIds(), saved.getSenderEmail());
+            emailService.sendEmailForOrderInitiation(saved.getServices(), saved.getSenderEmail());
         }
 
         GiftOrderResponse response = new GiftOrderResponse(
@@ -94,7 +109,7 @@ public class OrdersServiceImpl implements OrdersService {
                 !updatedOrder.getSenderEmail().isBlank()) {
 
             emailService.sendEmailForOrderStatus(
-                    updatedOrder.getServiceIds(),
+                    updatedOrder.getServices(),
                     updatedOrder.getSenderEmail(),
                     updatedOrder.getOrderStatus()
             );

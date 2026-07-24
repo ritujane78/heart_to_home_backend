@@ -1,6 +1,7 @@
 package com.chillies.hearttohome.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -55,15 +56,13 @@ public class GiftOrder {
     @Column(length = 1000)
     private String message;
 
-    // Selected Services
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "order_services",
-            joinColumns = @JoinColumn(name = "order_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "service_id",referencedColumnName = "id")
+    @OneToMany(
+            mappedBy = "giftOrder",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    @Builder.Default
-    private List<ServiceEntity> serviceIds = new ArrayList<>();
+    @JsonManagedReference
+    private List<OrderService> services = new ArrayList<>();
 
     @Column(nullable = false)
     private String totalPrice;
