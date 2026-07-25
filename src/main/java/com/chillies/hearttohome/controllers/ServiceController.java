@@ -1,6 +1,7 @@
 package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.ServiceDTO;
+import com.chillies.hearttohome.DTO.ServicePageResponse;
 import com.chillies.hearttohome.models.ServiceEntity;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.services.Services;
@@ -25,21 +26,33 @@ public class ServiceController {
     private final Services services;
 
     @GetMapping
-    public Page<ServiceEntity> getServices(
+    public ServicePageResponse getServices(
             @RequestParam(defaultValue = "") String keyword,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "6") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
 
+        Page<ServiceEntity> services;
+
         if (keyword.isBlank()) {
-            return serviceRepository.findByIsEnabledTrue(pageable);
+            services = serviceRepository.findByIsEnabledTrue(pageable);
+        } else {
+            services = serviceRepository.findByIsEnabledTrueAndTitleContainingIgnoreCase(
+                    keyword,
+                    pageable
+            );
         }
 
-        return serviceRepository.findByIsEnabledTrueAndTitleContainingIgnoreCase(
-                keyword,
-                pageable
-        );
+        // Get all matching services (without pagination)
+        List<ServiceEntity> allMatchingServices = serviceRepository.findByIsEnabledTrue();
+
+        List<String> providerNames = allMatchingServices.stream()
+                .map(service -> service.getProvider().getName())
+                .distinct()
+                .toList();
+
+        return new ServicePageResponse(services, providerNames);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
