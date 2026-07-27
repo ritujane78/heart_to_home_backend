@@ -6,6 +6,7 @@ spring:
     user:
       name: ${SPRING_SECURITY_USER_NAME}
       password: ${SPRING_SECURITY_USER_PASSWORD}
+    debug: true
 
   datasource:
     url: ${SPRING_DATASOURCE_URL}
@@ -40,7 +41,22 @@ logging:
   level:
     org:
       springframework:
-        security: DEBUG
+        security: TRACE
+        security.web.FilterChainProxy: TRACE
+        security.authentication: TRACE
+        web: DEBUG
+
+    com:
+      chillies:
+        hearttohome: DEBUG
+        hearttohome.security: TRACE
+        hearttohome.security.jwt: TRACE
+
+    io:
+      jsonwebtoken: DEBUG
 
 frontend:
   url: ${FRONTEND_URL}
+stripe:
+  key:
+    secret: ${STRIPE_KEY_SECRET}

@@ -1,5 +1,6 @@
 package com.chillies.hearttohome.exceptions;
 
+import com.stripe.exception.StripeException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("message", ex.getMessage()));
+    }
+
+    @ExceptionHandler(StripeException.class)
+    public ResponseEntity<Map<String, String>> handleStripeException(
+            StripeException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Map.of(
+                        "message",
+                        "Unable to process your payment. " +
+                                ex.getMessage()
+                ));
     }
 }

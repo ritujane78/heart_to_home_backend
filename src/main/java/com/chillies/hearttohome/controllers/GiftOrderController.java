@@ -3,14 +3,19 @@ package com.chillies.hearttohome.controllers;
 import com.chillies.hearttohome.DTO.AllOrdersDTO;
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
+import com.chillies.hearttohome.DTO.PaymentInfoRequest;
 import com.chillies.hearttohome.models.GiftOrder;
 import com.chillies.hearttohome.models.OrderStatus;
 import com.chillies.hearttohome.models.User;
 import com.chillies.hearttohome.services.OrdersService;
+import com.chillies.hearttohome.services.PaymentService;
 import com.chillies.hearttohome.services.UserService;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,6 +33,7 @@ public class GiftOrderController {
 
     private final OrdersService ordersService;
     private final UserService userService;
+    private final PaymentService paymentService;
 
     @PostMapping
     public ResponseEntity<GiftOrderResponse> create(@AuthenticationPrincipal UserDetails userDetails, @RequestBody GiftOrderRequest  giftOrderRequest) throws MessagingException, UnsupportedEncodingException {
@@ -71,5 +77,13 @@ public class GiftOrderController {
                 ordersService.getOrdersByUser(user.getId())
         );
     }
+    @PostMapping("/payment/secure/payment-intent")
+    public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoRequest paymentInfoRequest)
+            throws StripeException {
 
+        PaymentIntent paymentIntent = paymentService.createPaymentIntent(paymentInfoRequest);
+        String paymentStr = paymentIntent.toJson();
+
+        return new ResponseEntity<>(paymentStr, HttpStatus.OK);
+    }
 }
