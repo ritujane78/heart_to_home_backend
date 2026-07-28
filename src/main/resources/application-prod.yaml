@@ -44,3 +44,8 @@ logging:
 
 frontend:
   url: ${FRONTEND_URL}
+stripe:
+  key:
+    secret: ${STRIPE_KEY_SECRET}
+sender:
+  email: ${SENDER_EMAIL}

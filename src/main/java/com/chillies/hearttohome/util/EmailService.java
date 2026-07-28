@@ -25,16 +25,29 @@ public class EmailService {
     @Value("${frontend.url}")
     String frontendUrl;
 
+    @Value("${sender.email}")
+    String senderEmail;
+
+    private void configureEmail(
+            MimeMessageHelper helper,
+            String recipientEmail
+    ) throws UnsupportedEncodingException, MessagingException {
+
+        helper.setFrom(new InternetAddress(
+                senderEmail,
+                "Heart to Home"
+        ));
+
+        helper.setTo(new InternetAddress(
+                recipientEmail,
+                "Customer"
+        ));
+    }
     public void sendSignupEmail(User savedUser) throws UnsupportedEncodingException, MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom(new InternetAddress(
-                "teamhearttohome@gmail.com",
-                "Heart to Home"
-        ));
-
-        helper.setTo(new InternetAddress(savedUser.getEmail(), "Customer"));
+        configureEmail(helper, savedUser.getEmail());
 
         helper.setSubject("Welcome to Heart to Home!");
 
@@ -77,12 +90,7 @@ public class EmailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom(new InternetAddress(
-                "teamhearttohome@gmail.com",
-                "Heart to Home"
-        ));
-
-        helper.setTo(new InternetAddress(to, "Customer"));
+        configureEmail(helper, to);
 
         helper.setSubject("Password Reset Request");
 
@@ -135,11 +143,7 @@ public class EmailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom(new InternetAddress(
-                "teamhearttohome@gmail.com",
-                "Heart to Home"
-        ));
-        helper.setTo(to);
+        configureEmail(helper, to);
 
         String subject;
         String orderedServices = getServices(services);
@@ -244,11 +248,8 @@ public class EmailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom(new InternetAddress(
-                "teamhearttohome@gmail.com",
-                "Heart to Home"
-        ));
-        helper.setTo(to);
+        configureEmail(helper, to);
+
         helper.setSubject("Your Heart to Home Order is Being Processed");
         String orderedServices = getServices(services);
         String text = """

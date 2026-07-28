@@ -60,3 +60,5 @@ frontend:
 stripe:
   key:
     secret: ${STRIPE_KEY_SECRET}
+sender:
+  email: ${SENDER_EMAIL}
