@@ -3,6 +3,7 @@ package com.chillies.hearttohome.services;
 import com.chillies.hearttohome.DTO.AllOrdersDTO;
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
+import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.models.*;
 import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
@@ -10,13 +11,16 @@ import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrdersServiceImpl implements OrdersService {
 
     private final OrdersRepository ordersRepository;
@@ -26,7 +30,7 @@ public class OrdersServiceImpl implements OrdersService {
     private final EmailService emailService;
 
     @Override
-    public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) throws MessagingException, UnsupportedEncodingException {
+    public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest){
 
         GiftOrder order = new GiftOrder();
 
@@ -75,20 +79,30 @@ public class OrdersServiceImpl implements OrdersService {
         order.setOrderStatus(OrderStatus.IN_PROCESS);
 
         GiftOrder saved = ordersRepository.save(order);
+        boolean emailSent = true;
         if (saved.getId() != null &&
                 saved.getSenderEmail() != null &&
                 !saved.getSenderEmail().isBlank()) {
 
-            emailService.sendEmailForOrderInitiation(saved.getServices(), saved.getSenderEmail());
+            try {
+                emailService.sendEmailForOrderInitiation(
+                        saved.getServices(),
+                        saved.getSenderEmail()
+                );
+            } catch (EmailSendingException ex) {
+                emailSent = false;
+                log.error("Unable to send order initiation email for order {}", saved.getId(), ex);
+            }
         }
 
-        GiftOrderResponse response = new GiftOrderResponse(
+        return new GiftOrderResponse(
                 saved.getId(),
                 saved.getOrderStatus(),
-                saved.getTotalPrice()
-        );
-
-        return response;
+                saved.getTotalPrice(),
+                emailSent,
+                emailSent
+                        ? "Order placed successfully. A confirmation email has been sent."
+                        : "Order placed successfully, but we couldn't send the confirmation email.");
     }
 
     @Override
@@ -103,7 +117,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public GiftOrder updateStatus(Long id, OrderStatus status) throws MessagingException, UnsupportedEncodingException {
+    public Map<String, Object> updateStatus(Long id, OrderStatus status) {
 
         GiftOrder order = ordersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
@@ -111,18 +125,42 @@ public class OrdersServiceImpl implements OrdersService {
         order.setOrderStatus(status);
         GiftOrder updatedOrder = ordersRepository.save(order);
 
-        if (updatedOrder.getId() != null &&
-                updatedOrder.getSenderEmail() != null &&
+        boolean emailSent = true;
+
+        if (updatedOrder.getSenderEmail() != null &&
                 !updatedOrder.getSenderEmail().isBlank()) {
 
-            emailService.sendEmailForOrderStatus(
-                    updatedOrder.getServices(),
-                    updatedOrder.getSenderEmail(),
-                    updatedOrder.getOrderStatus()
-            );
+            try {
+                emailService.sendEmailForOrderStatus(
+                        updatedOrder.getServices(),
+                        updatedOrder.getSenderEmail(),
+                        updatedOrder.getOrderStatus()
+                );
+            } catch (EmailSendingException ex) {
+                emailSent = false;
+                log.error(
+                        "Unable to send order status email for order {}",
+                        updatedOrder.getId(),
+                        ex
+                );
+            }
         }
 
-        return updatedOrder;
+        String message;
+
+        if (emailSent) {
+            message = updatedOrder.getSenderEmail() != null
+                    ? "Status updated successfully. Notification email sent to " + updatedOrder.getSenderEmail() + "."
+                    : "Status updated successfully.";
+        } else {
+            message = "Status updated successfully, but we couldn't send the notification email.";
+        }
+
+        return Map.of(
+                "order", updatedOrder,
+                "message", message,
+                "emailSent", emailSent
+        );
     }
     @Override
     public List<GiftOrder> getOrdersByUser(Long userId) {

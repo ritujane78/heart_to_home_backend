@@ -23,8 +23,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${SPRING_MAIL_USERNAME}
-    password: ${SPRING_MAIL_PASSWORD}
+    username: ${SENDER_EMAIL_USERNAME}
+    password: ${SENDER_EMAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -45,6 +45,12 @@ logging:
         security.web.FilterChainProxy: TRACE
         security.authentication: TRACE
         web: DEBUG
+        mail: DEBUG
+      eclipse:
+        angus:
+          mail: DEBUG
+      .jakarta:
+        mail: DEBUG
 
     com:
       chillies:
@@ -61,4 +67,4 @@ stripe:
   key:
     secret: ${STRIPE_KEY_SECRET}
 sender:
-  email: ${SENDER_EMAIL}
+  email: ${SENDER_EMAIL_USERNAME}

@@ -3,6 +3,7 @@ package com.chillies.hearttohome.services;
 
 
 import com.chillies.hearttohome.DTO.UserDTO;
+import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.models.AppRole;
 import com.chillies.hearttohome.models.PasswordResetToken;
 import com.chillies.hearttohome.models.Role;
@@ -13,6 +14,7 @@ import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -133,7 +136,19 @@ public class UserServiceImpl implements UserService {
 
         String resetUrl = frontendUrl + "/reset-password?token=" + token;
         // Send email to user
-        emailService.sendEmailForPasswordReset(user.getEmail(), resetUrl);
+        try {
+            emailService.sendEmailForPasswordReset(
+                    user.getEmail(),
+                    resetUrl
+            );
+        } catch (EmailSendingException ex) {
+            log.error(
+                    "Unable to send password reset email to {}",
+                    user.getEmail(),
+                    ex
+            );
+            throw ex;
+        }
     }
 
     @Override

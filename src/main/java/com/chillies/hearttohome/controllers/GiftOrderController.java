@@ -34,12 +34,17 @@ public class GiftOrderController {
     private final OrdersService ordersService;
     private final UserService userService;
     private final PaymentService paymentService;
-
     @PostMapping
-    public ResponseEntity<GiftOrderResponse> create(@AuthenticationPrincipal UserDetails userDetails, @RequestBody GiftOrderRequest  giftOrderRequest) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<GiftOrderResponse> create(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody GiftOrderRequest giftOrderRequest)
+            throws MessagingException, UnsupportedEncodingException {
+
         User user = userService.findByUsername(userDetails.getUsername());
-        GiftOrderResponse giftOrderResponse = ordersService.create(user, giftOrderRequest);
-        return ResponseEntity.ok(giftOrderResponse);
+
+        GiftOrderResponse response = ordersService.create(user, giftOrderRequest);
+
+        return ResponseEntity.ok(response);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -57,15 +62,16 @@ public class GiftOrderController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}/status")
-    public ResponseEntity<GiftOrder> updateStatus(
+    public ResponseEntity<Map<String, Object>> updateStatus(
             @PathVariable Long id,
-            @RequestBody Map<String, String> body) throws MessagingException, UnsupportedEncodingException {
+            @RequestBody Map<String, String> body)
+            throws MessagingException, UnsupportedEncodingException {
 
         OrderStatus status = OrderStatus.valueOf(body.get("orderStatus"));
 
-        GiftOrder updatedOrder = ordersService.updateStatus(id, status);
+        Map<String, Object> response = ordersService.updateStatus(id, status);
 
-        return ResponseEntity.ok(updatedOrder);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/my-orders")

@@ -46,4 +46,14 @@ public class GlobalExceptionHandler {
                                 ex.getMessage()
                 ));
     }
+    @ExceptionHandler(EmailSendingException.class)
+    public ResponseEntity<Map<String, String>> handleEmailSendingException(
+            EmailSendingException ex) {
+
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(Map.of(
+                        "message",
+                        ex.getMessage()
+                ));
+    }
 }

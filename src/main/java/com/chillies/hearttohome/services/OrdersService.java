@@ -12,17 +12,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 public interface OrdersService {
 
 
-    GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) throws MessagingException, UnsupportedEncodingException;
-
+GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest);
     List<AllOrdersDTO> getAllOrders();
 
     GiftOrder getOrder(Long id);
 
-    GiftOrder updateStatus(Long id, OrderStatus status) throws MessagingException, UnsupportedEncodingException;
+    Map<String, Object> updateStatus(Long id, OrderStatus status) throws MessagingException, UnsupportedEncodingException;
 
     List<GiftOrder> getOrdersByUser(Long userId);
 }

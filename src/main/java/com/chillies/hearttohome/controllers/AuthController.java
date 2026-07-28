@@ -3,6 +3,7 @@ package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.TokenRefreshRequest;
 import com.chillies.hearttohome.DTO.TokenRefreshResponse;
+import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.models.AppRole;
 import com.chillies.hearttohome.models.RefreshToken;
 import com.chillies.hearttohome.models.Role;
@@ -22,6 +23,7 @@ import com.chillies.hearttohome.util.AuthUtil;
 import com.chillies.hearttohome.util.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +44,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
+@Slf4j
 public class AuthController {
 
     @Autowired
@@ -112,9 +115,30 @@ public class AuthController {
         }
         user.setRole(role);
         User savedUser = userRepository.save(user);
-        emailService.sendSignupEmail(savedUser);
+        boolean emailSent = true;
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        try {
+            emailService.sendSignupEmail(savedUser);
+        } catch (EmailSendingException ex) {
+            emailSent = false;
+            log.error("Unable to send signup email", ex);
+        }
+
+        if (emailSent) {
+            return ResponseEntity.ok(
+                    Map.of(
+                            "message",
+                            "Account created successfully. A welcome email has been sent to your email address."
+                    )
+            );
+        }
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "message",
+                        "Account created successfully, but we couldn't send the welcome email at this time. You can still sign in with your account."
+                )
+        );
     }
 
     @GetMapping("/user")
