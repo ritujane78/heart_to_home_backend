@@ -19,6 +19,7 @@ import com.chillies.hearttohome.security.services.UserDetailsImpl;
 import com.chillies.hearttohome.services.RefreshTokenService;
 import com.chillies.hearttohome.services.UserService;
 import com.chillies.hearttohome.util.AuthUtil;
+import com.chillies.hearttohome.util.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,9 +67,11 @@ public class AuthController {
 
     @Autowired
     AuthUtil authUtil;
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/public/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws MessagingException, UnsupportedEncodingException {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
         }
@@ -108,7 +111,8 @@ public class AuthController {
             user.setSignupMethod("email");
         }
         user.setRole(role);
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        emailService.sendSignupEmail(savedUser);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

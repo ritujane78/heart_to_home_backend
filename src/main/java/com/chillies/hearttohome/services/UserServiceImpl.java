@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = UUID.randomUUID().toString();
-        Instant expiryDate = Instant.now().plus(24, ChronoUnit.HOURS);
+        Instant expiryDate = Instant.now().plus(10, ChronoUnit.HOURS);
         PasswordResetToken resetToken = new PasswordResetToken(token, expiryDate, user);
         passwordResetTokenRepository.save(resetToken);
 

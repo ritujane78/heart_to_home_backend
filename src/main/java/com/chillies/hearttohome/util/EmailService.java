@@ -2,8 +2,10 @@ package com.chillies.hearttohome.util;
 
 import com.chillies.hearttohome.models.OrderService;
 import com.chillies.hearttohome.models.OrderStatus;
+import com.chillies.hearttohome.models.User;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,57 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Value("${frontend.url}")
+    String frontendUrl;
+
+    public void sendSignupEmail(User savedUser) throws UnsupportedEncodingException, MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(new InternetAddress(
+                "teamhearttohome@gmail.com",
+                "Heart to Home"
+        ));
+
+        helper.setTo(new InternetAddress(savedUser.getEmail(), "Customer"));
+
+        helper.setSubject("Welcome to Heart to Home!");
+
+        String servicesUrl = frontendUrl + "/services";
+
+        String text = """
+            <p>Dear Customer,</p>
+
+            <p>Welcome to <strong>Heart to Home</strong>!</p>
+
+            <p>
+                Your account has been successfully created with the email address:
+                <br>
+                <strong>%s</strong>
+            </p>
+
+            <p>
+                You can now browse our healthcare services and gift care to your loved ones.
+            </p>
+
+            <p>
+                Visit our Services page  href="%s">here</a>.
+            </p>
+
+            <p>
+                Thank you for choosing Heart to Home. We look forward to helping you care for those who matter most.
+            </p>
+
+            <p>
+                Kind regards,<br>
+                <strong>Heart to Home Team</strong>
+            </p>
+            """.formatted(savedUser.getEmail(), servicesUrl, servicesUrl);
+
+        helper.setText(text, true);
+        mailSender.send(message);
+    }
 
     public void sendEmailForPasswordReset(String to, String resetUrl) throws UnsupportedEncodingException, MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
@@ -43,6 +96,9 @@ public class EmailService {
                       <br><br>
                       <a href="%s">%s</a>
                   </p>
+                  <p><strong>Please note:</strong> This password reset link will expire 10 hours after 
+                  this email is sent. After that, the link will no longer be valid, 
+                  and you'll need to request a new password reset.</p>
                 
                   <p>If you did not request a password reset, you can safely ignore this email.</p>
                 
