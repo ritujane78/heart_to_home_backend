@@ -9,12 +9,10 @@ import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,14 +28,13 @@ public class OrdersServiceImpl implements OrdersService {
     private final EmailService emailService;
 
     @Override
-    public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest){
+    public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) {
 
         GiftOrder order = new GiftOrder();
 
         order.setSenderName(giftOrderRequest.getSenderName());
         order.setSenderEmail(giftOrderRequest.getSenderEmail());
         order.setRecipientName(giftOrderRequest.getRecipientName());
-//        order.setRecipientEmail(giftOrderRequest.getRecipientEmail());
         order.setRecipientPhone(giftOrderRequest.getRecipientPhone());
         order.setRelationship(giftOrderRequest.getRelationship());
         order.setMessage(giftOrderRequest.getMessage());
@@ -45,23 +42,14 @@ public class OrdersServiceImpl implements OrdersService {
         order.setExchangeRate(giftOrderRequest.getExchangeRate());
 
         List<ServiceEntity> services =
-                serviceRepository.findByIdInAndIsEnabledTrue(
-                        giftOrderRequest.getServiceIds());
-
-        if (services.size() != giftOrderRequest.getServiceIds().size()) {
-            throw new RuntimeException("One or more selected services are no longer available. " +
-                    "Please refresh the page and try selecting services again.");
-        }
+                validateServices(giftOrderRequest.getServiceIds());
 
         for (ServiceEntity service : services) {
 
             OrderService orderService = new OrderService();
 
             orderService.setGiftOrder(order);
-
-            orderService.setService(service);               // optional
-//            orderService.setOriginalServiceId(service.getId()); // if using a separate field
-
+            orderService.setService(service);
             orderService.setCode(service.getCode());
             orderService.setTitle(service.getTitle());
             orderService.setDescription(service.getDescription());
@@ -71,14 +59,12 @@ public class OrdersServiceImpl implements OrdersService {
             order.getServices().add(orderService);
         }
 
-//        order.setServiceIds(services);
-
         order.setTotalPrice(giftOrderRequest.getTotalPrice());
         order.setCurrency(giftOrderRequest.getCurrency());
-        // don't trust frontend
         order.setOrderStatus(OrderStatus.IN_PROCESS);
 
         GiftOrder saved = ordersRepository.save(order);
+
         boolean emailSent = true;
         if (saved.getId() != null &&
                 saved.getSenderEmail() != null &&
@@ -101,8 +87,24 @@ public class OrdersServiceImpl implements OrdersService {
                 saved.getTotalPrice(),
                 emailSent,
                 emailSent
-                        ? "Order placed successfully. A confirmation email has been sent."
-                        : "Order placed successfully, but we couldn't send the confirmation email.");
+                        ? "Order placed successfully."
+                        : "Successful! But we couldn't send the confirmation email."
+        );
+    }
+
+    @Override
+    public List<ServiceEntity> validateServices(List<Long> serviceIds) {
+        List<ServiceEntity> services =
+                serviceRepository.findAllByIdInAndIsEnabledTrue(serviceIds);
+
+        if (services.size() != serviceIds.size()) {
+            throw new RuntimeException(
+                    "One or more selected services are no longer available. " +
+                            "Please refresh the page and try selecting services again."
+            );
+        }
+
+        return services;
     }
 
     @Override
@@ -149,11 +151,9 @@ public class OrdersServiceImpl implements OrdersService {
         String message;
 
         if (emailSent) {
-            message = updatedOrder.getSenderEmail() != null
-                    ? "Status updated successfully. Notification email sent to " + updatedOrder.getSenderEmail() + "."
-                    : "Status updated successfully.";
+            message = "Status updated successfully";
         } else {
-            message = "Status updated successfully, but we couldn't send the notification email.";
+            message = "Updated!! But we couldn't send the notification email.";
         }
 
         return Map.of(

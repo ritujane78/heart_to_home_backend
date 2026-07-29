@@ -5,6 +5,7 @@ import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
 import com.chillies.hearttohome.models.GiftOrder;
 import com.chillies.hearttohome.models.OrderStatus;
+import com.chillies.hearttohome.models.ServiceEntity;
 import com.chillies.hearttohome.models.User;
 import jakarta.mail.MessagingException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +19,9 @@ public interface OrdersService {
 
 
 GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest);
+
+    List<ServiceEntity> validateServices(List<Long> serviceIds);
+
     List<AllOrdersDTO> getAllOrders();
 
     GiftOrder getOrder(Long id);

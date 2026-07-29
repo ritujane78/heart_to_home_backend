@@ -1,9 +1,6 @@
 package com.chillies.hearttohome.controllers;
 
-import com.chillies.hearttohome.DTO.AllOrdersDTO;
-import com.chillies.hearttohome.DTO.GiftOrderRequest;
-import com.chillies.hearttohome.DTO.GiftOrderResponse;
-import com.chillies.hearttohome.DTO.PaymentInfoRequest;
+import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.models.GiftOrder;
 import com.chillies.hearttohome.models.OrderStatus;
 import com.chillies.hearttohome.models.User;
@@ -57,6 +54,11 @@ public class GiftOrderController {
     @GetMapping("/{id}")
     public ResponseEntity<GiftOrder> getOrder(@PathVariable Long id) {
         return ResponseEntity.ok(ordersService.getOrder(id));
+    }
+    @PostMapping("/validate")
+    public ResponseEntity<Void> validateServices(@RequestBody ServiceValidationRequest request) {
+        ordersService.validateServices(request.getServiceIds());
+        return ResponseEntity.ok().build();
     }
 
 

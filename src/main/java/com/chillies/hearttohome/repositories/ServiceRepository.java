@@ -20,7 +20,7 @@ public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
             Pageable pageable
     );
 
-    List<ServiceEntity> findByIdInAndIsEnabledTrue(List<Long> ids);
+    List<ServiceEntity> findAllByIdInAndIsEnabledTrue(List<Long> ids);
 
     List<ServiceEntity> findByIsEnabledFalseOrderByCodeAsc();
 

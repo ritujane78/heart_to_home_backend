@@ -128,7 +128,7 @@ public class AuthController {
             return ResponseEntity.ok(
                     Map.of(
                             "message",
-                            "Account created successfully. A welcome email has been sent to your email address."
+                            "Account created successfully."
                     )
             );
         }
@@ -136,7 +136,7 @@ public class AuthController {
         return ResponseEntity.ok(
                 Map.of(
                         "message",
-                        "Account created successfully, but we couldn't send the welcome email at this time. You can still sign in with your account."
+                        "Successful!! Though we couldn't send the welcome email at this time, you can still sign in with your account."
                 )
         );
     }
