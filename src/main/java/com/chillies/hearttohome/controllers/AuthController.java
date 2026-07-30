@@ -104,6 +104,8 @@ public class AuthController {
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             }
 
+            user.setFirstName(signUpRequest.getFirstName());
+            user.setLastName(signUpRequest.getLastName());
             user.setAccountNonLocked(true);
             user.setAccountNonExpired(true);
             user.setCredentialsNonExpired(true);
@@ -152,6 +154,8 @@ public class AuthController {
         UserInfoResponse response = new UserInfoResponse(
                 user.getId(),
                 user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
                 user.isAccountNonLocked(),
                 user.isAccountNonExpired(),

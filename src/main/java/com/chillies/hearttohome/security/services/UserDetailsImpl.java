@@ -26,6 +26,9 @@ public class UserDetailsImpl implements UserDetails {
     private String username;
     private String email;
 
+    private String firstName;
+    private String lastName;
+
     @JsonIgnore
     private String password;
 
@@ -34,13 +37,16 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String username, String email, String password,
-                           boolean is2faEnabled, Collection<? extends GrantedAuthority> authorities) {
+                           boolean is2faEnabled, Collection<? extends GrantedAuthority> authorities, String firstName,
+                           String lastName) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.is2faEnabled = is2faEnabled;
         this.authorities = authorities;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -52,13 +58,24 @@ public class UserDetailsImpl implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.isTwoFactorEnabled(),
-                List.of(authority) // Wrapping the single authority in a list
+                List.of(authority), // Wrapping the single authority in a list
+                user.getFirstName(),
+                user.getLastName()
         );
     }
 
     public boolean is2faEnabled() {
         return is2faEnabled;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -36,8 +36,15 @@ public class SecurityConfig {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
+    @Value("${spring.admin.firstname}")
+    private String firstName;
+
+    @Value("${spring.admin.lastname}")
+    private String lastName;
+
     @Value("${spring.security.user.name}")
     private String username;
+
     @Value("${spring.security.user.password}")
     private String password;
 
@@ -100,6 +107,8 @@ public class SecurityConfig {
 
             if (!userRepository.existsByUsername(username)) {
                 User admin = new User(username, "hth@admin.com", passwordEncoder.encode(password));
+                admin.setFirstName(firstName);
+                admin.setLastName(lastName);
                 admin.setAccountNonLocked(true);
                 admin.setAccountNonExpired(true);
                 admin.setCredentialsNonExpired(true);

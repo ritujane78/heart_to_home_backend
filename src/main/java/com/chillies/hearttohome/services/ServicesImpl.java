@@ -27,7 +27,6 @@ public class ServicesImpl implements Services {
     @Override
     public Page<ServiceEntity> getServices(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        System.out.println("here");
         return serviceRepository.findAll(pageable);
     }
 

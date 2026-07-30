@@ -7,6 +7,9 @@ spring:
       name: ${SPRING_SECURITY_USER_NAME}
       password: ${SPRING_SECURITY_USER_PASSWORD}
     debug: true
+  admin:
+    firstname: ${ADMIN_FIRSTNAME}
+    lastname: ${ADMIN_LASTNAME}
 
   datasource:
     url: ${SPRING_DATASOURCE_URL}

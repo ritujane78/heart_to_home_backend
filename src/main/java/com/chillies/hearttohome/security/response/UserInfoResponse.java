@@ -12,6 +12,8 @@ public class UserInfoResponse {
     private Long id;
     private String username;
     private String email;
+    private String firstName;
+    private String lastName;
     private boolean accountNonLocked;
     private boolean accountNonExpired;
     private boolean credentialsNonExpired;
@@ -21,11 +23,13 @@ public class UserInfoResponse {
     private boolean isTwoFactorEnabled;
     private List<String> roles;
 
-    public UserInfoResponse(Long id, String username, String email, boolean accountNonLocked, boolean accountNonExpired,
+    public UserInfoResponse(Long id, String username, String firstName, String lastName, String email, boolean accountNonLocked, boolean accountNonExpired,
                             boolean credentialsNonExpired, boolean enabled, LocalDate credentialsExpiryDate,
                             LocalDate accountExpiryDate, boolean isTwoFactorEnabled, List<String> roles) {
         this.id = id;
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.accountNonLocked = accountNonLocked;
         this.accountNonExpired = accountNonExpired;
