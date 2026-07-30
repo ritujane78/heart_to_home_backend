@@ -36,13 +36,14 @@ public class JwtUtils {
 
     public String generateTokenFromUsername(UserDetailsImpl userDetails) {
         String username = userDetails.getUsername();
+        String email = userDetails.getEmail();
         String roles = userDetails.getAuthorities().stream()
                 .map(authority -> authority.getAuthority())
                 .collect(Collectors.joining(","));
         return Jwts.builder()
                 .subject(username)
                 .claim("roles", roles)
-                .claim("is2faEnabled", userDetails.is2faEnabled())
+                .claim("email", email)
                 .issuedAt(new Date())
                 .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key())
