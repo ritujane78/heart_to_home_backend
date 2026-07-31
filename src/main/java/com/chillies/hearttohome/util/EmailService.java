@@ -4,6 +4,7 @@ import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.models.OrderService;
 import com.chillies.hearttohome.models.OrderStatus;
 import com.chillies.hearttohome.models.User;
+import com.stripe.model.Customer;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,10 +56,12 @@ public class EmailService {
 
             helper.setSubject("Welcome to Heart to Home!");
 
+            String formattedName = NameUtils.formatFirstName(savedUser.getFirstName());
+
             String servicesUrl = frontendUrl + "/services";
 
             String text = """
-                    <p>Dear Customer,</p>
+                    <p>Hi there, %s!,</p>
                     
                     <p>Welcome to <strong>Heart to Home</strong>!</p>
                     
@@ -84,7 +87,7 @@ public class EmailService {
                         Kind regards,<br>
                         <strong>Heart to Home Team</strong>
                     </p>
-                    """.formatted(savedUser.getEmail(), servicesUrl, servicesUrl);
+                    """.formatted(formattedName, savedUser.getEmail(), servicesUrl, servicesUrl);
 
             helper.setText(text, true);
             mailSender.send(message);
@@ -96,7 +99,7 @@ public class EmailService {
         }
     }
 
-    public void sendEmailForPasswordReset(String to, String resetUrl) {
+    public void sendEmailForPasswordReset(String recipientName, String to, String resetUrl) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -106,7 +109,7 @@ public class EmailService {
             helper.setSubject("Password Reset Request");
 
             String text = """
-                      <p>Dear Customer,</p>
+                      <p>Hi there, %s!</p>
                     
                       <p>You recently requested to reset your Heart to Home account password.</p>
                     
@@ -125,7 +128,7 @@ public class EmailService {
                           Kind regards,<br>
                           <strong>Heart to Home Team</strong>
                       </p>
-                    """.formatted(resetUrl, resetUrl);
+                    """.formatted(recipientName, resetUrl, resetUrl);
 
             helper.setText(text, true);
             mailSender.send(message);
@@ -155,7 +158,7 @@ public class EmailService {
         return sb.toString();
     }
 
-    public void sendEmailForOrderStatus(List<OrderService> services, String to, OrderStatus status) {
+    public void sendEmailForOrderStatus(List<OrderService> services, String recipientName, String to, OrderStatus status) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -170,8 +173,8 @@ public class EmailService {
 
                 case IN_PROCESS:
                     subject = "Your Heart to Home Order is Being Processed";
-                    text = """
-                            <p>Dear Customer,</p>
+                    text = "<p>Hi there, " + recipientName + "!</p>"
+                            + """
                             
                             <p>Thank you for choosing <strong>Heart to Home</strong>.</p>
                             
@@ -192,8 +195,8 @@ public class EmailService {
 
                 case READY_FOR_CLINIC:
                     subject = "Your Heart to Home Order is Ready for the Clinic";
-                    text = """
-                            <p>Dear Customer,</p>
+                    text = "<p>Hi there, " + recipientName + "!</p>"
+                            + """
                             
                             <p><strong>Good news!</strong></p>
                             
@@ -214,8 +217,8 @@ public class EmailService {
 
                 case DELIVERED:
                     subject = "Your Heart to Home Order Has Been Delivered";
-                    text = """
-                            <p>Dear Customer,</p>
+                    text = "<p>Hi there, " + recipientName + "!</p>"
+                            + """
                             
                             <p>We're pleased to let you know that your order has been successfully delivered.</p>
                             """
@@ -232,8 +235,8 @@ public class EmailService {
 
                 case CANCELED:
                     subject = "Your Heart to Home Order Has Been Cancelled";
-                    text = """
-                            <p>Dear Customer,</p>
+                    text = "<p>Hi there, " + recipientName + "!</p>"
+                            + """
                             
                             <p>We regret to inform you that your order has been cancelled.</p>
                             """
@@ -267,7 +270,7 @@ public class EmailService {
         }
     }
 
-    public void sendEmailForOrderInitiation(List<OrderService> services, String to) {
+    public void sendEmailForOrderInitiation(List<OrderService> services, String recipientName, String to) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -277,7 +280,9 @@ public class EmailService {
             helper.setSubject("Your Heart to Home Order is Being Processed");
             String orderedServices = getServices(services);
             String text = """
-                    <p>Dear Customer,</p>
+                    <p>Hi there, """ + recipientName +
+                                                                            """
+                                                                            !</p>
                     
                     <p>Thank you for choosing <strong>Heart to Home</strong>.</p>
                     

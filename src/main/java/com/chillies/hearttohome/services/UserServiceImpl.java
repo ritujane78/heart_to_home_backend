@@ -12,6 +12,7 @@ import com.chillies.hearttohome.repositories.PasswordResetTokenRepository;
 import com.chillies.hearttohome.repositories.RoleRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
+import com.chillies.hearttohome.util.NameUtils;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -138,6 +139,7 @@ public class UserServiceImpl implements UserService {
         // Send email to user
         try {
             emailService.sendEmailForPasswordReset(
+                    NameUtils.formatFirstName(user.getFirstName()),
                     user.getEmail(),
                     resetUrl
             );

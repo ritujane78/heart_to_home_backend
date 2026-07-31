@@ -9,6 +9,7 @@ import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
+import com.chillies.hearttohome.util.NameUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,7 @@ public class OrdersServiceImpl implements OrdersService {
             try {
                 emailService.sendEmailForOrderInitiation(
                         saved.getServices(),
+                        NameUtils.formatFirstName(saved.getSenderName()),
                         saved.getSenderEmail()
                 );
             } catch (EmailSendingException ex) {
@@ -135,6 +137,7 @@ public class OrdersServiceImpl implements OrdersService {
             try {
                 emailService.sendEmailForOrderStatus(
                         updatedOrder.getServices(),
+                        NameUtils.formatFirstName(updatedOrder.getSenderName()),
                         updatedOrder.getSenderEmail(),
                         updatedOrder.getOrderStatus()
                 );
@@ -151,7 +154,7 @@ public class OrdersServiceImpl implements OrdersService {
         String message;
 
         if (emailSent) {
-            message = "Status updated successfully";
+            message = "Status updated successfully. Email sent to " + updatedOrder.getSenderEmail() + ".";
         } else {
             message = "Updated!! But we couldn't send the notification email.";
         }
