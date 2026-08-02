@@ -1,5 +1,6 @@
 package com.chillies.hearttohome.services;
 
+import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.models.ProviderEntity;
 import com.chillies.hearttohome.repositories.ProviderRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +21,10 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public ProviderEntity addProvider(ProviderEntity provider) {
-
-//        provider.setId(provider.getId().trim().toLowerCase());
-//        provider.setName(provider.getName().trim());
-
         if (providerRepository.existsByNameIgnoreCase(provider.getName())) {
-            throw new IllegalArgumentException("Provider ID already exists.");
-        }
-
-        if (providerRepository.existsByNameIgnoreCase(provider.getName())) {
-            throw new IllegalArgumentException("Provider name already exists.");
+            throw new BadRequestException(
+                    "Provider '" + provider.getName() + "' already exists."
+            );
         }
 
         return providerRepository.save(provider);

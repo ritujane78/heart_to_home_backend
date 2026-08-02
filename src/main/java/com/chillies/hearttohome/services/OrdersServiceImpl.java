@@ -3,7 +3,9 @@ package com.chillies.hearttohome.services;
 import com.chillies.hearttohome.DTO.AllOrdersDTO;
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
+import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
+import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.models.*;
 import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
@@ -100,9 +102,8 @@ public class OrdersServiceImpl implements OrdersService {
                 serviceRepository.findAllByIdInAndIsEnabledTrue(serviceIds);
 
         if (services.size() != serviceIds.size()) {
-            throw new RuntimeException(
-                    "One or more selected services are no longer available. " +
-                            "Please refresh the page and try selecting services again."
+            throw new BadRequestException(
+                    "One or more selected services are no longer available. Please refresh the page and try again."
             );
         }
 
@@ -117,14 +118,24 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public GiftOrder getOrder(Long id) {
         return ordersRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Order",
+                                "id",
+                                id
+                        ));
     }
 
     @Override
     public Map<String, Object> updateStatus(Long id, OrderStatus status) {
 
         GiftOrder order = ordersRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Order",
+                                "id",
+                                id
+                        ));
 
         order.setOrderStatus(status);
         GiftOrder updatedOrder = ordersRepository.save(order);
@@ -156,7 +167,7 @@ public class OrdersServiceImpl implements OrdersService {
         if (emailSent) {
             message = "Status updated successfully. Email sent to " + updatedOrder.getSenderEmail() + ".";
         } else {
-            message = "Updated!! But we couldn't send the notification email.";
+            message = "Status Updated!! But we couldn't send the notification email.";
         }
 
         return Map.of(

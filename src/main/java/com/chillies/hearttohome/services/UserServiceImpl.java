@@ -3,7 +3,9 @@ package com.chillies.hearttohome.services;
 
 
 import com.chillies.hearttohome.DTO.UserDTO;
+import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
+import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.models.AppRole;
 import com.chillies.hearttohome.models.PasswordResetToken;
 import com.chillies.hearttohome.models.Role;
@@ -48,10 +50,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserRole(Long userId, String roleName) {
         User user = userRepository.findById(userId).orElseThrow(()
-                -> new RuntimeException("User not found"));
+                -> new ResourceNotFoundException(
+                "User",
+                "id",
+                userId
+        ));
         AppRole appRole = AppRole.valueOf(roleName);
         Role role = roleRepository.findByRoleName(appRole)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Role",
+                                "name",
+                                roleName
+                        ));
         user.setRole(role);
         userRepository.save(user);
     }
@@ -64,8 +75,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Long id) {
-//        return userRepository.findById(id).orElseThrow();
-        User user = userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(
+                "User",
+                "id",
+                id
+        ));
         return convertToDto(user);
     }
 
@@ -92,7 +107,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
-        return user.orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+        return user.orElseThrow(() -> new ResourceNotFoundException(
+                "User",
+                "username",
+                username
+        ));
     }
 
 
@@ -105,11 +124,17 @@ public class UserServiceImpl implements UserService {
     public void updatePassword(Long userId, String password) {
         try {
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            "User",
+                            "id",
+                            userId
+                    ));
             user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to update password");
+            throw new BadRequestException(
+                    "Failed to update password."
+            );
         }
     }
 
@@ -128,7 +153,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void generatePasswordResetToken(String email) throws MessagingException, UnsupportedEncodingException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "User",
+                        "email",
+                        email
+                ));
 
         String token = UUID.randomUUID().toString();
         Instant expiryDate = Instant.now().plus(10, ChronoUnit.HOURS);
@@ -156,13 +185,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void resetPassword(String token, String newPassword) {
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Invalid token"));
+                .orElseThrow(() -> new BadRequestException("Invalid password reset token."));
         if(resetToken.isUsed()) {
-            throw new RuntimeException("Token has already been used");
+            throw new BadRequestException(
+                    "Password reset token has already been used."
+            );
         }
 
         if (resetToken.getExpiryDate().isBefore(Instant.now())) {
-            throw new RuntimeException("Token has expired");
+            throw new BadRequestException(
+                    "Password reset token has expired."
+            );
         }
 
         User user = resetToken.getUser();
@@ -176,31 +209,51 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateAccountExpiryStatus(Long userId, boolean expire) {
-        User user = userRepository.findById(userId).orElseThrow(()
-                -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User",
+                                "id",
+                                userId
+                        ));
         user.setAccountNonExpired(!expire);
         userRepository.save(user);
     }
 
     @Override
     public void updateAccountEnabledStatus(Long userId, boolean enabled) {
-        User user = userRepository.findById(userId).orElseThrow(()
-                -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User",
+                                "id",
+                                userId
+                        ));
         user.setEnabled(enabled);
         userRepository.save(user);
     }
 
     @Override
     public void updateCredentialsExpiryStatus(Long userId, boolean expire) {
-        User user = userRepository.findById(userId).orElseThrow(()
-                -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User",
+                                "id",
+                        userId
+                ));
         user.setCredentialsNonExpired(!expire);
         userRepository.save(user);
     }
     @Override
     public void updateAccountLockStatus(Long userId, boolean lock) {
-        User user = userRepository.findById(userId).orElseThrow(()
-                -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User",
+                                "id",
+                                userId
+                        ));
         user.setAccountNonLocked(!lock);
         userRepository.save(user);
     }

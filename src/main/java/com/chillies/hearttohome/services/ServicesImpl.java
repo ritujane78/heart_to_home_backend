@@ -2,6 +2,7 @@ package com.chillies.hearttohome.services;
 
 
 import com.chillies.hearttohome.DTO.ServiceDTO;
+import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.models.ProviderEntity;
 import com.chillies.hearttohome.models.ServiceEntity;
 import com.chillies.hearttohome.repositories.ProviderRepository;
@@ -62,7 +63,12 @@ public class ServicesImpl implements Services {
         serviceEntity.setTitle(serviceDTO.getTitle());
 
         ProviderEntity provider = providerRepository.findById(serviceDTO.getProviderId())
-                .orElseThrow(() -> new RuntimeException("Provider not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Provider",
+                                "id",
+                                serviceDTO.getProviderId()
+                        ));
 
         serviceEntity.setProvider(provider);
 
@@ -84,7 +90,12 @@ public class ServicesImpl implements Services {
     public void deleteService(Long id) {
 
         ServiceEntity service = serviceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Service not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Service",
+                                "id",
+                                id
+                        ));
 
         service.setEnabled(false);
 
@@ -100,7 +111,12 @@ public class ServicesImpl implements Services {
     public void enableService(Long id) {
 
         ServiceEntity service = serviceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Service not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Service",
+                                "id",
+                                id
+                        ));
 
         service.setEnabled(true);
 
@@ -112,10 +128,13 @@ public class ServicesImpl implements Services {
             Long id,
             ServiceDTO request) {
 
-        ServiceEntity service =
-                serviceRepository.findById(id)
-                        .orElseThrow(() ->
-                                new RuntimeException("Service not found"));
+        ServiceEntity service = serviceRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Service",
+                                "id",
+                                id
+                        ));
 
         service.setCode(request.getCode());
         service.setTitle(request.getTitle());
@@ -125,7 +144,11 @@ public class ServicesImpl implements Services {
         ProviderEntity provider =
                 providerRepository.findById(request.getProviderId())
                         .orElseThrow(() ->
-                                new RuntimeException("Provider not found"));
+                                new ResourceNotFoundException(
+                                        "Provider",
+                                        "id",
+                                        request.getProviderId()
+                                ));
 
         service.setProvider(provider);
 

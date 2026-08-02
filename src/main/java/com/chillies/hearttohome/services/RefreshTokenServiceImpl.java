@@ -1,5 +1,7 @@
 package com.chillies.hearttohome.services;
 
+import com.chillies.hearttohome.exceptions.BadRequestException;
+import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.models.RefreshToken;
 
 import java.util.Optional;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,7 +32,8 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Override
     public RefreshToken createRefreshToken(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User", "id", userId));
 
         // Delete existing refresh token for this user
         refreshTokenRepository.findByUser(user)
@@ -50,11 +52,11 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     public RefreshToken verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().isBefore(Instant.now())) {
             refreshTokenRepository.delete(token);
-            throw new RuntimeException("Refresh token was expired. Please make a new signin request");
+            throw new BadRequestException("Refresh token was expired. Please make a new signin request");
         }
 
         if (token.isRevoked()) {
-            throw new RuntimeException("Refresh token was revoked");
+            throw new BadRequestException("Refresh token was revoked");
         }
 
         return token;
@@ -69,7 +71,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Transactional
     public void deleteByUserId(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         refreshTokenRepository.deleteByUser(user);
     }
 
@@ -77,7 +79,12 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Transactional
     public void revokeToken(String token) {
         RefreshToken refreshToken = refreshTokenRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Refresh token not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Refresh Token",
+                                "token",
+                                token
+                        ));
         refreshToken.setRevoked(true);
         refreshTokenRepository.save(refreshToken);
     }

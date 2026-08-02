@@ -1,6 +1,7 @@
 package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.PaymentInfoRequest;
+import com.chillies.hearttohome.exceptions.StripePaymentException;
 import com.chillies.hearttohome.models.Payment;
 import com.chillies.hearttohome.repositories.PaymentRepository;
 import com.stripe.Stripe;
@@ -29,7 +30,7 @@ public class PaymentService {
         Stripe.apiKey = secretKey;
     }
 
-    public PaymentIntent createPaymentIntent(PaymentInfoRequest paymentInfoRequest) throws StripeException {
+    public PaymentIntent createPaymentIntent(PaymentInfoRequest paymentInfoRequest) {
         List<String> paymentMethodTypes = new ArrayList<>();
         paymentMethodTypes.add("card");
 
@@ -38,6 +39,14 @@ public class PaymentService {
         params.put("currency", paymentInfoRequest.getCurrency());
         params.put("payment_method_types", paymentMethodTypes);
 
-        return PaymentIntent.create(params);
+        try {
+            return PaymentIntent.create(params);
+        } catch (StripeException ex) {
+
+            throw new StripePaymentException(
+                    "Unable to process your payment.",
+                    ex
+            );
+        }
     }
 }
