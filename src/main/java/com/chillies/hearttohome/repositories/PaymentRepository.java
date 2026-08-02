@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.repositories;
 
 
-import com.chillies.hearttohome.models.Payment;
+import com.chillies.hearttohome.entity.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PaymentRepository extends JpaRepository<Payment, Long> {

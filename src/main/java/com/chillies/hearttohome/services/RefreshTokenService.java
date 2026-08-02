@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.services;
 
-import com.chillies.hearttohome.models.RefreshToken;
+import com.chillies.hearttohome.entity.RefreshToken;
 
 import java.util.Optional;
 

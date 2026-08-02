@@ -1,4 +1,4 @@
-package com.chillies.hearttohome.models;
+package com.chillies.hearttohome.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

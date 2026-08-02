@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.util;
 
 
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.entity.User;
 import com.chillies.hearttohome.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

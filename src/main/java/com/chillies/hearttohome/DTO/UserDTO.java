@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.DTO;
 
-import com.chillies.hearttohome.models.Role;
+import com.chillies.hearttohome.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

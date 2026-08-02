@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.controllers;
 
-import com.chillies.hearttohome.models.ProviderEntity;
+import com.chillies.hearttohome.entity.ProviderEntity;
 import com.chillies.hearttohome.services.ProviderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

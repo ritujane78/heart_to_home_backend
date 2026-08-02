@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.ServiceDTO;
-import com.chillies.hearttohome.models.ServiceEntity;
+import com.chillies.hearttohome.entity.ServiceEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;

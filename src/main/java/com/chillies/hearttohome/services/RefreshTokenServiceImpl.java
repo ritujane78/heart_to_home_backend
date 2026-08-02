@@ -2,11 +2,11 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
-import com.chillies.hearttohome.models.RefreshToken;
+import com.chillies.hearttohome.entity.RefreshToken;
 
 import java.util.Optional;
 
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.entity.User;
 import com.chillies.hearttohome.repositories.RefreshTokenRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

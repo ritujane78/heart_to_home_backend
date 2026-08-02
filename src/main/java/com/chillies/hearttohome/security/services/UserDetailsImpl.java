@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.security.services;
 
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

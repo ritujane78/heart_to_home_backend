@@ -1,8 +1,8 @@
 package com.chillies.hearttohome.repositories;
 
 
-import com.chillies.hearttohome.models.AppRole;
-import com.chillies.hearttohome.models.Role;
+import com.chillies.hearttohome.entity.AppRole;
+import com.chillies.hearttohome.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

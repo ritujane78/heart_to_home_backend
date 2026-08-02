@@ -1,4 +1,4 @@
-package com.chillies.hearttohome.models;
+package com.chillies.hearttohome.entity;
 
 import lombok.Data;
 

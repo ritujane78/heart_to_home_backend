@@ -2,15 +2,13 @@ package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.ServiceDTO;
 import com.chillies.hearttohome.DTO.ServicePageResponse;
-import com.chillies.hearttohome.models.ServiceEntity;
+import com.chillies.hearttohome.entity.ServiceEntity;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.services.Services;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

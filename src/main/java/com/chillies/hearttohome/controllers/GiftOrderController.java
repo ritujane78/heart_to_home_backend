@@ -1,9 +1,9 @@
 package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.*;
-import com.chillies.hearttohome.models.GiftOrder;
-import com.chillies.hearttohome.models.OrderStatus;
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.entity.GiftOrder;
+import com.chillies.hearttohome.entity.OrderStatus;
+import com.chillies.hearttohome.entity.User;
 import com.chillies.hearttohome.services.OrdersService;
 import com.chillies.hearttohome.services.PaymentService;
 import com.chillies.hearttohome.services.UserService;
@@ -11,7 +11,6 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

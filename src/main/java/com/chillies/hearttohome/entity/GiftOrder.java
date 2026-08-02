@@ -1,4 +1,4 @@
-package com.chillies.hearttohome.models;
+package com.chillies.hearttohome.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -7,11 +7,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

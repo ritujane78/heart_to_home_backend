@@ -1,4 +1,4 @@
-package com.chillies.hearttohome.models;
+package com.chillies.hearttohome.entity;
 
 public enum AppRole {
     ROLE_USER,

@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.exceptions.BadRequestException;
-import com.chillies.hearttohome.models.ProviderEntity;
+import com.chillies.hearttohome.entity.ProviderEntity;
 import com.chillies.hearttohome.repositories.ProviderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

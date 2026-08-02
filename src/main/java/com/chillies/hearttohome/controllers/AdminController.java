@@ -3,10 +3,9 @@ package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.ServiceDTO;
 import com.chillies.hearttohome.DTO.UserDTO;
-import com.chillies.hearttohome.models.Role;
-import com.chillies.hearttohome.models.ServiceEntity;
-import com.chillies.hearttohome.models.User;
-import com.chillies.hearttohome.repositories.ServiceRepository;
+import com.chillies.hearttohome.entity.Role;
+import com.chillies.hearttohome.entity.ServiceEntity;
+import com.chillies.hearttohome.entity.User;
 import com.chillies.hearttohome.services.Services;
 import com.chillies.hearttohome.services.UserService;
 import lombok.RequiredArgsConstructor;

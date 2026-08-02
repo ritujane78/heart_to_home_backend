@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.repositories;
 
-import com.chillies.hearttohome.models.ProviderEntity;
+import com.chillies.hearttohome.entity.ProviderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

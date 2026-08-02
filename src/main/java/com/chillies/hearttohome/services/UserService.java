@@ -3,8 +3,8 @@ package com.chillies.hearttohome.services;
 
 
 import com.chillies.hearttohome.DTO.UserDTO;
-import com.chillies.hearttohome.models.Role;
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.entity.Role;
+import com.chillies.hearttohome.entity.User;
 import jakarta.mail.MessagingException;
 
 import java.io.UnsupportedEncodingException;

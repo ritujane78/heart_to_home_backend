@@ -6,7 +6,7 @@ import com.chillies.hearttohome.DTO.GiftOrderResponse;
 import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
-import com.chillies.hearttohome.models.*;
+import com.chillies.hearttohome.entity.*;
 import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;

@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.repositories;
 
-import com.chillies.hearttohome.models.RefreshToken;
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.entity.RefreshToken;
+import com.chillies.hearttohome.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;

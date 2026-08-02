@@ -3,13 +3,11 @@ package com.chillies.hearttohome.services;
 import com.chillies.hearttohome.DTO.AllOrdersDTO;
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
-import com.chillies.hearttohome.models.GiftOrder;
-import com.chillies.hearttohome.models.OrderStatus;
-import com.chillies.hearttohome.models.ServiceEntity;
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.entity.GiftOrder;
+import com.chillies.hearttohome.entity.OrderStatus;
+import com.chillies.hearttohome.entity.ServiceEntity;
+import com.chillies.hearttohome.entity.User;
 import jakarta.mail.MessagingException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;

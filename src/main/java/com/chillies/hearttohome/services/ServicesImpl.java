@@ -3,8 +3,8 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.ServiceDTO;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
-import com.chillies.hearttohome.models.ProviderEntity;
-import com.chillies.hearttohome.models.ServiceEntity;
+import com.chillies.hearttohome.entity.ProviderEntity;
+import com.chillies.hearttohome.entity.ServiceEntity;
 import com.chillies.hearttohome.repositories.ProviderRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import jakarta.transaction.Transactional;

@@ -2,15 +2,12 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.PaymentInfoRequest;
 import com.chillies.hearttohome.exceptions.StripePaymentException;
-import com.chillies.hearttohome.models.Payment;
 import com.chillies.hearttohome.repositories.PaymentRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

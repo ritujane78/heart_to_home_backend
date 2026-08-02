@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.DTO;
 
-import com.chillies.hearttohome.models.ServiceEntity;
+import com.chillies.hearttohome.entity.ServiceEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;

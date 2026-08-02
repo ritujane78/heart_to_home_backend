@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.services;
 
-import com.chillies.hearttohome.models.ProviderEntity;
+import com.chillies.hearttohome.entity.ProviderEntity;
 
 import java.util.List;
 

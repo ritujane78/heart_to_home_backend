@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.repositories;
 
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

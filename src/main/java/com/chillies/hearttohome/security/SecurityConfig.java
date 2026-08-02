@@ -1,9 +1,9 @@
 package com.chillies.hearttohome.security;
 
 
-import com.chillies.hearttohome.models.AppRole;
-import com.chillies.hearttohome.models.Role;
-import com.chillies.hearttohome.models.User;
+import com.chillies.hearttohome.entity.AppRole;
+import com.chillies.hearttohome.entity.Role;
+import com.chillies.hearttohome.entity.User;
 import com.chillies.hearttohome.repositories.RoleRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.security.jwt.AuthEntryPointJwt;

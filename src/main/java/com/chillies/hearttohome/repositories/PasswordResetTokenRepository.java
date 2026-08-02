@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.repositories;
 
 
-import com.chillies.hearttohome.models.PasswordResetToken;
+import com.chillies.hearttohome.entity.PasswordResetToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

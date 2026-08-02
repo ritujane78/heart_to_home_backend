@@ -1,6 +1,5 @@
 package com.chillies.hearttohome.DTO;
 
-import com.chillies.hearttohome.models.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
