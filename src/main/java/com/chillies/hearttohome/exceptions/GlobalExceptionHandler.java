@@ -59,17 +59,10 @@ public class GlobalExceptionHandler {
             DataIntegrityViolationException ex,
             HttpServletRequest request) {
 
-        String message = "Unable to save the data.";
-
-        String cause = ex.getMostSpecificCause().getMessage();
-
-        if (cause != null && cause.contains("Duplicate entry")) {
-            message = "A record with this value already exists.";
-        }
-
-        return ResponseEntity.badRequest()
-                .body(buildResponse(HttpStatus.BAD_REQUEST,
-                        message,
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(buildResponse(
+                        HttpStatus.CONFLICT,
+                        "The operation could not be completed because it would violate a data constraint.",
                         request));
     }
 
@@ -174,20 +167,23 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<ErrorResponse> handleConflictException(
+    public ResponseEntity<ValidationErrorResponse> handleConflictException(
             ConflictException ex,
             HttpServletRequest request) {
 
-        ErrorResponse response = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.CONFLICT.value(),
-                HttpStatus.CONFLICT.getReasonPhrase(),
-                ex.getMessage(),
-                request.getRequestURI()
-        );
+        Map<String, String> errors = new LinkedHashMap<>();
+        errors.put(ex.getField(), ex.getMessage());
 
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(response);
+        ValidationErrorResponse response =
+                new ValidationErrorResponse(
+                        LocalDateTime.now(),
+                        HttpStatus.CONFLICT.value(),
+                        HttpStatus.CONFLICT.getReasonPhrase(),
+                        "Validation failed",
+                        request.getRequestURI(),
+                        errors
+                );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 }

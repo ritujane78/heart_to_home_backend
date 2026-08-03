@@ -32,4 +32,8 @@ public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
 
     List<ServiceEntity> findByIsEnabledTrueAndTitleContainingIgnoreCase(String keyword);
 
+    boolean existsByCodeAndIdNot(String code, Long id);
+
+    boolean existsByTitleIgnoreCaseAndIdNot(String title, Long id);
+
 }

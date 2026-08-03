@@ -3,6 +3,7 @@ package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.TokenRefreshRequest;
 import com.chillies.hearttohome.DTO.TokenRefreshResponse;
+import com.chillies.hearttohome.exceptions.ConflictException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.entity.AppRole;
 import com.chillies.hearttohome.entity.RefreshToken;
@@ -75,12 +76,24 @@ public class AuthController {
 
     @PostMapping("/public/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws MessagingException, UnsupportedEncodingException {
+//        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+//            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+//        }
+//
+//        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+//            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+//        }
+
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+            throw new ConflictException(
+                    "username",
+                    "Username is already taken!");
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+            throw new ConflictException(
+                    "email",
+                    "Email is already in use!");
         }
 
         // Create new user's account

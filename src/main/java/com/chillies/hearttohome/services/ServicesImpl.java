@@ -2,6 +2,7 @@ package com.chillies.hearttohome.services;
 
 
 import com.chillies.hearttohome.DTO.ServiceDTO;
+import com.chillies.hearttohome.exceptions.ConflictException;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.entity.ProviderEntity;
 import com.chillies.hearttohome.entity.ServiceEntity;
@@ -135,6 +136,16 @@ public class ServicesImpl implements Services {
                                 "id",
                                 id
                         ));
+        boolean codeExists = serviceRepository.existsByCodeAndIdNot(request.getCode(), id);
+
+        if (codeExists) {
+            throw new ConflictException("code", "A service with this code already exists.");
+        }
+        boolean titleExists = serviceRepository.existsByTitleIgnoreCaseAndIdNot(request.getTitle(), id);
+
+        if (titleExists) {
+            throw new ConflictException("title", "A service with this title already exists.");
+        }
 
         service.setCode(request.getCode());
         service.setTitle(request.getTitle());

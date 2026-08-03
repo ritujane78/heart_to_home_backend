@@ -2,7 +2,14 @@ package com.chillies.hearttohome.exceptions;
 
 public class ConflictException extends RuntimeException {
 
-    public ConflictException(String message) {
+    private final String field;
+
+    public ConflictException(String field, String message) {
         super(message);
+        this.field = field;
+    }
+
+    public String getField() {
+        return field;
     }
 }

@@ -21,7 +21,7 @@ public class ServiceEntity {
     @JoinColumn(name = "provider_id", nullable = false)
     private ProviderEntity provider;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String title;
 
     @Column(length = 2000)
