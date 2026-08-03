@@ -6,6 +6,7 @@ import com.chillies.hearttohome.repositories.ProviderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public ProviderEntity addProvider(ProviderEntity provider) {
         if (providerRepository.existsByNameIgnoreCase(provider.getName())) {
-            throw new BadRequestException(
+            throw new ConcurrentModificationException(
                     "Provider '" + provider.getName() + "' already exists."
             );
         }
