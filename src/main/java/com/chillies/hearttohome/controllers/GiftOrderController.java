@@ -3,6 +3,7 @@ package com.chillies.hearttohome.controllers;
 import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.entity.GiftOrder;
 import com.chillies.hearttohome.entity.OrderStatus;
+import com.chillies.hearttohome.entity.Payment;
 import com.chillies.hearttohome.entity.User;
 import com.chillies.hearttohome.services.OrdersService;
 import com.chillies.hearttohome.services.PaymentService;
@@ -92,5 +93,9 @@ public class GiftOrderController {
         String paymentStr = paymentIntent.toJson();
 
         return new ResponseEntity<>(paymentStr, HttpStatus.OK);
+    }
+    @PostMapping("/payment/secure/save-payment")
+    public ResponseEntity<Payment> savePayment(@RequestBody PaymentInfoRequestExtended paymentInfo){
+        return ResponseEntity.ok(paymentService.savePayment(paymentInfo));
     }
 }

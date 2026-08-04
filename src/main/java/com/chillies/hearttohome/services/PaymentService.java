@@ -1,6 +1,8 @@
 package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.PaymentInfoRequest;
+import com.chillies.hearttohome.DTO.PaymentInfoRequestExtended;
+import com.chillies.hearttohome.entity.Payment;
 import com.chillies.hearttohome.exceptions.StripePaymentException;
 import com.chillies.hearttohome.repositories.PaymentRepository;
 import com.stripe.Stripe;
@@ -42,6 +44,26 @@ public class PaymentService {
 
             throw new StripePaymentException(
                     "Unable to process your payment.",
+                    ex
+            );
+        }
+    }
+
+    public Payment savePayment(PaymentInfoRequestExtended request) {
+        try {
+            Payment payment = new Payment();
+
+            payment.setPaymentIntentId(request.getPaymentIntentId());
+            payment.setPayerName(request.getPayerName());
+            payment.setUserEmail(request.getReceiptEmail());
+            payment.setTotal(request.getTotal());
+            payment.setAmountNpr(request.getAmountNpr());
+
+            return paymentRepository.save(payment);
+
+        } catch (Exception ex) {
+            throw new RuntimeException(
+                    "Payment was successful but was Unable to save payment details. Please contact support.",
                     ex
             );
         }

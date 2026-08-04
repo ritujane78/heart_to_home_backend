@@ -4,6 +4,8 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "payment")
 @Data
@@ -14,9 +16,18 @@ public class Payment {
     @Column(name = "id")
     private Long id;
 
+    @Column(nullable = false)
+    private String paymentIntentId;
+
     @Column(name="user_email")
     private String userEmail;
 
-    @Column(name = "amount")
-    private double amount;
+    @Column(name = "total")
+    private String total;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal amountNpr;
+
+    @Column(nullable = false)
+    private String payerName;
 }
