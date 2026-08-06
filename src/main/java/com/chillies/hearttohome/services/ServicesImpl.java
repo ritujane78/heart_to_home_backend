@@ -1,11 +1,13 @@
 package com.chillies.hearttohome.services;
 
 
-import com.chillies.hearttohome.DTO.ServiceDTO;
+import com.chillies.hearttohome.DTO.ServiceDTORequest;
+import com.chillies.hearttohome.DTO.ServiceDTOResponse;
 import com.chillies.hearttohome.exceptions.ConflictException;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.entity.ProviderEntity;
 import com.chillies.hearttohome.entity.ServiceEntity;
+import com.chillies.hearttohome.mapper.ServiceMapper;
 import com.chillies.hearttohome.repositories.ProviderRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import jakarta.transaction.Transactional;
@@ -25,6 +27,7 @@ public class ServicesImpl implements Services {
 
     private final ServiceRepository serviceRepository;
     private final ProviderRepository providerRepository;
+    private final ServiceMapper serviceMapper;
 
     @Override
     public Page<ServiceEntity> getServices(int page, int size) {
@@ -33,9 +36,9 @@ public class ServicesImpl implements Services {
     }
 
     @Override
-    public ResponseEntity<ServiceEntity> addService(ServiceDTO serviceDTO) {
+    public ResponseEntity<ServiceDTOResponse> addService(ServiceDTORequest serviceDTORequest) {
 
-        String title = serviceDTO.getTitle().trim();
+        String title = serviceDTORequest.getTitle().trim();
 
         StringBuilder codeBuilder = new StringBuilder("HS_");
 
@@ -56,26 +59,22 @@ public class ServicesImpl implements Services {
             code += "1";
         }
 
-        ServiceEntity serviceEntity = new ServiceEntity();
+        ServiceEntity serviceEntity = serviceMapper.toEntity(serviceDTORequest);
         serviceEntity.setCode(code);
-        serviceEntity.setEnabled(serviceDTO.isEnabled());
-        serviceEntity.setDescription(serviceDTO.getDescription());
-        serviceEntity.setPrice(serviceDTO.getPrice());
-        serviceEntity.setTitle(serviceDTO.getTitle());
 
-        ProviderEntity provider = providerRepository.findById(serviceDTO.getProviderId())
+        ProviderEntity provider = providerRepository.findById(serviceDTORequest.getProviderId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Provider",
                                 "id",
-                                serviceDTO.getProviderId()
+                                serviceDTORequest.getProviderId()
                         ));
 
         serviceEntity.setProvider(provider);
 
         ServiceEntity saved = serviceRepository.save(serviceEntity);
 
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(serviceMapper.toDTO(saved));
     }
     @Override
     public boolean titleExists(String title){
@@ -103,8 +102,8 @@ public class ServicesImpl implements Services {
         serviceRepository.save(service);
     }
     @Override
-    public List<ServiceEntity> getDisabledServices() {
-        return serviceRepository.findByIsEnabledFalseOrderByCodeAsc();
+    public List<ServiceDTOResponse> getDisabledServices() {
+        return serviceMapper.toDTO(serviceRepository.findByIsEnabledFalseOrderByCodeAsc());
     }
 
     @Override
@@ -125,9 +124,9 @@ public class ServicesImpl implements Services {
     }
 
     @Override
-    public ServiceEntity updateService(
+    public ServiceDTOResponse updateService(
             Long id,
-            ServiceDTO request) {
+            ServiceDTORequest request) {
 
         ServiceEntity service = serviceRepository.findById(id)
                 .orElseThrow(() ->
@@ -163,6 +162,6 @@ public class ServicesImpl implements Services {
 
         service.setProvider(provider);
 
-        return serviceRepository.save(service);
+        return serviceMapper.toDTO(serviceRepository.save(service));
     }
 }

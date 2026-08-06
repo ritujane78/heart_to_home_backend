@@ -1,10 +1,10 @@
 package com.chillies.hearttohome.controllers;
 
 
-import com.chillies.hearttohome.DTO.ServiceDTO;
+import com.chillies.hearttohome.DTO.ServiceDTORequest;
+import com.chillies.hearttohome.DTO.ServiceDTOResponse;
 import com.chillies.hearttohome.DTO.UserDTO;
 import com.chillies.hearttohome.entity.Role;
-import com.chillies.hearttohome.entity.ServiceEntity;
 import com.chillies.hearttohome.entity.User;
 import com.chillies.hearttohome.services.Services;
 import com.chillies.hearttohome.services.UserService;
@@ -88,8 +88,8 @@ public class AdminController {
         }
     }
     @PostMapping("/add-service")
-    public ResponseEntity<ServiceEntity> addService(@RequestBody ServiceDTO serviceDTO) {
-        return services.addService(serviceDTO);
+    public ResponseEntity<ServiceDTOResponse> addService(@RequestBody ServiceDTORequest serviceDTORequest) {
+        return services.addService(serviceDTORequest);
     }
 
     @GetMapping("/title-exists")
@@ -106,7 +106,7 @@ public class AdminController {
     }
 
     @GetMapping("/disabled-services")
-    public List<ServiceEntity> getDisabledServices() {
+    public List<ServiceDTOResponse> getDisabledServices() {
         return services.getDisabledServices();
     }
     @PutMapping("/enable-service/{id}")

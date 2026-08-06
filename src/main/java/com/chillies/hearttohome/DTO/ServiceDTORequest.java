@@ -3,7 +3,7 @@ package com.chillies.hearttohome.DTO;
 import lombok.Data;
 
 @Data
-public class ServiceDTO {
+public class ServiceDTORequest {
 
     private Long providerId;
 

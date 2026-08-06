@@ -1,6 +1,7 @@
 package com.chillies.hearttohome.services;
 
-import com.chillies.hearttohome.DTO.ServiceDTO;
+import com.chillies.hearttohome.DTO.ServiceDTORequest;
+import com.chillies.hearttohome.DTO.ServiceDTOResponse;
 import com.chillies.hearttohome.entity.ServiceEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -12,19 +13,19 @@ public interface Services {
 
     Page<ServiceEntity> getServices(int page, int size);
 
-    ResponseEntity<ServiceEntity> addService(ServiceDTO serviceDTO);
+    ResponseEntity<ServiceDTOResponse> addService(ServiceDTORequest serviceDTORequest);
 
     boolean titleExists(String title);
 
     @Transactional
     void deleteService(Long id);
 
-    List<ServiceEntity> getDisabledServices();
+    List<ServiceDTOResponse> getDisabledServices();
 
     void enableService(Long id);
 
     @Transactional
-    ServiceEntity updateService(
+    ServiceDTOResponse updateService(
             Long id,
-            ServiceDTO request);
+            ServiceDTORequest request);
 }

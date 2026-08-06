@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.controllers;
 
-import com.chillies.hearttohome.DTO.ServiceDTO;
+import com.chillies.hearttohome.DTO.ServiceDTORequest;
 import com.chillies.hearttohome.DTO.ServicePageResponse;
 import com.chillies.hearttohome.entity.ServiceEntity;
 import com.chillies.hearttohome.repositories.ServiceRepository;
@@ -57,7 +57,7 @@ public class ServiceController {
     @PutMapping("/admin/update-service/{id}")
     public ResponseEntity<?> updateService(
             @PathVariable Long id,
-            @RequestBody ServiceDTO request) {
+            @RequestBody ServiceDTORequest request) {
 
         return ResponseEntity.ok(
                 services.updateService(id, request)
