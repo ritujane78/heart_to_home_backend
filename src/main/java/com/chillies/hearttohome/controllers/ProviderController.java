@@ -1,5 +1,7 @@
 package com.chillies.hearttohome.controllers;
 
+import com.chillies.hearttohome.DTO.ProviderRequest;
+import com.chillies.hearttohome.DTO.ProviderResponse;
 import com.chillies.hearttohome.entity.ProviderEntity;
 import com.chillies.hearttohome.services.ProviderService;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +20,14 @@ public class ProviderController {
     private final ProviderService providerService;
 
     @GetMapping
-    public List<ProviderEntity> getProviders() {
+    public List<ProviderResponse> getProviders() {
         return providerService.getProviders();
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> addProvider(
-            @RequestBody ProviderEntity provider) {
+            @RequestBody ProviderRequest provider) {
 
         try {
             return ResponseEntity.ok(

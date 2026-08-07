@@ -52,8 +52,11 @@ logging:
       eclipse:
         angus:
           mail: DEBUG
-      .jakarta:
+      jakarta:
         mail: DEBUG
+      orm:
+        jdbc:
+          bind: TRACE
 
     com:
       chillies:
@@ -63,7 +66,6 @@ logging:
 
     io:
       jsonwebtoken: DEBUG
-
 frontend:
   url: ${FRONTEND_URL}
 stripe:

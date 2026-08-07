@@ -1,13 +1,16 @@
 package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.PaymentInfoRequest;
-import com.chillies.hearttohome.DTO.PaymentInfoRequestExtended;
+import com.chillies.hearttohome.DTO.PaymentInfoDTO;
 import com.chillies.hearttohome.entity.Payment;
+import com.chillies.hearttohome.exceptions.PaymentSaveException;
 import com.chillies.hearttohome.exceptions.StripePaymentException;
+import com.chillies.hearttohome.mapper.PaymentMapper;
 import com.chillies.hearttohome.repositories.PaymentRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,16 +23,16 @@ import java.util.Map;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class PaymentService {
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
+    private final PaymentMapper paymentMapper;
 
-    @Autowired
-    public PaymentService(PaymentRepository paymentRepository, @Value("${stripe.key.secret}") String secretKey) {
-        this.paymentRepository = paymentRepository;
-        Stripe.apiKey = secretKey;
-    }
+    @Value("${stripe.key.secret}")
+    String secretKey;
 
     public PaymentIntent createPaymentIntent(PaymentInfoRequest paymentInfoRequest) {
+        Stripe.apiKey = secretKey;
         List<String> paymentMethodTypes = new ArrayList<>();
         paymentMethodTypes.add("card");
 
@@ -49,21 +52,16 @@ public class PaymentService {
         }
     }
 
-    public Payment savePayment(PaymentInfoRequestExtended request) {
+    public PaymentInfoDTO savePayment(PaymentInfoDTO request) {
         try {
-            Payment payment = new Payment();
+            Payment payment = paymentMapper.toEntity(request);
 
-            payment.setPaymentIntentId(request.getPaymentIntentId());
-            payment.setPayerName(request.getPayerName());
-            payment.setUserEmail(request.getReceiptEmail());
-            payment.setTotal(request.getTotal());
-            payment.setAmountNpr(request.getAmountNpr());
-
-            return paymentRepository.save(payment);
+            Payment saved = paymentRepository.save(payment);
+            return paymentMapper.toDTO(saved);
 
         } catch (Exception ex) {
-            throw new RuntimeException(
-                    "Payment was successful but was Unable to save payment details. Please contact support.",
+            throw new PaymentSaveException(
+                    "Payment was successful, but we were unable to save the payment details. Please contact support.",
                     ex
             );
         }

@@ -1,12 +1,13 @@
 package com.chillies.hearttohome.services;
 
-import com.chillies.hearttohome.entity.ProviderEntity;
+import com.chillies.hearttohome.DTO.ProviderRequest;
+import com.chillies.hearttohome.DTO.ProviderResponse;
 
 import java.util.List;
 
 public interface ProviderService {
 
-    List<ProviderEntity> getProviders();
+    List<ProviderResponse> getProviders();
 
-    ProviderEntity addProvider(ProviderEntity provider);
+    ProviderResponse addProvider(ProviderRequest providerRequest);
 }

@@ -1,7 +1,6 @@
 package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.*;
-import com.chillies.hearttohome.entity.GiftOrder;
 import com.chillies.hearttohome.entity.OrderStatus;
 import com.chillies.hearttohome.entity.Payment;
 import com.chillies.hearttohome.entity.User;
@@ -52,7 +51,7 @@ public class GiftOrderController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
-    public ResponseEntity<GiftOrder> getOrder(@PathVariable Long id) {
+    public ResponseEntity<GiftOrderResponse> getOrder(@PathVariable Long id) {
         return ResponseEntity.ok(ordersService.getOrder(id));
     }
     @PostMapping("/validate")
@@ -77,7 +76,7 @@ public class GiftOrderController {
     }
 
     @GetMapping("/my-orders")
-    public ResponseEntity<List<GiftOrder>> getMyOrders(
+    public ResponseEntity<List<GiftOrderResponse>> getMyOrders(
             @AuthenticationPrincipal UserDetails userDetails) {
         User user = userService.findByUsername(userDetails.getUsername());
 
@@ -95,7 +94,7 @@ public class GiftOrderController {
         return new ResponseEntity<>(paymentStr, HttpStatus.OK);
     }
     @PostMapping("/payment/secure/save-payment")
-    public ResponseEntity<Payment> savePayment(@RequestBody PaymentInfoRequestExtended paymentInfo){
+    public ResponseEntity<PaymentInfoDTO> savePayment(@RequestBody PaymentInfoDTO paymentInfo){
         return ResponseEntity.ok(paymentService.savePayment(paymentInfo));
     }
 }

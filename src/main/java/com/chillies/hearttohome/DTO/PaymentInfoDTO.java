@@ -5,11 +5,11 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class PaymentInfoRequestExtended {
+public class PaymentInfoDTO {
     private String paymentIntentId;
     private String payerName;
     private BigDecimal amountNpr;
     private String total;
-    private String receiptEmail;
+    private String userEmail;
 
 }

@@ -52,6 +52,7 @@ public class GiftOrder {
     @Column(length = 1000)
     private String message;
 
+    @Builder.Default
     @OneToMany(
             mappedBy = "giftOrder",
             cascade = CascadeType.ALL,

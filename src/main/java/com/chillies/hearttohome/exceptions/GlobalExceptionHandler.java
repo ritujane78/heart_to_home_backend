@@ -186,4 +186,16 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
+    @ExceptionHandler(PaymentSaveException.class)
+    public ResponseEntity<ErrorResponse> handlePaymentSave(
+            PaymentSaveException ex,
+            HttpServletRequest request) {
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(buildResponse(
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        ex.getMessage(),
+                        request
+                ));
+    }
 }

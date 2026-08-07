@@ -9,6 +9,7 @@ import com.chillies.hearttohome.entity.AppRole;
 import com.chillies.hearttohome.entity.RefreshToken;
 import com.chillies.hearttohome.entity.Role;
 import com.chillies.hearttohome.entity.User;
+import com.chillies.hearttohome.mapper.UserMapper;
 import com.chillies.hearttohome.repositories.RoleRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.security.jwt.JwtUtils;
@@ -73,6 +74,9 @@ public class AuthController {
     AuthUtil authUtil;
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @PostMapping("/public/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws MessagingException, UnsupportedEncodingException {
@@ -164,22 +168,22 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        UserInfoResponse response = new UserInfoResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.isAccountNonLocked(),
-                user.isAccountNonExpired(),
-                user.isCredentialsNonExpired(),
-                user.isEnabled(),
-                user.getCredentialsExpiryDate(),
-                user.getAccountExpiryDate(),
-                user.isTwoFactorEnabled(),
-                roles
-        );
-
+//        UserInfoResponse response = new UserInfoResponse(
+//                user.getId(),
+//                user.getUsername(),
+//                user.getFirstName(),
+//                user.getLastName(),
+//                user.getEmail(),
+//                user.isAccountNonLocked(),
+//                user.isAccountNonExpired(),
+//                user.isCredentialsNonExpired(),
+//                user.isEnabled(),
+//                user.getCredentialsExpiryDate(),
+//                user.getAccountExpiryDate(),
+//                user.isTwoFactorEnabled(),
+//                roles
+//        );
+        UserInfoResponse response = userMapper.toResponse(user);
         return ResponseEntity.ok().body(response);
     }
 

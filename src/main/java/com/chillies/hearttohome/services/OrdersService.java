@@ -3,6 +3,7 @@ package com.chillies.hearttohome.services;
 import com.chillies.hearttohome.DTO.AllOrdersDTO;
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
+import com.chillies.hearttohome.DTO.ServiceDTOResponse;
 import com.chillies.hearttohome.entity.GiftOrder;
 import com.chillies.hearttohome.entity.OrderStatus;
 import com.chillies.hearttohome.entity.ServiceEntity;
@@ -22,9 +23,9 @@ GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest);
 
     List<AllOrdersDTO> getAllOrders();
 
-    GiftOrder getOrder(Long id);
+    GiftOrderResponse getOrder(Long id);
 
     Map<String, Object> updateStatus(Long id, OrderStatus status) throws MessagingException, UnsupportedEncodingException;
 
-    List<GiftOrder> getOrdersByUser(Long userId);
+    List<GiftOrderResponse> getOrdersByUser(Long userId);
 }

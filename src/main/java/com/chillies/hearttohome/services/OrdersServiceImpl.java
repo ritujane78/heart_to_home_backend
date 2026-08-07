@@ -3,10 +3,13 @@ package com.chillies.hearttohome.services;
 import com.chillies.hearttohome.DTO.AllOrdersDTO;
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
+import com.chillies.hearttohome.DTO.ServiceDTOResponse;
 import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.entity.*;
+import com.chillies.hearttohome.mapper.GiftOrderMapper;
+import com.chillies.hearttohome.mapper.OrderServiceMapper;
 import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
@@ -29,38 +32,23 @@ public class OrdersServiceImpl implements OrdersService {
     private final ServiceRepository serviceRepository;
     private final UserService userService;
     private final EmailService emailService;
+    private final GiftOrderMapper giftOrderMapper;
+    private final OrderServiceMapper orderServiceMapper;
 
     @Override
     public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) {
 
-        GiftOrder order = new GiftOrder();
+        GiftOrder order = giftOrderMapper.toEntity(giftOrderRequest);
 
-        order.setSenderName(giftOrderRequest.getSenderName());
-        order.setSenderEmail(giftOrderRequest.getSenderEmail());
-        order.setRecipientName(giftOrderRequest.getRecipientName());
-        order.setRecipientPhone(giftOrderRequest.getRecipientPhone());
-        order.setRelationship(giftOrderRequest.getRelationship());
-        order.setMessage(giftOrderRequest.getMessage());
         order.setUser(user);
-        order.setExchangeRate(giftOrderRequest.getExchangeRate());
 
         List<ServiceEntity> services =
                 validateServices(giftOrderRequest.getServiceIds());
 
-        for (ServiceEntity service : services) {
-
-            OrderService orderService = new OrderService();
-
-            orderService.setGiftOrder(order);
-            orderService.setService(service);
-            orderService.setCode(service.getCode());
-            orderService.setTitle(service.getTitle());
-            orderService.setDescription(service.getDescription());
-            orderService.setPrice(service.getPrice());
-            orderService.setProviderName(service.getProvider().getName());
-
-            order.getServices().add(orderService);
-        }
+        services.forEach(service ->
+                order.getServices().add(
+                        orderServiceMapper.toOrderService(service, order)
+                ));
 
         order.setTotalPrice(giftOrderRequest.getTotalPrice());
         order.setCurrency(giftOrderRequest.getCurrency());
@@ -84,16 +72,15 @@ public class OrdersServiceImpl implements OrdersService {
                 log.error("Unable to send order initiation email for order {}", saved.getId(), ex);
             }
         }
+        GiftOrderResponse response = giftOrderMapper.toResponse(saved);
 
-        return new GiftOrderResponse(
-                saved.getId(),
-                saved.getOrderStatus(),
-                saved.getTotalPrice(),
-                emailSent,
+        response.setEmailSent(emailSent);
+        response.setMessage(
                 emailSent
                         ? "Order placed successfully."
-                        : "Successful! But we couldn't send the confirmation email."
+                        : "Order placed successfully! But we couldn't send the confirmation email."
         );
+        return response;
     }
 
     @Override
@@ -116,14 +103,15 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public GiftOrder getOrder(Long id) {
-        return ordersRepository.findById(id)
+    public GiftOrderResponse getOrder(Long id) {
+        GiftOrder giftOrder = ordersRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Order",
                                 "id",
                                 id
                         ));
+        return giftOrderMapper.toResponse(giftOrder);
     }
 
     @Override
@@ -177,8 +165,8 @@ public class OrdersServiceImpl implements OrdersService {
         );
     }
     @Override
-    public List<GiftOrder> getOrdersByUser(Long userId) {
+    public List<GiftOrderResponse> getOrdersByUser(Long userId) {
         List<GiftOrder> userOrders = ordersRepository.findByUserIdOrderByIdDesc(userId);
-        return userOrders;
+        return giftOrderMapper.toResponse(userOrders);
     }
 }

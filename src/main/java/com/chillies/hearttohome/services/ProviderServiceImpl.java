@@ -1,13 +1,14 @@
 package com.chillies.hearttohome.services;
 
-import com.chillies.hearttohome.exceptions.BadRequestException;
+import com.chillies.hearttohome.DTO.ProviderRequest;
+import com.chillies.hearttohome.DTO.ProviderResponse;
 import com.chillies.hearttohome.entity.ProviderEntity;
 import com.chillies.hearttohome.exceptions.ConflictException;
+import com.chillies.hearttohome.mapper.ProviderMapper;
 import com.chillies.hearttohome.repositories.ProviderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 @Service
@@ -15,21 +16,29 @@ import java.util.List;
 public class ProviderServiceImpl implements ProviderService {
 
     private final ProviderRepository providerRepository;
+    private final ProviderMapper providerMapper;
 
     @Override
-    public List<ProviderEntity> getProviders() {
-        return providerRepository.findAllByOrderByNameAsc();
+    public List<ProviderResponse> getProviders() {
+        return providerMapper.toResponseList(
+                providerRepository.findAllByOrderByNameAsc()
+        );
     }
 
     @Override
-    public ProviderEntity addProvider(ProviderEntity provider) {
-        if (providerRepository.existsByNameIgnoreCase(provider.getName())) {
+    public ProviderResponse addProvider(ProviderRequest providerRequest) {
+
+        if (providerRepository.existsByNameIgnoreCase(providerRequest.getName())) {
             throw new ConflictException(
                     "name",
-                    "Provider '" + provider.getName() + "' already exists."
+                    "Provider '" + providerRequest.getName() + "' already exists."
             );
         }
 
-        return providerRepository.save(provider);
+        ProviderEntity provider = providerMapper.toEntity(providerRequest);
+
+        ProviderEntity savedProvider = providerRepository.save(provider);
+
+        return providerMapper.toResponse(savedProvider);
     }
 }
