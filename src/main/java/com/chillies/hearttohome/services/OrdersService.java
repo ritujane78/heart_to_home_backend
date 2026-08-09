@@ -1,12 +1,7 @@
 package com.chillies.hearttohome.services;
 
-import com.chillies.hearttohome.DTO.AllOrdersDTO;
-import com.chillies.hearttohome.DTO.GiftOrderRequest;
-import com.chillies.hearttohome.DTO.GiftOrderResponse;
-import com.chillies.hearttohome.DTO.ServiceDTOResponse;
-import com.chillies.hearttohome.entity.GiftOrder;
+import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.entity.OrderStatus;
-import com.chillies.hearttohome.entity.ServiceEntity;
 import com.chillies.hearttohome.entity.User;
 import jakarta.mail.MessagingException;
 
@@ -19,7 +14,7 @@ public interface OrdersService {
 
 GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest);
 
-    List<ServiceEntity> validateServices(List<Long> serviceIds);
+    ServiceValidationResult validateServices(List<Long> serviceIds);
 
     List<AllOrdersDTO> getAllOrders();
 

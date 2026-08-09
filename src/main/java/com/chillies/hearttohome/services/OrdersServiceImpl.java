@@ -1,15 +1,13 @@
 package com.chillies.hearttohome.services;
 
-import com.chillies.hearttohome.DTO.AllOrdersDTO;
-import com.chillies.hearttohome.DTO.GiftOrderRequest;
-import com.chillies.hearttohome.DTO.GiftOrderResponse;
-import com.chillies.hearttohome.DTO.ServiceDTOResponse;
+import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.entity.*;
 import com.chillies.hearttohome.mapper.GiftOrderMapper;
 import com.chillies.hearttohome.mapper.OrderServiceMapper;
+import com.chillies.hearttohome.mapper.ServiceMapper;
 import com.chillies.hearttohome.repositories.OrdersRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
@@ -34,6 +32,7 @@ public class OrdersServiceImpl implements OrdersService {
     private final EmailService emailService;
     private final GiftOrderMapper giftOrderMapper;
     private final OrderServiceMapper orderServiceMapper;
+    private final ServiceMapper serviceMapper;
 
     @Override
     public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) {
@@ -42,8 +41,10 @@ public class OrdersServiceImpl implements OrdersService {
 
         order.setUser(user);
 
-        List<ServiceEntity> services =
+        ServiceValidationResult validation =
                 validateServices(giftOrderRequest.getServiceIds());
+
+        List<ServiceEntity> services = validation.services();
 
         services.forEach(service ->
                 order.getServices().add(
@@ -84,17 +85,20 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public List<ServiceEntity> validateServices(List<Long> serviceIds) {
+    public ServiceValidationResult validateServices(List<Long> serviceIds) {
+
         List<ServiceEntity> services =
                 serviceRepository.findAllByIdInAndIsEnabledTrue(serviceIds);
 
-        if (services.size() != serviceIds.size()) {
-            throw new BadRequestException(
-                    "One or more selected services are no longer available. Please refresh the page and try again."
-            );
-        }
+        boolean valid = services.size() == serviceIds.size();
 
-        return services;
+        return new ServiceValidationResult(
+                valid,
+                valid
+                        ? "All selected services are available."
+                        : "One or more selected services are no longer available. Please refresh the page and try again.",
+                services
+        );
     }
 
     @Override

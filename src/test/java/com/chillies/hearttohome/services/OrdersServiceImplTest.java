@@ -2,6 +2,7 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.GiftOrderRequest;
 import com.chillies.hearttohome.DTO.GiftOrderResponse;
+import com.chillies.hearttohome.DTO.ServiceValidationResult;
 import com.chillies.hearttohome.entity.AppRole;
 import com.chillies.hearttohome.entity.GiftOrder;
 import com.chillies.hearttohome.entity.OrderService;
@@ -114,13 +115,32 @@ class OrdersServiceImplTest {
     }
 
     @Test
-    void validateServicesRejectsMissingOrDisabledServices() {
-        when(serviceRepository.findAllByIdInAndIsEnabledTrue(List.of(1L, 2L)))
-                .thenReturn(List.of(TestFixtures.service(1L, "HS_ONE", "One", TestFixtures.provider(1L, "P"), true)));
+    void validateServicesDetectsMissingOrDisabledServices() {
+        List<Long> serviceIds = List.of(1L, 2L);
 
-        assertThatThrownBy(() -> ordersService.validateServices(List.of(1L, 2L)))
-                .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("no longer available");
+        ServiceEntity availableService = TestFixtures.service(
+                1L,
+                "HS_ONE",
+                "One",
+                TestFixtures.provider(1L, "P"),
+                true
+        );
+
+        when(serviceRepository.findAllByIdInAndIsEnabledTrue(serviceIds))
+                .thenReturn(List.of(availableService));
+
+        ServiceValidationResult result =
+                ordersService.validateServices(serviceIds);
+
+        assertThat(result.valid()).isFalse();
+        assertThat(result.message())
+                .contains("no longer available");
+
+        assertThat(result.services())
+                .containsExactly(availableService);
+
+        verify(serviceRepository)
+                .findAllByIdInAndIsEnabledTrue(serviceIds);
     }
 
     @Test

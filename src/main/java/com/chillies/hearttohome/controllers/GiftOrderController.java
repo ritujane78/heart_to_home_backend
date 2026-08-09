@@ -4,6 +4,7 @@ import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.entity.OrderStatus;
 import com.chillies.hearttohome.entity.Payment;
 import com.chillies.hearttohome.entity.User;
+import com.chillies.hearttohome.mapper.ServiceMapper;
 import com.chillies.hearttohome.services.OrdersService;
 import com.chillies.hearttohome.services.PaymentService;
 import com.chillies.hearttohome.services.UserService;
@@ -30,6 +31,8 @@ public class GiftOrderController {
     private final OrdersService ordersService;
     private final UserService userService;
     private final PaymentService paymentService;
+    private final ServiceMapper serviceMapper;
+
     @PostMapping
     public ResponseEntity<GiftOrderResponse> create(
             @AuthenticationPrincipal UserDetails userDetails,
@@ -55,9 +58,20 @@ public class GiftOrderController {
         return ResponseEntity.ok(ordersService.getOrder(id));
     }
     @PostMapping("/validate")
-    public ResponseEntity<Void> validateServices(@RequestBody ServiceValidationRequest request) {
-        ordersService.validateServices(request.getServiceIds());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ServiceValidationResponse> validateServices(
+            @RequestBody ServiceValidationRequest request) {
+
+        ServiceValidationResult validation =
+                ordersService.validateServices(request.getServiceIds());
+
+        ServiceValidationResponse response =
+                new ServiceValidationResponse(
+                        validation.valid(),
+                        validation.message(),
+                        serviceMapper.toDTO(validation.services())
+                );
+
+        return ResponseEntity.ok(response);
     }
 
 
