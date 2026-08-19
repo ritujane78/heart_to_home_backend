@@ -1,7 +1,6 @@
 package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.*;
-import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.entity.*;
@@ -13,13 +12,11 @@ import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
 import com.chillies.hearttohome.util.NameUtils;
-import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentIntent;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -62,36 +59,50 @@ public class OrdersServiceImpl implements OrdersService {
 
         boolean emailSent = true;
 
-        GiftOrder saved = ordersRepository.save(order);
+        return ordersRepository.save(order);
+    }
+    @Transactional
+    @Override
+    public void confirmOrder(
+            GiftOrder order
+    ) {
 
-        if (saved.getId() != null &&
-                saved.getSenderEmail() != null &&
-                !saved.getSenderEmail().isBlank()) {
+        order.setOrderStatus(
+                OrderStatus.IN_PROCESS
+        );
 
-            try {
+        boolean emailSent = false;
+
+        try {
+
+            if (order.getSenderEmail() != null
+                    && !order.getSenderEmail().isBlank()) {
+
                 emailService.sendEmailForOrderInitiation(
-                        saved.getServices(),
-                        NameUtils.formatFirstName(saved.getSenderName()),
-                        saved.getSenderEmail()
+                        order.getServices(),
+                        NameUtils.formatFirstName(
+                                order.getSenderName()
+                        ),
+                        order.getSenderEmail()
                 );
-            } catch (EmailSendingException ex) {
-                emailSent = false;
-                log.error("Unable to send order initiation email for order {}", saved.getId(), ex);
-            }
-        }
-        saved.setEmailSent(emailSent);
-        return ordersRepository.save(saved);
 
-//
-//        GiftOrderResponse response = giftOrderMapper.toResponse(saved);
-//
-//        response.setEmailSent(emailSent);
-//        response.setMessage(
-//                emailSent
-//                        ? "Order placed successfully."
-//                        : "Order placed successfully! But we couldn't send the confirmation email."
-//        );
-//        return response;
+                emailSent = true;
+            }
+
+        } catch (EmailSendingException ex) {
+
+            log.error(
+                    "Unable to send email for order {}",
+                    order.getId(),
+                    ex
+            );
+        }
+
+        order.setEmailSent(
+                emailSent
+        );
+
+        ordersRepository.save(order);
     }
 
     @Override

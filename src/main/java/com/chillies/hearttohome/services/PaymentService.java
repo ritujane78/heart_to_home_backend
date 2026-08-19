@@ -2,12 +2,14 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.entity.*;
+import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.exceptions.PaymentSaveException;
 import com.chillies.hearttohome.exceptions.StripePaymentException;
 import com.chillies.hearttohome.mapper.GiftOrderMapper;
 import com.chillies.hearttohome.mapper.PaymentMapper;
 import com.chillies.hearttohome.repositories.PaymentRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
+import com.chillies.hearttohome.util.NameUtils;
 import com.stripe.Stripe;
 import com.stripe.exception.EventDataObjectDeserializationException;
 import com.stripe.exception.SignatureVerificationException;
@@ -149,17 +151,19 @@ public class PaymentService {
     @Transactional
     public void processWebhook(
             String payload,
-            String signature) throws SignatureVerificationException, EventDataObjectDeserializationException {
+            String signature
+    ) throws SignatureVerificationException, EventDataObjectDeserializationException {
 
         Event event =
                 Webhook.constructEvent(
                         payload,
                         signature,
-                        webhookSecret);
+                        webhookSecret
+                );
 
-        if (!"payment_intent.succeeded"
-                .equals(event.getType())) {
+        String eventType = event.getType();
 
+        if (!eventType.startsWith("payment_intent.")) {
             return;
         }
 
@@ -174,12 +178,13 @@ public class PaymentService {
                                 paymentIntent.getId()
                         )
                         .orElseThrow(
-                                () ->
-                                        new RuntimeException(
-                                                "Payment not found."
-                                        )
+                                () -> new RuntimeException(
+                                        "Payment not found."
+                                )
                         );
-        GiftOrder giftOrder = payment.getGiftOrder();
+
+        GiftOrder giftOrder =
+                payment.getGiftOrder();
 
         if (giftOrder == null) {
             throw new RuntimeException(
@@ -187,30 +192,55 @@ public class PaymentService {
                             + paymentIntent.getId()
             );
         }
-        try {
 
-            giftOrder.setOrderStatus(OrderStatus.IN_PROCESS);
+        switch (eventType) {
 
-            payment.setPaymentOrderStatus(
-                    PaymentOrderStatus.ORDER_SAVED
-            );
+            case "payment_intent.succeeded":
 
-        } catch (Exception ex) {
-            giftOrder.setOrderStatus(OrderStatus.CANCELED);
+                payment.setPaymentOrderStatus(
+                        PaymentOrderStatus.ORDER_SAVED
+                );
 
-            payment.setPaymentOrderStatus(
-                    PaymentOrderStatus.ORDER_SAVE_FAILED
-            );
+                ordersService.confirmOrder(
+                        giftOrder
+                );
 
-            throw ex;
-        } finally {
+                break;
 
-            paymentRepository.save(
-                    payment
-            );
+            case "payment_intent.payment_failed":
+
+                payment.setPaymentOrderStatus(
+                        PaymentOrderStatus.ORDER_SAVE_FAILED
+                );
+
+                giftOrder.setOrderStatus(
+                        OrderStatus.CANCELED
+                );
+
+                break;
+
+            case "payment_intent.canceled":
+
+                payment.setPaymentOrderStatus(
+                        PaymentOrderStatus.ORDER_CANCELED
+                );
+
+                giftOrder.setOrderStatus(
+                        OrderStatus.CANCELED
+                );
+
+                break;
+
+            default:
+
+                return;
         }
 
+        paymentRepository.save(
+                payment
+        );
     }
+
     public void createPendingPayment(
             PaymentIntent paymentIntent,
             CheckoutRequest request,

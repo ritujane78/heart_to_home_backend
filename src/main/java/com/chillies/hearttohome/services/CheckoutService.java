@@ -3,8 +3,6 @@ package com.chillies.hearttohome.services;
 import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.entity.*;
 import com.chillies.hearttohome.exceptions.BadRequestException;
-import com.chillies.hearttohome.mapper.PaymentMapper;
-import com.chillies.hearttohome.repositories.PaymentRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;

@@ -6,6 +6,7 @@ import com.chillies.hearttohome.entity.OrderStatus;
 import com.chillies.hearttohome.entity.User;
 import com.stripe.exception.StripeException;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -15,6 +16,11 @@ public interface OrdersService {
 
 
     GiftOrder create(User user, GiftOrderRequest giftOrderRequest);
+
+    @Transactional
+    void confirmOrder(
+            GiftOrder order
+    );
 
     ServiceValidationResult validateServices(List<Long> serviceIds);
 
