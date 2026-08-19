@@ -30,4 +30,11 @@ public class Payment {
 
     @Column(nullable = false)
     private String payerName;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentOrderStatus paymentOrderStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gift_order_id", nullable = false)
+    private GiftOrder giftOrder;
 }

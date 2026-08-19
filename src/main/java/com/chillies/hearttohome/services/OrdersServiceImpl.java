@@ -13,10 +13,13 @@ import com.chillies.hearttohome.repositories.ServiceRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.util.EmailService;
 import com.chillies.hearttohome.util.NameUtils;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +38,7 @@ public class OrdersServiceImpl implements OrdersService {
     private final ServiceMapper serviceMapper;
 
     @Override
-    public GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest) {
+    public GiftOrder create(User user, GiftOrderRequest giftOrderRequest) {
 
         GiftOrder order = giftOrderMapper.toEntity(giftOrderRequest);
 
@@ -53,11 +56,14 @@ public class OrdersServiceImpl implements OrdersService {
 
         order.setTotalPrice(giftOrderRequest.getTotalPrice());
         order.setCurrency(giftOrderRequest.getCurrency());
-        order.setOrderStatus(OrderStatus.IN_PROCESS);
+        order.setOrderStatus(OrderStatus.PENDING);
+        order.setExchangeRate(giftOrderRequest.getExchangeRate());
+        order.setEmailSent(false);
+
+        boolean emailSent = true;
 
         GiftOrder saved = ordersRepository.save(order);
 
-        boolean emailSent = true;
         if (saved.getId() != null &&
                 saved.getSenderEmail() != null &&
                 !saved.getSenderEmail().isBlank()) {
@@ -73,15 +79,19 @@ public class OrdersServiceImpl implements OrdersService {
                 log.error("Unable to send order initiation email for order {}", saved.getId(), ex);
             }
         }
-        GiftOrderResponse response = giftOrderMapper.toResponse(saved);
+        saved.setEmailSent(emailSent);
+        return ordersRepository.save(saved);
 
-        response.setEmailSent(emailSent);
-        response.setMessage(
-                emailSent
-                        ? "Order placed successfully."
-                        : "Order placed successfully! But we couldn't send the confirmation email."
-        );
-        return response;
+//
+//        GiftOrderResponse response = giftOrderMapper.toResponse(saved);
+//
+//        response.setEmailSent(emailSent);
+//        response.setMessage(
+//                emailSent
+//                        ? "Order placed successfully."
+//                        : "Order placed successfully! But we couldn't send the confirmation email."
+//        );
+//        return response;
     }
 
     @Override
@@ -168,9 +178,11 @@ public class OrdersServiceImpl implements OrdersService {
                 "emailSent", emailSent
         );
     }
+
     @Override
     public List<GiftOrderResponse> getOrdersByUser(Long userId) {
         List<GiftOrder> userOrders = ordersRepository.findByUserIdOrderByIdDesc(userId);
+        System.out.println("userOrders = " + userOrders.toString());
         return giftOrderMapper.toResponse(userOrders);
     }
 }

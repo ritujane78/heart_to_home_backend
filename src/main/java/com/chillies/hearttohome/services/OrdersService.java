@@ -1,8 +1,10 @@
 package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.*;
+import com.chillies.hearttohome.entity.GiftOrder;
 import com.chillies.hearttohome.entity.OrderStatus;
 import com.chillies.hearttohome.entity.User;
+import com.stripe.exception.StripeException;
 import jakarta.mail.MessagingException;
 
 import java.io.UnsupportedEncodingException;
@@ -12,7 +14,7 @@ import java.util.Map;
 public interface OrdersService {
 
 
-GiftOrderResponse create(User user, GiftOrderRequest giftOrderRequest);
+    GiftOrder create(User user, GiftOrderRequest giftOrderRequest);
 
     ServiceValidationResult validateServices(List<Long> serviceIds);
 

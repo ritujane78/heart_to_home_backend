@@ -28,4 +28,19 @@ public class GiftOrderRequest {
 
     private BigDecimal exchangeRate;
 
+    @Override
+    public String toString() {
+        return "GiftOrderRequest{" +
+                "recipientName='" + recipientName + '\'' +
+                ", recipientPhone='" + recipientPhone + '\'' +
+                ", relationship='" + relationship + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", senderEmail='" + senderEmail + '\'' +
+                ", message='" + message + '\'' +
+                ", serviceIds=" + serviceIds +
+                ", totalPrice='" + totalPrice + '\'' +
+                ", currency='" + currency + '\'' +
+                ", exchangeRate=" + exchangeRate +
+                '}';
+    }
 }

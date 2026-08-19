@@ -2,6 +2,7 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.ServiceDTORequest;
 import com.chillies.hearttohome.DTO.ServiceDTOResponse;
+import com.chillies.hearttohome.DTO.ServicePageResponseDTO;
 import com.chillies.hearttohome.entity.ServiceEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface Services {
 
-    Page<ServiceEntity> getServices(int page, int size);
+    ServicePageResponseDTO getServices(int page, int size);
 
     ResponseEntity<ServiceDTOResponse> addService(ServiceDTORequest serviceDTORequest);
 

@@ -3,6 +3,7 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.ServiceDTORequest;
 import com.chillies.hearttohome.DTO.ServiceDTOResponse;
+import com.chillies.hearttohome.DTO.ServicePageResponseDTO;
 import com.chillies.hearttohome.exceptions.ConflictException;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
 import com.chillies.hearttohome.entity.ProviderEntity;
@@ -28,11 +29,36 @@ public class ServicesImpl implements Services {
     private final ServiceRepository serviceRepository;
     private final ProviderRepository providerRepository;
     private final ServiceMapper serviceMapper;
+    private final ExchangeRateService exchangeRateService;
+
 
     @Override
-    public Page<ServiceEntity> getServices(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        return serviceRepository.findAll(pageable);
+    public ServicePageResponseDTO getServices(
+            int page,
+            int size
+    ) {
+
+        Pageable pageable =
+                PageRequest.of(
+                        page,
+                        size,
+                        Sort.by("id")
+                );
+
+        Page<ServiceEntity> services =
+                serviceRepository.findAll(pageable);
+
+        List<String> providerNames =
+                providerRepository.findAll()
+                        .stream()
+                        .map(ProviderEntity::getName)
+                        .toList();
+
+        return new ServicePageResponseDTO(
+                services,
+                providerNames,
+                exchangeRateService.getRates()
+        );
     }
 
     @Override

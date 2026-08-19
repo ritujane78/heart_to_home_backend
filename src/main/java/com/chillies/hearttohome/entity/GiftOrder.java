@@ -74,6 +74,8 @@ public class GiftOrder {
     @Column(nullable = false)
     private OrderStatus orderStatus;
 
+    private boolean emailSent;
+
     @Column(nullable = false)
     private LocalDateTime orderedAt;
 
@@ -92,5 +94,18 @@ public class GiftOrder {
     @PreUpdate
     public void preUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+    @Override
+    public String toString() {
+        return "GiftOrder{" +
+                "id=" + id +
+                ", recipientName='" + recipientName + '\'' +
+                ", recipientPhone='" + recipientPhone + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", senderEmail='" + senderEmail + '\'' +
+                ", totalPrice=" + totalPrice +
+                ", exchangeRate=" + exchangeRate +
+                ", services=" + services +
+                '}';
     }
 }

@@ -1,9 +1,10 @@
 package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.ServiceDTORequest;
-import com.chillies.hearttohome.DTO.ServicePageResponse;
+import com.chillies.hearttohome.DTO.ServicePageResponseDTO;
 import com.chillies.hearttohome.entity.ServiceEntity;
 import com.chillies.hearttohome.repositories.ServiceRepository;
+import com.chillies.hearttohome.services.ExchangeRateService;
 import com.chillies.hearttohome.services.Services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,9 +23,10 @@ public class ServiceController {
 
     private final ServiceRepository serviceRepository;
     private final Services services;
+    private final ExchangeRateService exchangeRateService;
 
     @GetMapping
-    public ServicePageResponse getServices(
+    public ServicePageResponseDTO getServices(
             @RequestParam(defaultValue = "") String keyword,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "6") int size) {
@@ -49,8 +51,10 @@ public class ServiceController {
                 .map(service -> service.getProvider().getName())
                 .distinct()
                 .toList();
+        var exchangeRates =
+                exchangeRateService.getRates();
 
-        return new ServicePageResponse(services, providerNames);
+        return new ServicePageResponseDTO(services, providerNames, exchangeRates);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

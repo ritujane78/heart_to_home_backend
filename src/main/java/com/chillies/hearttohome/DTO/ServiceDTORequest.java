@@ -2,6 +2,8 @@ package com.chillies.hearttohome.DTO;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class ServiceDTORequest {
 
@@ -11,7 +13,7 @@ public class ServiceDTORequest {
 
     private String description;
 
-    private Double price;
+    private BigDecimal price;
 
     private String code;
 
