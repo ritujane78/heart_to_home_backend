@@ -91,7 +91,6 @@ public class CheckoutService {
                                 BigDecimal.ZERO,
                                 BigDecimal::add
                         );
-
         /*
          * Create Stripe PaymentIntent using the backend-calculated
          * amount and exchange rate.
@@ -160,6 +159,7 @@ public class CheckoutService {
         paymentService.createPendingPayment(
                 paymentIntent,
                 request,
+                currency,
                 totalNpr,
                 giftOrder
         );

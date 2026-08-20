@@ -22,6 +22,9 @@ public class Payment {
     @Column(name="user_email")
     private String userEmail;
 
+    @Column(nullable = false, length = 3)
+    private String currency;
+
     @Column(name = "total")
     private String total;
 

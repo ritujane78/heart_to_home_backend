@@ -35,6 +35,7 @@ public class PaymentService {
     private final PaymentMapper paymentMapper;
     private final OrdersService ordersService;
     private final UserRepository userRepository;
+    private final ExchangeRateService exchangeRateService;
 
     @Value("${stripe.key.secret}")
     String secretKey;
@@ -244,6 +245,7 @@ public class PaymentService {
     public void createPendingPayment(
             PaymentIntent paymentIntent,
             CheckoutRequest request,
+            String currency,
             BigDecimal totalNpr,
             GiftOrder giftOrder
 
@@ -271,8 +273,10 @@ public class PaymentService {
                     .divide(BigDecimal.valueOf(100));
         }
 
+        String currencySymbol = exchangeRateService.getCurrencySymbol(currency);
+
         paymentInfo.setTotal(
-                total.toPlainString()
+                currencySymbol + total.toPlainString()
         );
 
         paymentInfo.setUserEmail(
@@ -283,6 +287,7 @@ public class PaymentService {
                 paymentMapper.toEntity(
                         paymentInfo
                 );
+        payment.setCurrency(currency);
         payment.setGiftOrder(giftOrder);
         payment.setPaymentOrderStatus(
                 PaymentOrderStatus.PENDING

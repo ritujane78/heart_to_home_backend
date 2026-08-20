@@ -140,4 +140,16 @@ public class ExchangeRateService {
 
         return rates;
     }
+    public String getCurrencySymbol(String currency) {
+        return switch (currency.toUpperCase()) {
+            case "USD" -> "$";
+            case "EUR" -> "€";
+            case "GBP" -> "£";
+            case "JPY" -> "¥";
+            case "INR" -> "₹";
+            case "AUD" -> "A$";
+            case "CAD" -> "C$";
+            default -> currency + " ";
+        };
+    }
 }
