@@ -25,11 +25,11 @@ public interface GiftOrderMapper {
     List<GiftOrderResponse> toResponse(List<GiftOrder> orders);
 
     @Mapping(target = "id", source = "service.id")
-    @Mapping(target = "code", source = "service.code")
-    @Mapping(target = "title", source = "service.title")
-    @Mapping(target = "description", source = "service.description")
-    @Mapping(target = "price", source = "service.price")
-    @Mapping(target = "providerName", source = "service.provider.name")
+    @Mapping(target = "code", source = "code")
+    @Mapping(target = "title", source = "title")
+    @Mapping(target = "description", source = "description")
+    @Mapping(target = "price", source = "price")
+    @Mapping(target = "providerName", source = "providerName")
     OrderServiceResponse toResponse(OrderService orderService);
 
     List<OrderServiceResponse> toOrderServiceResponses(List<OrderService> services);
