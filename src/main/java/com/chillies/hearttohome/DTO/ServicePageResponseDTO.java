@@ -17,4 +17,6 @@ public class ServicePageResponseDTO {
 
     private List<String> providerNames;
 
+    private Map<String, BigDecimal> exchangeRates;
+
 }

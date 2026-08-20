@@ -51,7 +51,10 @@ public class ServiceController {
                 .map(service -> service.getProvider().getName())
                 .distinct()
                 .toList();
-        return new ServicePageResponseDTO(services, providerNames);
+        var exchangeRates =
+                exchangeRateService.getRates();
+
+        return new ServicePageResponseDTO(services, providerNames, exchangeRates);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
