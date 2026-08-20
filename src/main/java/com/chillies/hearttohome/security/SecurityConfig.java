@@ -63,6 +63,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/services").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/providers").permitAll()
                         .requestMatchers("/api/payments/webhook").permitAll()
+                        .requestMatchers("/api/exchange-rates").permitAll()
                         .anyRequest().authenticated());
         http
                 .csrf(AbstractHttpConfigurer::disable)

@@ -29,7 +29,6 @@ public class ServicesImpl implements Services {
     private final ServiceRepository serviceRepository;
     private final ProviderRepository providerRepository;
     private final ServiceMapper serviceMapper;
-    private final ExchangeRateService exchangeRateService;
 
 
     @Override
@@ -56,8 +55,7 @@ public class ServicesImpl implements Services {
 
         return new ServicePageResponseDTO(
                 services,
-                providerNames,
-                exchangeRateService.getRates()
+                providerNames
         );
     }
 

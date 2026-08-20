@@ -17,6 +17,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CheckoutService {
+
     private final PaymentService paymentService;
     private final ServiceRepository serviceRepository;
     private final ExchangeRateService exchangeRateService;
@@ -29,12 +30,9 @@ public class CheckoutService {
     ) throws StripeException {
 
         ServiceValidationResult validation =
-                validateServices(
-                        request.getServiceIds()
-                );
+                validateServices(request.getServiceIds());
 
         if (!validation.valid()) {
-
             throw new BadRequestException(
                     validation.message()
             );
@@ -43,11 +41,27 @@ public class CheckoutService {
         List<ServiceEntity> services =
                 validation.services();
 
-        BigDecimal rate =
+        /*
+         * Get the exchange rate from the backend.
+         *
+         * ExchangeRateService handles:
+         * - live exchange rate
+         * - fallback exchange rate
+         */
+        ExchangeRateResult exchangeRateResult =
                 exchangeRateService.getRate(
                         request.getCurrency()
                 );
 
+        BigDecimal exchangeRate =
+                exchangeRateResult.rate();
+
+        String currency =
+                exchangeRateResult.currency();
+
+        /*
+         * Calculate the original total in NPR.
+         */
         BigDecimal totalNpr =
                 services.stream()
                         .map(ServiceEntity::getPrice)
@@ -56,39 +70,83 @@ public class CheckoutService {
                                 BigDecimal::add
                         );
 
+        /*
+         * Convert each service individually and round to 2 decimals.
+         *
+         * This keeps the total consistent with the amounts displayed
+         * on the frontend.
+         */
         BigDecimal convertedTotal =
                 services.stream()
                         .map(ServiceEntity::getPrice)
                         .map(price ->
                                 price
-                                        .multiply(rate)
-                                        .setScale(2, RoundingMode.HALF_UP)
+                                        .multiply(exchangeRate)
+                                        .setScale(
+                                                2,
+                                                RoundingMode.HALF_UP
+                                        )
                         )
                         .reduce(
                                 BigDecimal.ZERO,
                                 BigDecimal::add
                         );
 
+        /*
+         * Create Stripe PaymentIntent using the backend-calculated
+         * amount and exchange rate.
+         */
         PaymentIntent paymentIntent =
                 paymentService.createPaymentIntent(
                         convertedTotal,
                         request,
                         totalNpr,
-                        rate,
+                        exchangeRate,
                         user
-                        );
-        GiftOrderRequest orderRequest = new GiftOrderRequest();
+                );
 
-        orderRequest.setRecipientName(request.getRecipientName());
-        orderRequest.setRecipientPhone(request.getRecipientPhone());
-        orderRequest.setRelationship(request.getRelationship());
-        orderRequest.setSenderName(request.getSenderName());
-        orderRequest.setSenderEmail(request.getSenderEmail());
-        orderRequest.setMessage(request.getMessage());
-        orderRequest.setCurrency(request.getCurrency());
-        orderRequest.setExchangeRate(rate);
-        orderRequest.setTotalPrice(convertedTotal.toString());
-        orderRequest.setServiceIds(request.getServiceIds());
+        /*
+         * Create the GiftOrder using the exact currency and
+         * exchange rate used for the payment.
+         */
+        GiftOrderRequest orderRequest =
+                new GiftOrderRequest();
+
+        orderRequest.setRecipientName(
+                request.getRecipientName()
+        );
+
+        orderRequest.setRecipientPhone(
+                request.getRecipientPhone()
+        );
+
+        orderRequest.setRelationship(
+                request.getRelationship()
+        );
+
+        orderRequest.setSenderName(
+                request.getSenderName()
+        );
+
+        orderRequest.setSenderEmail(
+                request.getSenderEmail()
+        );
+
+        orderRequest.setMessage(
+                request.getMessage()
+        );
+
+        orderRequest.setCurrency(currency);
+
+        orderRequest.setExchangeRate(exchangeRate);
+
+        orderRequest.setTotalPrice(
+                convertedTotal.toString()
+        );
+
+        orderRequest.setServiceIds(
+                request.getServiceIds()
+        );
 
         GiftOrder giftOrder =
                 ordersService.create(
@@ -96,7 +154,9 @@ public class CheckoutService {
                         orderRequest
                 );
 
-
+        /*
+         * Save the pending payment against the newly created order.
+         */
         paymentService.createPendingPayment(
                 paymentIntent,
                 request,
@@ -110,12 +170,18 @@ public class CheckoutService {
                 totalNpr
         );
     }
-    public ServiceValidationResult validateServices(List<Long> serviceIds) {
+
+    public ServiceValidationResult validateServices(
+            List<Long> serviceIds
+    ) {
 
         List<ServiceEntity> services =
-                serviceRepository.findAllByIdInAndIsEnabledTrue(serviceIds);
+                serviceRepository.findAllByIdInAndIsEnabledTrue(
+                        serviceIds
+                );
 
-        boolean valid = services.size() == serviceIds.size();
+        boolean valid =
+                services.size() == serviceIds.size();
 
         return new ServiceValidationResult(
                 valid,

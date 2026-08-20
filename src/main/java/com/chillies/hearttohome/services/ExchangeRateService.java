@@ -1,5 +1,7 @@
 package com.chillies.hearttohome.services;
 
+import com.chillies.hearttohome.DTO.ExchangeRateResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -8,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class ExchangeRateService {
 
@@ -27,7 +30,17 @@ public class ExchangeRateService {
                     "NPR", BigDecimal.ONE
             );
 
-    public Map<String, BigDecimal> getRates() {
+    public ExchangeRateResult getRate(String currency) {
+
+        String normalizedCurrency = currency.toUpperCase();
+
+        if ("NPR".equals(normalizedCurrency)) {
+            return new ExchangeRateResult(
+                    "NPR",
+                    BigDecimal.ONE,
+                    false
+            );
+        }
 
         try {
 
@@ -38,8 +51,64 @@ public class ExchangeRateService {
                             .retrieve()
                             .body(List.class);
 
-            Map<String, BigDecimal> rates =
-                    new HashMap<>(FALLBACK);
+            if (response != null) {
+
+                for (Map<String, Object> item : response) {
+
+                    String quote = item.get("quote").toString();
+
+                    if (normalizedCurrency.equals(quote)) {
+
+                        BigDecimal rate =
+                                new BigDecimal(
+                                        item.get("rate").toString()
+                                );
+
+                        return new ExchangeRateResult(
+                                normalizedCurrency,
+                                rate,
+                                false
+                        );
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+
+            log.warn(
+                    "Unable to fetch exchange rate for {}. Using fallback rate.",
+                    normalizedCurrency,
+                    e
+            );
+        }
+
+        // External API failed or requested currency was not returned.
+        BigDecimal fallbackRate =
+                FALLBACK.getOrDefault(
+                        normalizedCurrency,
+                        BigDecimal.ONE
+                );
+
+        return new ExchangeRateResult(
+                normalizedCurrency,
+                fallbackRate,
+                true
+        );
+    }
+
+    public Map<String, BigDecimal> getRates() {
+
+        Map<String, BigDecimal> rates =
+                new HashMap<>(FALLBACK);
+
+        try {
+
+            List<Map<String, Object>> response =
+                    restClient
+                            .get()
+                            .uri(EXCHANGE_RATE_URL)
+                            .retrieve()
+                            .body(List.class);
 
             if (response != null) {
 
@@ -57,22 +126,18 @@ public class ExchangeRateService {
                 }
             }
 
-            rates.put("NPR", BigDecimal.ONE);
-
-            return rates;
-
         } catch (Exception e) {
 
-            return FALLBACK;
+            log.warn(
+                    "Unable to fetch exchange rates. Using fallback rates.",
+                    e
+            );
+
+            return rates;
         }
-    }
 
-    public BigDecimal getRate(String currency) {
+        rates.put("NPR", BigDecimal.ONE);
 
-        return getRates()
-                .getOrDefault(
-                        currency,
-                        BigDecimal.ONE
-                );
+        return rates;
     }
 }
