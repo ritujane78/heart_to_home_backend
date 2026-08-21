@@ -1,4 +1,4 @@
-package com.chillies.hearttohome.util;
+package com.chillies.hearttohome.utils;
 
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.entity.OrderService;

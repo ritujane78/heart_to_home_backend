@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.ExchangeRateResult;
-import com.chillies.hearttohome.services.ExchangeRateService;
+import com.chillies.hearttohome.utils.ExchangeRateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

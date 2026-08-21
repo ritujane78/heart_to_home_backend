@@ -1,4 +1,4 @@
-package com.chillies.hearttohome.util;
+package com.chillies.hearttohome.utils;
 
 
 import com.chillies.hearttohome.entity.User;

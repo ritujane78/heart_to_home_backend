@@ -4,7 +4,7 @@ import com.chillies.hearttohome.DTO.ServiceDTORequest;
 import com.chillies.hearttohome.DTO.ServicePageResponseDTO;
 import com.chillies.hearttohome.entity.ServiceEntity;
 import com.chillies.hearttohome.repositories.ServiceRepository;
-import com.chillies.hearttohome.services.ExchangeRateService;
+import com.chillies.hearttohome.utils.ExchangeRateService;
 import com.chillies.hearttohome.services.Services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -11,6 +11,7 @@ import com.chillies.hearttohome.entity.ServiceEntity;
 import com.chillies.hearttohome.mapper.ServiceMapper;
 import com.chillies.hearttohome.repositories.ProviderRepository;
 import com.chillies.hearttohome.repositories.ServiceRepository;
+import com.chillies.hearttohome.utils.ExchangeRateService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

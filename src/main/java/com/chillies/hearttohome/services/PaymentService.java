@@ -2,14 +2,11 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.entity.*;
-import com.chillies.hearttohome.exceptions.EmailSendingException;
-import com.chillies.hearttohome.exceptions.PaymentSaveException;
-import com.chillies.hearttohome.exceptions.StripePaymentException;
 import com.chillies.hearttohome.mapper.GiftOrderMapper;
 import com.chillies.hearttohome.mapper.PaymentMapper;
 import com.chillies.hearttohome.repositories.PaymentRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
-import com.chillies.hearttohome.util.NameUtils;
+import com.chillies.hearttohome.utils.ExchangeRateService;
 import com.stripe.Stripe;
 import com.stripe.exception.EventDataObjectDeserializationException;
 import com.stripe.exception.SignatureVerificationException;
@@ -18,14 +15,12 @@ import com.stripe.model.Event;
 import com.stripe.model.PaymentIntent;
 import com.stripe.net.Webhook;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

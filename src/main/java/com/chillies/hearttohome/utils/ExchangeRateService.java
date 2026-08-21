@@ -1,4 +1,4 @@
-package com.chillies.hearttohome.services;
+package com.chillies.hearttohome.utils;
 
 import com.chillies.hearttohome.DTO.ExchangeRateResult;
 import lombok.extern.slf4j.Slf4j;
