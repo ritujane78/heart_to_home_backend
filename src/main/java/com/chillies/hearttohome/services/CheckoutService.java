@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +30,110 @@ public class CheckoutService {
             CheckoutRequest request
     ) throws StripeException {
 
+        /*
+         * ---------------------------------------------------------
+         * 1. Check whether this checkout has already been created.
+         * ---------------------------------------------------------
+         */
+        Optional<Payment> existingPayment =
+                paymentService.findByCheckoutId(
+                        request.getCheckoutId()
+                );
+
+        if (existingPayment.isPresent()) {
+
+            Payment payment = existingPayment.get();
+
+            GiftOrder giftOrder = payment.getGiftOrder();
+
+            /*
+             * The checkout already exists.
+             *
+             * If the payment is still pending, reuse the existing
+             * Stripe PaymentIntent instead of creating another one.
+             */
+            if (payment.getPaymentOrderStatus()
+                    == PaymentOrderStatus.PENDING) {
+
+                PaymentIntent paymentIntent =
+                        PaymentIntent.retrieve(
+                                payment.getPaymentIntentId()
+                        );
+
+                /*
+                 * Stripe may already have completed the payment even
+                 * though the webhook has not updated our database yet.
+                 *
+                 * In that case, update the existing records instead
+                 * of creating new ones.
+                 */
+                if ("succeeded".equals(
+                        paymentIntent.getStatus()
+                )) {
+
+                    payment.setPaymentOrderStatus(
+                            PaymentOrderStatus.ORDER_SAVED
+                    );
+
+                    ordersService.confirmOrder(
+                            giftOrder
+                    );
+
+                    return new CheckoutResponse(
+                            paymentIntent.getClientSecret(),
+                            giftOrder.getTotalPrice(),
+                            payment.getAmountNpr(),
+                            true
+                    );
+                }
+
+                /*
+                 * Payment is still being processed or requires the
+                 * customer to complete payment.
+                 *
+                 * Reuse the existing PaymentIntent.
+                 */
+                return new CheckoutResponse(
+                        paymentIntent.getClientSecret(),
+                        giftOrder.getTotalPrice(),
+                        payment.getAmountNpr(),
+                        false
+                );
+            }
+
+            /*
+             * The payment was already successfully processed.
+             *
+             * Do not create another payment/order.
+             */
+            if (payment.getPaymentOrderStatus()
+                    == PaymentOrderStatus.ORDER_SAVED) {
+
+                return new CheckoutResponse(
+                        null,
+                        giftOrder.getTotalPrice(),
+                        payment.getAmountNpr(),
+                        true
+                );
+            }
+
+            /*
+             * If the previous payment was canceled or failed,
+             * allow this checkout to create a new payment.
+             *
+             * Continue below.
+             */
+        }
+
+        /*
+         * ---------------------------------------------------------
+         * 2. Validate services for a new checkout.
+         * ---------------------------------------------------------
+         */
         ServiceValidationResult validation =
-                validateServices(request.getServiceIds());
+                validateServices(
+                        request.getServiceIds()
+                );
 
         if (!validation.valid()) {
             throw new BadRequestException(
@@ -42,11 +145,9 @@ public class CheckoutService {
                 validation.services();
 
         /*
-         * Get the exchange rate from the backend.
-         *
-         * ExchangeRateService handles:
-         * - live exchange rate
-         * - fallback exchange rate
+         * ---------------------------------------------------------
+         * 3. Get exchange rate.
+         * ---------------------------------------------------------
          */
         ExchangeRateResult exchangeRateResult =
                 exchangeRateService.getRate(
@@ -60,7 +161,9 @@ public class CheckoutService {
                 exchangeRateResult.currency();
 
         /*
-         * Calculate the original total in NPR.
+         * ---------------------------------------------------------
+         * 4. Calculate original total in NPR.
+         * ---------------------------------------------------------
          */
         BigDecimal totalNpr =
                 services.stream()
@@ -71,10 +174,10 @@ public class CheckoutService {
                         );
 
         /*
-         * Convert each service individually and round to 2 decimals.
-         *
-         * This keeps the total consistent with the amounts displayed
-         * on the frontend.
+         * ---------------------------------------------------------
+         * 5. Convert each service individually and round to 2
+         *    decimal places.
+         * ---------------------------------------------------------
          */
         BigDecimal convertedTotal =
                 services.stream()
@@ -91,22 +194,22 @@ public class CheckoutService {
                                 BigDecimal.ZERO,
                                 BigDecimal::add
                         );
+
         /*
-         * Create Stripe PaymentIntent using the backend-calculated
-         * amount and exchange rate.
+         * ---------------------------------------------------------
+         * 6. Create Stripe PaymentIntent.
+         * ---------------------------------------------------------
          */
         PaymentIntent paymentIntent =
                 paymentService.createPaymentIntent(
                         convertedTotal,
-                        request,
-                        totalNpr,
-                        exchangeRate,
-                        user
+                        request
                 );
 
         /*
-         * Create the GiftOrder using the exact currency and
-         * exchange rate used for the payment.
+         * ---------------------------------------------------------
+         * 7. Create GiftOrder.
+         * ---------------------------------------------------------
          */
         GiftOrderRequest orderRequest =
                 new GiftOrderRequest();
@@ -135,9 +238,13 @@ public class CheckoutService {
                 request.getMessage()
         );
 
-        orderRequest.setCurrency(currency);
+        orderRequest.setCurrency(
+                currency
+        );
 
-        orderRequest.setExchangeRate(exchangeRate);
+        orderRequest.setExchangeRate(
+                exchangeRate
+        );
 
         orderRequest.setTotalPrice(
                 convertedTotal.toString()
@@ -154,7 +261,9 @@ public class CheckoutService {
                 );
 
         /*
-         * Save the pending payment against the newly created order.
+         * ---------------------------------------------------------
+         * 8. Save Payment as PENDING.
+         * ---------------------------------------------------------
          */
         paymentService.createPendingPayment(
                 paymentIntent,
@@ -164,10 +273,16 @@ public class CheckoutService {
                 giftOrder
         );
 
+        /*
+         * ---------------------------------------------------------
+         * 9. Return Stripe client secret.
+         * ---------------------------------------------------------
+         */
         return new CheckoutResponse(
                 paymentIntent.getClientSecret(),
                 convertedTotal.toString(),
-                totalNpr
+                totalNpr,
+                false
         );
     }
 

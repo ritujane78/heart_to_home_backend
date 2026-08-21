@@ -40,4 +40,7 @@ public class Payment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gift_order_id", nullable = false)
     private GiftOrder giftOrder;
+
+    @Column(name = "checkout_id", nullable = false, unique = true)
+    private String checkoutId;
 }

@@ -193,7 +193,6 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public List<GiftOrderResponse> getOrdersByUser(Long userId) {
         List<GiftOrder> userOrders = ordersRepository.findByUserIdOrderByIdDesc(userId);
-        System.out.println("userOrders = " + userOrders.toString());
         return giftOrderMapper.toResponse(userOrders);
     }
 }

@@ -16,4 +16,6 @@ public class CheckoutResponse {
     private String total;
 
     private BigDecimal amountNpr;
+
+    private boolean alreadyCompleted;
 }

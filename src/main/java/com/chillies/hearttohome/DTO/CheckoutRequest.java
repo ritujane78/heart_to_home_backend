@@ -10,6 +10,8 @@ import java.util.List;
 @Setter
 public class CheckoutRequest {
 
+    private String checkoutId;
+
     private String recipientName;
 
     private String recipientPhone;
@@ -23,7 +25,6 @@ public class CheckoutRequest {
     private String message;
 
     private List<Long> serviceIds;
-
 
     private String currency;
 }

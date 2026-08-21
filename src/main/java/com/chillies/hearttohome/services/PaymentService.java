@@ -47,72 +47,10 @@ public class PaymentService {
 
     public PaymentIntent createPaymentIntent(
             BigDecimal amount,
-            CheckoutRequest request,
-            BigDecimal totalNpr,
-            BigDecimal exchangeRate,
-            User user
+            CheckoutRequest request
     ) throws StripeException {
         Stripe.apiKey = secretKey;
-        Map<String, Object> metadata =
-                new HashMap<>();
 
-        metadata.put(
-                "userId",
-                user.getId().toString()
-        );
-
-        metadata.put(
-                "recipientName",
-                request.getRecipientName()
-        );
-
-        metadata.put(
-                "recipientPhone",
-                request.getRecipientPhone()
-        );
-
-        metadata.put(
-                "relationship",
-                request.getRelationship()
-        );
-
-        metadata.put(
-                "senderName",
-                request.getSenderName()
-        );
-
-        metadata.put(
-                "senderEmail",
-                request.getSenderEmail()
-        );
-
-        metadata.put(
-                "message",
-                request.getMessage()
-        );
-
-        metadata.put(
-                "serviceIds",
-                request.getServiceIds()
-                        .stream()
-                        .map(String::valueOf)
-                        .collect(Collectors.joining(","))
-        );
-
-        metadata.put(
-                "currency",
-                request.getCurrency()
-        );
-
-        metadata.put(
-                "amountNpr",
-                totalNpr.toString()
-        );
-
-        metadata.put(
-                "exchangeRate",
-                exchangeRate.toString()
-        );
         Map<String, Object> params =
                 new HashMap<>();
 
@@ -140,11 +78,6 @@ public class PaymentService {
         params.put(
                 "payment_method_types",
                 List.of("card")
-        );
-
-        params.put(
-                "metadata",
-                metadata
         );
 
         return PaymentIntent.create(params);
@@ -241,6 +174,13 @@ public class PaymentService {
                 payment
         );
     }
+    public Optional<Payment> findByCheckoutId(
+            String checkoutId
+    ) {
+        return paymentRepository.findByCheckoutId(
+                checkoutId
+        );
+    }
 
     public void createPendingPayment(
             PaymentIntent paymentIntent,
@@ -250,18 +190,19 @@ public class PaymentService {
             GiftOrder giftOrder
 
     ) {
-        PaymentInfoDTO paymentInfo =
-                new PaymentInfoDTO();
+        Payment payment = new Payment();
+//        PaymentInfoDTO paymentInfo =
+//                new PaymentInfoDTO();
 
-        paymentInfo.setPaymentIntentId(
+        payment.setPaymentIntentId(
                 paymentIntent.getId()
         );
 
-        paymentInfo.setPayerName(
+        payment.setPayerName(
                 request.getSenderName()
         );
 
-        paymentInfo.setAmountNpr(
+        payment.setAmountNpr(
                 totalNpr
         );
         BigDecimal total;
@@ -275,18 +216,15 @@ public class PaymentService {
 
         String currencySymbol = exchangeRateService.getCurrencySymbol(currency);
 
-        paymentInfo.setTotal(
+        payment.setTotal(
                 currencySymbol + total.toPlainString()
         );
 
-        paymentInfo.setUserEmail(
+        payment.setUserEmail(
                 request.getSenderEmail()
         );
 
-        Payment payment =
-                paymentMapper.toEntity(
-                        paymentInfo
-                );
+        payment.setCheckoutId(request.getCheckoutId());
         payment.setCurrency(currency);
         payment.setGiftOrder(giftOrder);
         payment.setPaymentOrderStatus(
@@ -297,22 +235,22 @@ public class PaymentService {
                 payment
         );
     }
-
-    private Payment savePayment(PaymentInfoDTO request) {
-        try {
-            Payment payment = paymentMapper.toEntity(request);
-            payment.setPaymentOrderStatus(PaymentOrderStatus.PENDING);
-
-            return paymentRepository.save(payment);
-//            return paymentMapper.toDTO(saved);
-
-        } catch (Exception ex) {
-            throw new PaymentSaveException(
-                    "Payment was successful, but we were unable to save the payment details. Please contact support.",
-                    ex
-            );
-        }
-    }
+//
+//    private Payment savePayment(PaymentInfoDTO request) {
+//        try {
+//            Payment payment = paymentMapper.toEntity(request);
+//            payment.setPaymentOrderStatus(PaymentOrderStatus.PENDING);
+//
+//            return paymentRepository.save(payment);
+////            return paymentMapper.toDTO(saved);
+//
+//        } catch (Exception ex) {
+//            throw new PaymentSaveException(
+//                    "Payment was successful, but we were unable to save the payment details. Please contact support.",
+//                    ex
+//            );
+//        }
+//    }
     public PaymentStatusResponse getPaymentStatus(
             String paymentIntentId
     ) {
