@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -50,6 +51,7 @@ public class AdminController {
     public List<Role> getAllRoles() {
         return userService.getAllRoles();
     }
+
     @PutMapping("/update-expiry-status")
     public ResponseEntity<String> updateAccountExpiryStatus(@RequestParam Long userId,
                                                             @RequestParam boolean expire) {
@@ -63,6 +65,7 @@ public class AdminController {
         userService.updateAccountEnabledStatus(userId, enabled);
         return ResponseEntity.ok("Account enabled status updated");
     }
+
     @PutMapping("/update-lock-status")
     public ResponseEntity<String> updateAccountLockStatus(@RequestParam Long userId,
                                                           @RequestParam boolean lock) {
@@ -87,6 +90,7 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
     @PostMapping("/add-service")
     public ResponseEntity<ServiceDTOResponse> addService(@RequestBody ServiceDTORequest serviceDTORequest) {
         return services.addService(serviceDTORequest);
@@ -109,6 +113,7 @@ public class AdminController {
     public List<ServiceDTOResponse> getDisabledServices() {
         return services.getDisabledServices();
     }
+
     @PutMapping("/enable-service/{id}")
     public ResponseEntity<Void> enableService(@PathVariable Long id) {
 

@@ -174,26 +174,26 @@ public class EmailService {
                     subject = "Your Heart to Home Order is Pending";
                     text = "<p>Hi there, " + recipientName + "!</p>"
                             + """
-
-        <p>Thank you for choosing <strong>Heart to Home</strong>.</p>
-
-        <p>We have received your order and it is currently pending payment confirmation.</p>
-
-        """
+                            
+                            <p>Thank you for choosing <strong>Heart to Home</strong>.</p>
+                            
+                            <p>We have received your order and it is currently pending payment confirmation.</p>
+                            
+                            """
                             + orderedServices +
                             """
-                    
-                            <p>Once your payment is confirmed, we will begin processing your order.</p>
-                    
-                            <p>We will notify you when your order moves to the next stage.</p>
-                    
-                            <p>Thank you for your patience.</p>
-                    
-                            <p>
-                                Kind regards,<br>
-                                <strong>Heart to Home Team</strong>
-                            </p>
-                            """;
+                                    
+                                    <p>Once your payment is confirmed, we will begin processing your order.</p>
+                                    
+                                    <p>We will notify you when your order moves to the next stage.</p>
+                                    
+                                    <p>Thank you for your patience.</p>
+                                    
+                                    <p>
+                                        Kind regards,<br>
+                                        <strong>Heart to Home Team</strong>
+                                    </p>
+                                    """;
                     break;
                 case IN_PROCESS:
                     subject = "Your Heart to Home Order is Being Processed";
@@ -305,13 +305,13 @@ public class EmailService {
             String orderedServices = getServices(services);
             String text = """
                     <p>Hi there, """ + recipientName +
-                                                                            """
-                                                                            !</p>
-                    
-                    <p>Thank you for choosing <strong>Heart to Home</strong>.</p>
-                    
-                    <p>Your order has been received and is currently being processed.</p>
                     """
+                                                                                    !</p>
+                            
+                            <p>Thank you for choosing <strong>Heart to Home</strong>.</p>
+                            
+                            <p>Your order has been received and is currently being processed.</p>
+                            """
                     + orderedServices +
                     """
                                                         <p>We will notify you once it is ready for the clinic.</p>

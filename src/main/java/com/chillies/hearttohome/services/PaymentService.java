@@ -77,6 +77,7 @@ public class PaymentService {
 
         return PaymentIntent.create(params);
     }
+
     @Transactional
     public void processWebhook(
             String payload,
@@ -169,6 +170,7 @@ public class PaymentService {
                 payment
         );
     }
+
     public Optional<Payment> findByCheckoutId(
             String checkoutId
     ) {
@@ -186,8 +188,6 @@ public class PaymentService {
 
     ) {
         Payment payment = new Payment();
-//        PaymentInfoDTO paymentInfo =
-//                new PaymentInfoDTO();
 
         payment.setPaymentIntentId(
                 paymentIntent.getId()
@@ -230,22 +230,7 @@ public class PaymentService {
                 payment
         );
     }
-//
-//    private Payment savePayment(PaymentInfoDTO request) {
-//        try {
-//            Payment payment = paymentMapper.toEntity(request);
-//            payment.setPaymentOrderStatus(PaymentOrderStatus.PENDING);
-//
-//            return paymentRepository.save(payment);
-////            return paymentMapper.toDTO(saved);
-//
-//        } catch (Exception ex) {
-//            throw new PaymentSaveException(
-//                    "Payment was successful, but we were unable to save the payment details. Please contact support.",
-//                    ex
-//            );
-//        }
-//    }
+
     public PaymentStatusResponse getPaymentStatus(
             String paymentIntentId
     ) {

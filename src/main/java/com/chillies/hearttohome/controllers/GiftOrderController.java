@@ -1,93 +1,92 @@
-    package com.chillies.hearttohome.controllers;
+package com.chillies.hearttohome.controllers;
 
-    import com.chillies.hearttohome.DTO.*;
-    import com.chillies.hearttohome.entity.OrderStatus;
-    import com.chillies.hearttohome.entity.Payment;
-    import com.chillies.hearttohome.entity.User;
-    import com.chillies.hearttohome.mapper.ServiceMapper;
-    import com.chillies.hearttohome.services.CheckoutService;
-    import com.chillies.hearttohome.services.OrdersService;
-    import com.chillies.hearttohome.services.PaymentService;
-    import com.chillies.hearttohome.services.UserService;
-    import com.stripe.exception.StripeException;
-    import com.stripe.model.PaymentIntent;
-    import jakarta.mail.MessagingException;
-    import lombok.RequiredArgsConstructor;
-    import org.springframework.http.HttpStatus;
-    import org.springframework.http.ResponseEntity;
-    import org.springframework.security.access.prepost.PreAuthorize;
-    import org.springframework.security.core.annotation.AuthenticationPrincipal;
-    import org.springframework.security.core.userdetails.UserDetails;
-    import org.springframework.web.bind.annotation.*;
+import com.chillies.hearttohome.DTO.*;
+import com.chillies.hearttohome.entity.OrderStatus;
+import com.chillies.hearttohome.entity.User;
+import com.chillies.hearttohome.mapper.ServiceMapper;
+import com.chillies.hearttohome.services.CheckoutService;
+import com.chillies.hearttohome.services.OrdersService;
+import com.chillies.hearttohome.services.PaymentService;
+import com.chillies.hearttohome.services.UserService;
+import com.stripe.exception.StripeException;
+import jakarta.mail.MessagingException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
-    import java.io.UnsupportedEncodingException;
-    import java.util.List;
-    import java.util.Map;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
 
-    @RestController
-    @RequestMapping("/api/orders")
-    @RequiredArgsConstructor
-    public class GiftOrderController {
+@RestController
+@RequestMapping("/api/orders")
+@RequiredArgsConstructor
+public class GiftOrderController {
 
-        private final OrdersService ordersService;
-        private final UserService userService;
-        private final PaymentService paymentService;
-        private final ServiceMapper serviceMapper;
-        private final CheckoutService checkoutService;
+    private final OrdersService ordersService;
+    private final UserService userService;
+    private final PaymentService paymentService;
+    private final ServiceMapper serviceMapper;
+    private final CheckoutService checkoutService;
 
 
-        @PreAuthorize("hasRole('ROLE_ADMIN')")
-        @GetMapping
-        public ResponseEntity<List<AllOrdersDTO>> getAllOrders() {
-            return ResponseEntity.ok(ordersService.getAllOrders());
-        }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping
+    public ResponseEntity<List<AllOrdersDTO>> getAllOrders() {
+        return ResponseEntity.ok(ordersService.getAllOrders());
+    }
 
-        @PreAuthorize("hasRole('ROLE_ADMIN')")
-        @GetMapping("/{id}")
-        public ResponseEntity<GiftOrderResponse> getOrder(@PathVariable Long id) {
-            return ResponseEntity.ok(ordersService.getOrder(id));
-        }
-        @PostMapping("/validate")
-        public ResponseEntity<ServiceValidationResponse> validateServices(
-                @RequestBody ServiceValidationRequest request) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/{id}")
+    public ResponseEntity<GiftOrderResponse> getOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(ordersService.getOrder(id));
+    }
 
-            ServiceValidationResult validation =
-                    ordersService.validateServices(request.getServiceIds());
+    @PostMapping("/validate")
+    public ResponseEntity<ServiceValidationResponse> validateServices(
+            @RequestBody ServiceValidationRequest request) {
 
-            ServiceValidationResponse response =
-                    new ServiceValidationResponse(
-                            validation.valid(),
-                            validation.message(),
-                            serviceMapper.toDTO(validation.services())
-                    );
+        ServiceValidationResult validation =
+                ordersService.validateServices(request.getServiceIds());
 
-            return ResponseEntity.ok(response);
-        }
+        ServiceValidationResponse response =
+                new ServiceValidationResponse(
+                        validation.valid(),
+                        validation.message(),
+                        serviceMapper.toDTO(validation.services())
+                );
+
+        return ResponseEntity.ok(response);
+    }
 
 
-        @PreAuthorize("hasRole('ROLE_ADMIN')")
-        @PutMapping("/{id}/status")
-        public ResponseEntity<Map<String, Object>> updateStatus(
-                @PathVariable Long id,
-                @RequestBody Map<String, String> body)
-                throws MessagingException, UnsupportedEncodingException {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Map<String, Object>> updateStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body)
+            throws MessagingException, UnsupportedEncodingException {
 
-            OrderStatus status = OrderStatus.valueOf(body.get("orderStatus"));
+        OrderStatus status = OrderStatus.valueOf(body.get("orderStatus"));
 
-            Map<String, Object> response = ordersService.updateStatus(id, status);
+        Map<String, Object> response = ordersService.updateStatus(id, status);
 
-            return ResponseEntity.ok(response);
-        }
+        return ResponseEntity.ok(response);
+    }
 
-        @GetMapping("/my-orders")
-        public ResponseEntity<List<GiftOrderResponse>> getMyOrders(
-                @AuthenticationPrincipal UserDetails userDetails) {
-            User user = userService.findByUsername(userDetails.getUsername());
+    @GetMapping("/my-orders")
+    public ResponseEntity<List<GiftOrderResponse>> getMyOrders(
+            @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.findByUsername(userDetails.getUsername());
 
-            return ResponseEntity.ok(
-                    ordersService.getOrdersByUser(user.getId())
-            );
-        }
+        return ResponseEntity.ok(
+                ordersService.getOrdersByUser(user.getId())
+        );
+    }
+
     @PostMapping("/checkout")
     public ResponseEntity<CheckoutResponse> checkout(
             @AuthenticationPrincipal
@@ -108,14 +107,13 @@
                 )
         );
     }
-        @GetMapping(
-                "/payments/{paymentIntentId}/payment-status"
-        )
-        public PaymentStatusResponse getPaymentStatus(
-                @PathVariable String paymentIntentId
-        ) {
-            return paymentService.getPaymentStatus(
-                    paymentIntentId
-            );
-        }
+
+    @GetMapping("/payments/{paymentIntentId}/payment-status")
+    public PaymentStatusResponse getPaymentStatus(
+            @PathVariable String paymentIntentId
+    ) {
+        return paymentService.getPaymentStatus(
+                paymentIntentId
+        );
     }
+}

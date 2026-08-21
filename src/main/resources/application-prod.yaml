@@ -50,5 +50,7 @@ frontend:
 stripe:
   key:
     secret: ${STRIPE_KEY_SECRET}
+  webhook:
+    key: ${STRIPE_WEBHOOK_SECRET}
 sender:
   email: ${SENDER_EMAIL_USERNAME}

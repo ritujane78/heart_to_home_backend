@@ -140,6 +140,7 @@ public class ExchangeRateService {
 
         return rates;
     }
+
     public String getCurrencySymbol(String currency) {
         return switch (currency.toUpperCase()) {
             case "USD" -> "$";

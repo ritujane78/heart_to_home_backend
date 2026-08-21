@@ -80,13 +80,6 @@ public class AuthController {
 
     @PostMapping("/public/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws MessagingException, UnsupportedEncodingException {
-//        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-//            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
-//        }
-//
-//        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-//            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-//        }
 
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             throw new ConflictException(
@@ -167,22 +160,6 @@ public class AuthController {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-
-//        UserInfoResponse response = new UserInfoResponse(
-//                user.getId(),
-//                user.getUsername(),
-//                user.getFirstName(),
-//                user.getLastName(),
-//                user.getEmail(),
-//                user.isAccountNonLocked(),
-//                user.isAccountNonExpired(),
-//                user.isCredentialsNonExpired(),
-//                user.isEnabled(),
-//                user.getCredentialsExpiryDate(),
-//                user.getAccountExpiryDate(),
-//                user.isTwoFactorEnabled(),
-//                roles
-//        );
         UserInfoResponse response = userMapper.toResponse(user);
         return ResponseEntity.ok().body(response);
     }
