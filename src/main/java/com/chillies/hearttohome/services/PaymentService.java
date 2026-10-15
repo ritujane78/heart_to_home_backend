@@ -2,10 +2,7 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.entity.*;
-import com.chillies.hearttohome.mapper.GiftOrderMapper;
-import com.chillies.hearttohome.mapper.PaymentMapper;
 import com.chillies.hearttohome.repositories.PaymentRepository;
-import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.utils.ExchangeRateService;
 import com.stripe.Stripe;
 import com.stripe.exception.EventDataObjectDeserializationException;
@@ -27,9 +24,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
-    private final PaymentMapper paymentMapper;
     private final OrdersService ordersService;
-    private final UserRepository userRepository;
     private final ExchangeRateService exchangeRateService;
 
     @Value("${stripe.key.secret}")
@@ -38,7 +33,6 @@ public class PaymentService {
     @Value("${stripe.webhook.secret}")
     String webhookSecret;
 
-    private final GiftOrderMapper giftOrderMapper;
 
     public PaymentIntent createPaymentIntent(
             BigDecimal amount,
@@ -78,98 +72,102 @@ public class PaymentService {
         return PaymentIntent.create(params);
     }
 
-    @Transactional
-    public void processWebhook(
-            String payload,
-            String signature
-    ) throws SignatureVerificationException, EventDataObjectDeserializationException {
+        @Transactional
+        public void processWebhook(
+                String payload,
+                String signature
+        ) throws SignatureVerificationException, EventDataObjectDeserializationException {
 
-        Event event =
-                Webhook.constructEvent(
-                        payload,
-                        signature,
-                        webhookSecret
+            Event event =
+                    Webhook.constructEvent(
+                            payload,
+                            signature,
+                            webhookSecret
+                    );
+            String eventType = event.getType();
+
+            if (!eventType.startsWith("payment_intent.")) {
+                return;
+            }
+
+            PaymentIntent paymentIntent =
+                    (PaymentIntent)
+                            event.getDataObjectDeserializer()
+                                    .deserializeUnsafe();
+
+            Payment payment =
+                    paymentRepository
+                            .findByPaymentIntentId(
+                                    paymentIntent.getId()
+                            )
+                            .orElseThrow(
+                                    () -> new RuntimeException(
+                                            "Payment not found."
+                                    )
+                            );
+
+            GiftOrder giftOrder =
+                    payment.getGiftOrder();
+
+            if (giftOrder == null) {
+                throw new RuntimeException(
+                        "Gift order not found for payment: "
+                                + paymentIntent.getId()
                 );
+            }
 
-        String eventType = event.getType();
+            switch (eventType) {
 
-        if (!eventType.startsWith("payment_intent.")) {
-            return;
-        }
+                case "payment_intent.succeeded":
 
-        PaymentIntent paymentIntent =
-                (PaymentIntent)
-                        event.getDataObjectDeserializer()
-                                .deserializeUnsafe();
+                    if (payment.getPaymentOrderStatus()
+                            == PaymentOrderStatus.ORDER_SAVED) {
+                        return;
+                    }
 
-        Payment payment =
-                paymentRepository
-                        .findByPaymentIntentId(
-                                paymentIntent.getId()
-                        )
-                        .orElseThrow(
-                                () -> new RuntimeException(
-                                        "Payment not found."
-                                )
-                        );
+                    payment.setPaymentOrderStatus(
+                            PaymentOrderStatus.ORDER_SAVED
+                    );
 
-        GiftOrder giftOrder =
-                payment.getGiftOrder();
+                    ordersService.confirmOrder(
+                            giftOrder
+                    );
 
-        if (giftOrder == null) {
-            throw new RuntimeException(
-                    "Gift order not found for payment: "
-                            + paymentIntent.getId()
+                    break;
+
+                case "payment_intent.payment_failed":
+
+                    payment.setPaymentOrderStatus(
+                            PaymentOrderStatus.ORDER_SAVE_FAILED
+                    );
+
+                    giftOrder.setOrderStatus(
+                            OrderStatus.CANCELED
+                    );
+
+                    break;
+
+                case "payment_intent.canceled":
+
+                    payment.setPaymentOrderStatus(
+                            PaymentOrderStatus.ORDER_CANCELED
+                    );
+
+                    giftOrder.setOrderStatus(
+                            OrderStatus.CANCELED
+                    );
+
+                    break;
+
+                default:
+
+                    return;
+            }
+
+            paymentRepository.save(
+                    payment
             );
         }
-
-        switch (eventType) {
-
-            case "payment_intent.succeeded":
-
-                payment.setPaymentOrderStatus(
-                        PaymentOrderStatus.ORDER_SAVED
-                );
-
-                ordersService.confirmOrder(
-                        giftOrder
-                );
-
-                break;
-
-            case "payment_intent.payment_failed":
-
-                payment.setPaymentOrderStatus(
-                        PaymentOrderStatus.ORDER_SAVE_FAILED
-                );
-
-                giftOrder.setOrderStatus(
-                        OrderStatus.CANCELED
-                );
-
-                break;
-
-            case "payment_intent.canceled":
-
-                payment.setPaymentOrderStatus(
-                        PaymentOrderStatus.ORDER_CANCELED
-                );
-
-                giftOrder.setOrderStatus(
-                        OrderStatus.CANCELED
-                );
-
-                break;
-
-            default:
-
-                return;
-        }
-
-        paymentRepository.save(
-                payment
-        );
-    }
 
     public Optional<Payment> findByCheckoutId(
             String checkoutId

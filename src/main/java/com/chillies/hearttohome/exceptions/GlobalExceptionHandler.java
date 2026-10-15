@@ -198,4 +198,18 @@ public class GlobalExceptionHandler {
                         request
                 ));
     }
+
+  @ExceptionHandler(CompromisedPasswordException.class)
+  public ResponseEntity<ErrorResponse> handleCompromisedPassword(
+    CompromisedPasswordException ex,
+    HttpServletRequest request) {
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+      .body(buildResponse(
+        HttpStatus.BAD_REQUEST,
+        ex.getMessage(),
+        request
+      ));
+  }
+
 }

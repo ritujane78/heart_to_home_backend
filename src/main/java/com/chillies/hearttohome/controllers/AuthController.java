@@ -3,6 +3,7 @@ package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.TokenRefreshRequest;
 import com.chillies.hearttohome.DTO.TokenRefreshResponse;
+import com.chillies.hearttohome.exceptions.CompromisedPasswordException;
 import com.chillies.hearttohome.exceptions.ConflictException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.entity.AppRole;
@@ -31,6 +32,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.password.CompromisedPasswordChecker;
+import org.springframework.security.authentication.password.CompromisedPasswordDecision;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -78,6 +81,9 @@ public class AuthController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private CompromisedPasswordChecker compromisedPasswordChecker;
+
     @PostMapping("/public/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws MessagingException, UnsupportedEncodingException {
 
@@ -91,6 +97,13 @@ public class AuthController {
             throw new ConflictException(
                     "email",
                     "Email is already in use!");
+        }
+
+        CompromisedPasswordDecision decision = compromisedPasswordChecker.check(signUpRequest.getPassword());
+        if(decision.isCompromised()){
+          throw new CompromisedPasswordException(
+            "This password has been found in a data breach. Please choose a different password."
+          );
         }
 
         // Create new user's account
