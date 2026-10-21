@@ -1,6 +1,7 @@
 package com.chillies.hearttohome.entity;
 
 
+import com.chillies.hearttohome.utils.AppRole;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;

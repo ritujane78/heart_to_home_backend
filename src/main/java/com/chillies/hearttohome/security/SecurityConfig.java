@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.security;
 
 
-import com.chillies.hearttohome.entity.AppRole;
+import com.chillies.hearttohome.utils.AppRole;
 import com.chillies.hearttohome.entity.Role;
 import com.chillies.hearttohome.entity.User;
 import com.chillies.hearttohome.repositories.RoleRepository;
@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
 import org.springframework.security.config.Customizer;
@@ -22,6 +25,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -30,9 +35,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Configuration
 @EnableWebSecurity
+@EnableJpaAuditing
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
     @Autowired
@@ -54,6 +61,21 @@ public class SecurityConfig {
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
     }
+  @Bean
+  public AuditorAware<String> auditorAware() {
+    return () -> {
+      Authentication authentication =
+        SecurityContextHolder.getContext().getAuthentication();
+
+      if (authentication == null
+        || !authentication.isAuthenticated()
+        || authentication instanceof AnonymousAuthenticationToken) {
+        return Optional.empty();
+      }
+
+      return Optional.of(authentication.getName());
+    };
+  }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {

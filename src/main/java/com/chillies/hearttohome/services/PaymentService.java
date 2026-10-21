@@ -4,6 +4,8 @@ import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.entity.*;
 import com.chillies.hearttohome.repositories.PaymentRepository;
 import com.chillies.hearttohome.utils.ExchangeRateService;
+import com.chillies.hearttohome.utils.OrderStatus;
+import com.chillies.hearttohome.utils.PaymentOrderStatus;
 import com.stripe.Stripe;
 import com.stripe.exception.EventDataObjectDeserializationException;
 import com.stripe.exception.SignatureVerificationException;
@@ -30,7 +32,7 @@ public class PaymentService {
     @Value("${stripe.key.secret}")
     String secretKey;
 
-    @Value("${stripe.webhook.secret}")
+    @Value("${stripe.webhook.key}")
     String webhookSecret;
 
 

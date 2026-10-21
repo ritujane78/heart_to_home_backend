@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.DTO;
 
-import com.chillies.hearttohome.entity.OrderStatus;
+import com.chillies.hearttohome.utils.OrderStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -35,8 +35,6 @@ public class GiftOrderResponse {
 
     // Order Details
     private OrderStatus orderStatus;
-    private LocalDateTime orderedAt;
-    private LocalDateTime updatedAt;
 
     // Existing field
     private boolean emailSent;

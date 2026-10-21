@@ -1,6 +1,6 @@
 package com.chillies.hearttohome.DTO;
 
-import com.chillies.hearttohome.entity.OrderStatus;
+import com.chillies.hearttohome.utils.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,16 +11,13 @@ import java.time.LocalDateTime;
 public class AllOrdersDTO {
     private Long id;
     private String senderEmail;
-    private LocalDateTime orderedAt;
     private OrderStatus orderStatus;
 
     public AllOrdersDTO(Long id,
                         String senderEmail,
-                        LocalDateTime orderedAt,
                         OrderStatus orderStatus) {
         this.id = id;
         this.senderEmail = senderEmail;
-        this.orderedAt = orderedAt;
         this.orderStatus = orderStatus;
     }
 }

@@ -2,7 +2,6 @@ package com.chillies.hearttohome.repositories;
 
 
 import com.chillies.hearttohome.entity.Payment;
-import com.chillies.hearttohome.entity.PaymentOrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -2,7 +2,6 @@ package com.chillies.hearttohome.utils;
 
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.entity.OrderService;
-import com.chillies.hearttohome.entity.OrderStatus;
 import com.chillies.hearttohome.entity.User;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;

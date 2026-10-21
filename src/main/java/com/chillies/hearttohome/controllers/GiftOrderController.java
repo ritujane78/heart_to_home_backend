@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.controllers;
 
 import com.chillies.hearttohome.DTO.*;
-import com.chillies.hearttohome.entity.OrderStatus;
+import com.chillies.hearttohome.utils.OrderStatus;
 import com.chillies.hearttohome.entity.User;
 import com.chillies.hearttohome.mapper.ServiceMapper;
 import com.chillies.hearttohome.services.CheckoutService;

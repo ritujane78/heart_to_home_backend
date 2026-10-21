@@ -6,7 +6,7 @@ import com.chillies.hearttohome.DTO.TokenRefreshResponse;
 import com.chillies.hearttohome.exceptions.CompromisedPasswordException;
 import com.chillies.hearttohome.exceptions.ConflictException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
-import com.chillies.hearttohome.entity.AppRole;
+import com.chillies.hearttohome.utils.AppRole;
 import com.chillies.hearttohome.entity.RefreshToken;
 import com.chillies.hearttohome.entity.Role;
 import com.chillies.hearttohome.entity.User;

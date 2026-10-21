@@ -6,7 +6,7 @@ import com.chillies.hearttohome.DTO.UserDTO;
 import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.exceptions.ResourceNotFoundException;
-import com.chillies.hearttohome.entity.AppRole;
+import com.chillies.hearttohome.utils.AppRole;
 import com.chillies.hearttohome.entity.PasswordResetToken;
 import com.chillies.hearttohome.entity.Role;
 import com.chillies.hearttohome.entity.User;

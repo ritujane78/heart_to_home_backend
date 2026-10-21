@@ -1,7 +1,7 @@
 package com.chillies.hearttohome.repositories;
 
 
-import com.chillies.hearttohome.entity.AppRole;
+import com.chillies.hearttohome.utils.AppRole;
 import com.chillies.hearttohome.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 

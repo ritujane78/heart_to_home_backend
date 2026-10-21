@@ -1,5 +1,6 @@
 package com.chillies.hearttohome.entity;
 
+import com.chillies.hearttohome.utils.PaymentOrderStatus;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -9,7 +10,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "payment")
 @Data
-public class Payment {
+public class Payment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

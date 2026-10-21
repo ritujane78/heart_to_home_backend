@@ -2,9 +2,8 @@ package com.chillies.hearttohome.services;
 
 import com.chillies.hearttohome.DTO.*;
 import com.chillies.hearttohome.entity.GiftOrder;
-import com.chillies.hearttohome.entity.OrderStatus;
+import com.chillies.hearttohome.utils.OrderStatus;
 import com.chillies.hearttohome.entity.User;
-import com.stripe.exception.StripeException;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 

@@ -1,5 +1,6 @@
 package com.chillies.hearttohome.entity;
 
+import com.chillies.hearttohome.utils.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -18,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GiftOrder {
+public class GiftOrder extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,25 +77,6 @@ public class GiftOrder {
 
     private boolean emailSent;
 
-    @Column(nullable = false)
-    private LocalDateTime orderedAt;
-
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    public void prePersist() {
-        orderedAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-
-        if (orderStatus == null) {
-            orderStatus = OrderStatus.IN_PROCESS;
-        }
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
     @Override
     public String toString() {
         return "GiftOrder{" +

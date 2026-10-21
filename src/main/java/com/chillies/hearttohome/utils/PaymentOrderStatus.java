@@ -1,4 +1,4 @@
-package com.chillies.hearttohome.entity;
+package com.chillies.hearttohome.utils;
 
 public enum PaymentOrderStatus {
         PENDING,
