@@ -1,9 +1,9 @@
 package com.chillies.hearttohome.controllers;
 
 
-import com.chillies.hearttohome.DTO.TokenRefreshRequest;
 import com.chillies.hearttohome.DTO.TokenRefreshResponse;
 import com.chillies.hearttohome.exceptions.CompromisedPasswordException;
+import com.chillies.hearttohome.exceptions.BadRequestException;
 import com.chillies.hearttohome.exceptions.ConflictException;
 import com.chillies.hearttohome.exceptions.EmailSendingException;
 import com.chillies.hearttohome.utils.AppRole;
@@ -29,6 +29,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,6 +47,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Value;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -83,6 +85,25 @@ public class AuthController {
 
     @Autowired
     private CompromisedPasswordChecker compromisedPasswordChecker;
+
+    @Value("${spring.app.jwtRefreshExpirationMs}")
+    private long refreshTokenDurationMs;
+
+    @Value("${spring.app.cookie.secure:false}")
+    private boolean secureCookies;
+
+    @Value("${spring.app.cookie.sameSite:Lax}")
+    private String cookieSameSite;
+
+    private ResponseCookie refreshCookie(String token, long maxAgeSeconds) {
+        return ResponseCookie.from("REFRESH_TOKEN", token)
+                .httpOnly(true)
+                .secure(secureCookies)
+                .sameSite(cookieSameSite)
+                .path("/api/auth")
+                .maxAge(maxAgeSeconds)
+                .build();
+    }
 
     @PostMapping("/public/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws MessagingException, UnsupportedEncodingException {
@@ -242,32 +263,51 @@ public class AuthController {
         LoginResponse response = new LoginResponse(
                 userDetails.getUsername(),
                 roles,
-                jwtToken,
-                refreshToken.getToken()
+                jwtToken
         );
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok()
+                .header("Set-Cookie", refreshCookie(
+                        refreshToken.getToken(), refreshTokenDurationMs / 1000
+                ).toString())
+                .body(response);
     }
 
     // Add new endpoint for token refresh
     @PostMapping("/public/refresh-token")
-    public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
-        String requestRefreshToken = request.getRefreshToken();
+    public ResponseEntity<?> refreshToken(
+            @CookieValue(name = "REFRESH_TOKEN", required = false) String requestRefreshToken) {
 
-        return refreshTokenService.findByToken(requestRefreshToken)
-                .map(refreshTokenService::verifyExpiration)
-                .map(RefreshToken::getUser)
-                .map(user -> {
-                    String newAccessToken = jwtUtils.generateTokenFromUsername(user.getUsername());
-                    // Optional: Generate a new refresh token (rotation)
-                    RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(user.getId());
+        if (requestRefreshToken == null || requestRefreshToken.isBlank()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
-                    return ResponseEntity.ok(new TokenRefreshResponse(
-                            newAccessToken,
-                            newRefreshToken.getToken()
-                    ));
-                })
-                .orElseThrow(() -> new RuntimeException("Refresh token not found!"));
+        try {
+            Optional<RefreshToken> validRefreshToken = refreshTokenService
+                    .findByToken(requestRefreshToken)
+                    .map(refreshTokenService::verifyExpiration);
+
+            if (validRefreshToken.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .header("Set-Cookie", refreshCookie("", 0).toString())
+                        .build();
+            }
+
+            User user = validRefreshToken.get().getUser();
+            String newAccessToken = jwtUtils.generateTokenFromUsername(
+                    UserDetailsImpl.build(user)
+            );
+            RefreshToken newRefreshToken = refreshTokenService.createRefreshToken(user.getId());
+            return ResponseEntity.ok()
+                    .header("Set-Cookie", refreshCookie(
+                            newRefreshToken.getToken(), refreshTokenDurationMs / 1000
+                    ).toString())
+                    .body(new TokenRefreshResponse(newAccessToken));
+        } catch (BadRequestException exception) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .header("Set-Cookie", refreshCookie("", 0).toString())
+                    .build();
+        }
     }
 
     // Add logout endpoint to revoke refresh token
@@ -275,6 +315,8 @@ public class AuthController {
     public ResponseEntity<?> logoutUser() {
         Long userId = authUtil.loggedInUserId();
         refreshTokenService.deleteByUserId(userId);
-        return ResponseEntity.ok(new MessageResponse("Logout successful!"));
+        return ResponseEntity.ok()
+                .header("Set-Cookie", refreshCookie("", 0).toString())
+                .body(new MessageResponse("Logout successful!"));
     }
 }

@@ -8,6 +8,7 @@ import com.chillies.hearttohome.repositories.RoleRepository;
 import com.chillies.hearttohome.repositories.UserRepository;
 import com.chillies.hearttohome.security.jwt.AuthEntryPointJwt;
 import com.chillies.hearttohome.security.jwt.AuthTokenFilter;
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -33,6 +34,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -77,31 +79,50 @@ public class SecurityConfig {
     };
   }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
-        http.authorizeHttpRequests((requests) ->
-                requests
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/csrf-token").permitAll()
-                        .requestMatchers("/api/auth/public/**").permitAll()
-                        .requestMatchers("/api/services").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/providers").permitAll()
-                        .requestMatchers("/api/payments/webhook").permitAll()
-                        .requestMatchers("/api/exchange-rates").permitAll()
-                        .anyRequest().authenticated());
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
-        http.cors(Customizer.withDefaults());
-        http.exceptionHandling(exception
-                -> exception.authenticationEntryPoint(unauthorizedHandler));
-        http.addFilterBefore(authenticationJwtTokenFilter(),
-                UsernamePasswordAuthenticationFilter.class);
-        http.httpBasic(Customizer.withDefaults());
-        return http.build();
-    }
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http)
+    throws Exception {
+
+    CookieCsrfTokenRepository csrfRepository =
+      CookieCsrfTokenRepository.withHttpOnlyFalse();
+
+    csrfRepository.setCookiePath("/");
+
+    http
+      .csrf(csrf -> csrf
+        .csrfTokenRepository(csrfRepository)
+        .csrfTokenRequestHandler(
+          new SpaCsrfTokenRequestHandler()
+        )
+        .ignoringRequestMatchers("/api/payments/webhook")
+      )
+      .sessionManagement(session ->
+        session.sessionCreationPolicy(
+          SessionCreationPolicy.STATELESS
+        )
+      )
+      .authorizeHttpRequests(requests -> requests
+        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+        .requestMatchers("/api/csrf-token").permitAll()
+        .requestMatchers("/api/auth/public/**").permitAll()
+        .requestMatchers("/api/services").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/providers").permitAll()
+        .requestMatchers("/api/payments/webhook").permitAll()
+        .requestMatchers("/api/exchange-rates").permitAll()
+        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+        .anyRequest().authenticated()
+      )
+      .cors(Customizer.withDefaults())
+      .exceptionHandling(exception ->
+        exception.authenticationEntryPoint(unauthorizedHandler)
+      )
+      .addFilterBefore(
+        authenticationJwtTokenFilter(),
+        UsernamePasswordAuthenticationFilter.class
+      );
+
+    return http.build();
+  }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

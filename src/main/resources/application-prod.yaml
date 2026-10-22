@@ -38,6 +38,9 @@ spring:
     jwtSecret: ${SPRING_APP_JWT_SECRET}
     jwtExpirationMs: ${SPRING_APP_JWT_EXPIRATION_MS}
     jwtRefreshExpirationMs: ${SPRING_APP_JWT_REFRESH_EXPIRATION_MS}
+    cookie:
+      secure: ${COOKIE_SECURE:true}
+      sameSite: ${COOKIE_SAME_SITE:None}
 
 logging:
   level:

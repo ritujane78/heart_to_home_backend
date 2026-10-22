@@ -34,11 +34,12 @@ spring:
           auth: true
           starttls:
             enable: true
-
   app:
     jwtSecret: ${SPRING_APP_JWT_SECRET}
     jwtExpirationMs: ${SPRING_APP_JWT_EXPIRATION_MS}
     jwtRefreshExpirationMs: ${SPRING_APP_JWT_REFRESH_EXPIRATION_MS}
+    cookie:
+      secure: ${COOKIE_SECURE:false}
 
 logging:
   level:
