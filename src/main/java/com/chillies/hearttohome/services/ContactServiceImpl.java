@@ -12,7 +12,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,11 +25,18 @@ public class ContactServiceImpl implements ContactService {
           contactRepository.save(contact);
           return true;
     }
-    @Override
-    public List<ContactResponseDto> getAllOpenMessages() {
-      List<Contact> contacts = contactRepository.fetchByStatus(ApplicationConstants.OPEN_MESSAGE);
-      return contacts.stream().map(this::mapToContactResponseDTO).collect(Collectors.toList());
-    }
+
+  @Override
+  public List<ContactResponseDto> getAllOpenMessages() {
+    List<Contact> contacts =
+      contactRepository.findByStatus(
+        ApplicationConstants.OPEN_MESSAGE
+      );
+
+    return contacts.stream()
+      .map(this::mapToContactResponseDTO)
+      .toList();
+  }
 
     @Override
     public void updateMessageStatus(Long contactId, String status) {
@@ -46,9 +52,11 @@ public class ContactServiceImpl implements ContactService {
         contact.getContactId(),
         contact.getName(),
         contact.getEmail(),
+        contact.getCountryCode(),
         contact.getMobileNumber(),
         contact.getMessage(),
-        contact.getStatus()
+        contact.getStatus(),
+        contact.getCreatedAt()
       );
       return responseDTO;
     }

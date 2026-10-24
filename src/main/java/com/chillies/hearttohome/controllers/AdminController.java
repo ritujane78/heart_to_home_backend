@@ -1,11 +1,11 @@
 package com.chillies.hearttohome.controllers;
 
 
-import com.chillies.hearttohome.DTO.ServiceDTORequest;
-import com.chillies.hearttohome.DTO.ServiceDTOResponse;
-import com.chillies.hearttohome.DTO.UserDTO;
+import com.chillies.hearttohome.DTO.*;
+import com.chillies.hearttohome.constants.ApplicationConstants;
 import com.chillies.hearttohome.entity.Role;
 import com.chillies.hearttohome.entity.User;
+import com.chillies.hearttohome.services.ContactService;
 import com.chillies.hearttohome.services.Services;
 import com.chillies.hearttohome.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +27,9 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ContactService contactService;
 
     @GetMapping("/getusers")
     public ResponseEntity<List<User>> getAllUsers() {
@@ -121,5 +124,16 @@ public class AdminController {
 
         return ResponseEntity.ok().build();
     }
+  @GetMapping("/messages")
+  public ResponseEntity<List<ContactResponseDto>> getAllOpenMessages() {
+    return ResponseEntity.ok(contactService.getAllOpenMessages());
+  }
 
+  @PatchMapping("/messages/{contactId}/close")
+  public ResponseEntity<ResponseDto> closeMessage(@PathVariable Long contactId) {
+    contactService.updateMessageStatus(contactId, ApplicationConstants.CLOSED_MESSAGE);
+    return ResponseEntity.ok(
+      new ResponseDto("200", "Contact #" + contactId + " has been closed.")
+    );
+  }
 }

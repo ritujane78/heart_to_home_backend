@@ -19,6 +19,10 @@ public class ContactRequestDto {
     @Email(message = "Email must be a valid email address")
     private String email;
 
+    @NotBlank(message = "Country Code is required")
+    @Pattern(regexp = "^(\\d{3})$", message = "Country Code must be valid")
+    private String countryCode;
+
     @NotBlank(message = "Mobile number is required")
     @Pattern(regexp = "^(\\d{10})$", message = "Mobile number must be a valid 10-digit number")
     private String mobileNumber;

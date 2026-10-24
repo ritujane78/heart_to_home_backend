@@ -21,11 +21,11 @@ import java.time.Instant;
 public class BaseEntity {
 
   @CreatedDate
-  @Column(name = "created_at", nullable = false, updatable = false)
+  @Column(name = "created_at", nullable = true, updatable = false)
   private Instant createdAt;
 
   @CreatedBy
-  @Column(name = "created_by", nullable = false, length = 100, updatable = false)
+  @Column(name = "created_by", nullable = true, length = 100, updatable = false)
   private String createdBy;
 
   @LastModifiedDate

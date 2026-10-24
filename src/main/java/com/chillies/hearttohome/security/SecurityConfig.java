@@ -104,6 +104,7 @@ public class SecurityConfig {
       .authorizeHttpRequests(requests -> requests
         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
         .requestMatchers("/api/csrf-token").permitAll()
+        .requestMatchers(("/api/contacts")).permitAll()
         .requestMatchers("/api/auth/public/**").permitAll()
         .requestMatchers("/api/services").permitAll()
         .requestMatchers(HttpMethod.GET, "/api/providers").permitAll()

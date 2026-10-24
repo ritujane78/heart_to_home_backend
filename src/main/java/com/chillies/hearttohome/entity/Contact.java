@@ -8,9 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@NamedQuery(name = "Contact.findByStatus",
-query = "select c from Contact c where c.status = :status")
-public class Contact extends BaseEntity {
+@Table(name = "contacts")
+public class Contact extends BaseEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "contact_id", nullable = false)
@@ -21,6 +20,9 @@ public class Contact extends BaseEntity {
 
   @Column(name = "email", nullable = false, length = 100)
   private String email;
+
+  @Column(name = "country_code", nullable = false, length = 4)
+  private String countryCode;
 
   @Column(name = "mobile_number", nullable = false, length = 15)
   private String mobileNumber;
