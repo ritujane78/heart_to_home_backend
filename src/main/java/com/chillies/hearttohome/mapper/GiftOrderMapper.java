@@ -20,6 +20,7 @@ public interface GiftOrderMapper {
     GiftOrder toEntity(GiftOrderRequest request);
 
     @Mapping(target = "emailSent", ignore = true)
+    @Mapping(target = "createdAt", source = "createdAt")
     GiftOrderResponse toResponse(GiftOrder order);
 
     List<GiftOrderResponse> toResponse(List<GiftOrder> orders);

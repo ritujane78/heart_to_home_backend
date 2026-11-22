@@ -87,6 +87,7 @@ public class GiftOrder extends BaseEntity {
                 ", senderEmail='" + senderEmail + '\'' +
                 ", totalPrice=" + totalPrice +
                 ", exchangeRate=" + exchangeRate +
+                ", createdAt=" + getCreatedAt() +
                 ", services=" + services +
                 '}';
     }

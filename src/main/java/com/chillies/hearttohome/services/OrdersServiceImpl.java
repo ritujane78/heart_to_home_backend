@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -125,7 +126,8 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public List<AllOrdersDTO> getAllOrders() {
-        return ordersRepository.findAllByOrderByIdDesc();
+      List<AllOrdersDTO> allOrdersDTOs = ordersRepository.findAllByOrderByIdDesc();
+        return allOrdersDTOs;
     }
 
     @Override

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,4 +39,7 @@ public class GiftOrderResponse {
 
     // Existing field
     private boolean emailSent;
+
+  private Instant createdAt;
+
 }
