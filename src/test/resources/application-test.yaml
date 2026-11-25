@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: hearttohome-tests
+  datasource:
+    url: jdbc:h2:mem:hearttohome;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  mail:
+    host: localhost
+    port: 3025
+    username: test@example.com
+    password: test
+  main:
+    allow-bean-definition-overriding: true
+  app:
+    jwtSecret: VGhpc0lzQVN1cGVyU2VjcmV0S2V5Rm9yVGVzdGluZ0NhdXNlSXQxMjM0NTY3ODkw
+    jwtExpirationMs: 3600000
+    jwtRefreshExpirationMs: 86400000
+    cookie:
+      secure: false
+  security:
+    user:
+      name: test
+      password: test
+frontend:
+  url: http://localhost:3000
+stripe:
+  key:
+    secret: sk_test_placeholder
+  webhook:
+    key: whsec_test_placeholder
+sender:
+  email: test@example.com
