@@ -132,21 +132,13 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
-        Role role;
+            // Public registration always receives ROLE_USER
+            Role role = roleRepository.findByRoleName(AppRole.ROLE_USER)
+              .orElseThrow(() ->
+                new RuntimeException("Error: Role is not found.")
+              );
 
-        if (strRoles == null || strRoles.isEmpty()) {
-            role = roleRepository.findByRoleName(AppRole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        } else {
-            String roleStr = strRoles.iterator().next();
-            if (roleStr.equals("admin")) {
-                role = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
-                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            } else {
-                role = roleRepository.findByRoleName(AppRole.ROLE_USER)
-                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            }
+            user.setRole(role);
 
             user.setFirstName(signUpRequest.getFirstName());
             user.setLastName(signUpRequest.getLastName());
@@ -158,8 +150,6 @@ public class AuthController {
             user.setAccountExpiryDate(LocalDate.now().plusYears(1));
             user.setTwoFactorEnabled(false);
             user.setSignupMethod("email");
-        }
-        user.setRole(role);
         User savedUser = userRepository.save(user);
         boolean emailSent = true;
 

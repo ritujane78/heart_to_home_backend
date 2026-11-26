@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,19 +41,27 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @NotBlank
-    @Size(max = 20)
-    private String firstName;
+  @NotBlank(message = "First name is required")
+  @Size(max = 20, message = "First name cannot exceed 20 characters")
+  @Pattern(
+    regexp = "^[\\p{L}]+(?:[ '\\u2019-][\\p{L}]+)*$",
+    message = "Invalid name"
+  )
+  private String firstName;
 
-    @NotBlank
-    @Size(max = 20)
-    private String lastName;
+  @NotBlank(message = "Last name is required")
+  @Size(max = 20, message = "Last name cannot exceed 20 characters")
+  @Pattern(
+    regexp = "^[\\p{L}]+(?:[ '\\u2019-][\\p{L}]+)*$",
+    message = "Invalid name"
+  )
+  private String lastName;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    @Column(name = "email")
-    private String email;
+  @NotBlank(message = "Email is required")
+  @Size(max = 50, message = "Email cannot exceed 50 characters")
+  @Email(message = "Invalid email address")
+  @Column(name = "email")
+  private String email;
 
     @NotBlank
     @Size(max = 120)

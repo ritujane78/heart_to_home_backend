@@ -10,6 +10,7 @@ import com.chillies.hearttohome.services.PaymentService;
 import com.chillies.hearttohome.services.UserService;
 import com.stripe.exception.StripeException;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -91,7 +92,7 @@ public class GiftOrderController {
     public ResponseEntity<CheckoutResponse> checkout(
             @AuthenticationPrincipal
             UserDetails userDetails,
-            @RequestBody
+            @Valid @RequestBody
             CheckoutRequest request
     ) throws StripeException {
 

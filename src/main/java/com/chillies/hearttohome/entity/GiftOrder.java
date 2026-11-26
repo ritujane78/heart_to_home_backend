@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -31,27 +35,49 @@ public class GiftOrder extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // Recipient Details
-    @Column(nullable = false)
-    private String recipientName;
+  // Recipient Details
 
-    @Column(nullable = false)
-    private String recipientPhone;
+  @NotBlank(message = "Recipient name is required")
+  @Size(max = 100, message = "Recipient name cannot exceed 100 characters")
+  @Pattern(
+    regexp = "^[\\p{L}]+(?:[ '’-][\\p{L}]+)*$",
+    message = "Invalid name"
+  )
+  @Column(nullable = false)
+  private String recipientName;
 
-//    private String recipientEmail;
+  @NotBlank(message = "Phone number is required")
+  @Pattern(
+    regexp = "^(01\\d{6}|9[78]\\d{8})$",
+    message = "Invalid Nepal phone number"
+  )
+  @Column(nullable = false)
+  private String recipientPhone;
 
-    @Column(nullable = false)
-    private String relationship;
 
-    // Sender Details
-    @Column(nullable = false)
-    private String senderName;
+// Sender Details
 
-    @Column(nullable = false)
-    private String senderEmail;
+  @NotBlank(message = "Sender name is required")
+  @Size(max = 100, message = "Sender name cannot exceed 100 characters")
+  @Pattern(
+    regexp = "^[\\p{L}]+(?:[ '’-][\\p{L}]+)*$",
+    message = "Invalid name"
+  )
+  @Column(nullable = false)
+  private String senderName;
 
-    @Column(length = 1000)
-    private String message;
+  @NotBlank(message = "Sender email is required")
+  @Size(max = 50, message = "Email cannot exceed 50 characters")
+  @Email(message = "Invalid email address")
+  @Column(nullable = false)
+  private String senderEmail;
+
+
+// Optional Message
+
+  @Size(max = 1000, message = "Message cannot exceed 1000 characters")
+  @Column(length = 1000)
+  private String message;
 
     @Builder.Default
     @OneToMany(

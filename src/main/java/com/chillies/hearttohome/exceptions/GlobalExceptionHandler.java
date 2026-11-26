@@ -66,37 +66,39 @@ public class GlobalExceptionHandler {
                         request));
     }
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationErrorResponse> handleValidation(
-            MethodArgumentNotValidException ex,
-            HttpServletRequest request) {
+      MethodArgumentNotValidException ex,
+      HttpServletRequest request) {
 
-        Map<String, String> errors = new LinkedHashMap<>();
+      Map<String, String> errors = new LinkedHashMap<>();
 
-        ex.getBindingResult()
-                .getAllErrors()
-                .forEach(error -> {
+      ex.getBindingResult()
+        .getFieldErrors()
+        .forEach(error ->
+          errors.merge(
+            error.getField(),
+            error.getDefaultMessage(),
+            (existing, additional) -> existing
+          )
+        );
 
-                    String field = ((FieldError) error).getField();
+      ValidationErrorResponse response =
+        new ValidationErrorResponse(
+          LocalDateTime.now(),
+          HttpStatus.BAD_REQUEST.value(),
+          HttpStatus.BAD_REQUEST.getReasonPhrase(),
+          "Validation failed",
+          request.getRequestURI(),
+          errors
+        );
 
-                    String message = error.getDefaultMessage();
-
-                    errors.put(field, message);
-                });
-
-        ValidationErrorResponse response =
-                new ValidationErrorResponse(
-                        LocalDateTime.now(),
-                        HttpStatus.BAD_REQUEST.value(),
-                        HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                        "Validation failed",
-                        request.getRequestURI(),
-                        errors);
-
-        return ResponseEntity.badRequest().body(response);
+      return ResponseEntity.badRequest().body(response);
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+
+  @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleJsonParse(
             HttpMessageNotReadableException ex,
             HttpServletRequest request) {
@@ -200,16 +202,25 @@ public class GlobalExceptionHandler {
     }
 
   @ExceptionHandler(CompromisedPasswordException.class)
-  public ResponseEntity<ErrorResponse> handleCompromisedPassword(
+  public ResponseEntity<ValidationErrorResponse> handleCompromisedPassword(
     CompromisedPasswordException ex,
     HttpServletRequest request) {
 
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-      .body(buildResponse(
-        HttpStatus.BAD_REQUEST,
-        ex.getMessage(),
-        request
-      ));
+    Map<String, String> errors = new LinkedHashMap<>();
+    errors.put("password", ex.getMessage());
+
+    ValidationErrorResponse response =
+      new ValidationErrorResponse(
+        LocalDateTime.now(),
+        HttpStatus.BAD_REQUEST.value(),
+        HttpStatus.BAD_REQUEST.getReasonPhrase(),
+        "Validation failed",
+        request.getRequestURI(),
+        errors
+      );
+
+    return ResponseEntity.badRequest().body(response);
   }
+
 
 }
