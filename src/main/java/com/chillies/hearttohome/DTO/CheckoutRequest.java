@@ -16,7 +16,7 @@ public class CheckoutRequest {
   private String checkoutId;
 
   @NotBlank(message = "Recipient name is required")
-  @Size(max = 100, message = "Recipient name cannot exceed 100 characters")
+  @Size(max = 50, message = "Recipient name cannot exceed 50 characters")
   @Pattern(
     regexp = "^[\\p{L}]+(?:[ '’-][\\p{L}]+)*$",
     message = "Invalid recipient name"
@@ -35,7 +35,7 @@ public class CheckoutRequest {
   private String relationship;
 
   @NotBlank(message = "Sender name is required")
-  @Size(max = 100, message = "Sender name cannot exceed 100 characters")
+  @Size(max = 50, message = "Sender name cannot exceed 50 characters")
   @Pattern(
     regexp = "^[\\p{L}]+(?:[ '’-][\\p{L}]+)*$",
     message = "Invalid sender name"

@@ -38,7 +38,7 @@ public class GiftOrder extends BaseEntity {
   // Recipient Details
 
   @NotBlank(message = "Recipient name is required")
-  @Size(max = 100, message = "Recipient name cannot exceed 100 characters")
+  @Size(max = 50, message = "Recipient name cannot exceed 50 characters")
   @Pattern(
     regexp = "^[\\p{L}]+(?:[ '’-][\\p{L}]+)*$",
     message = "Invalid name"
@@ -53,6 +53,9 @@ public class GiftOrder extends BaseEntity {
   )
   @Column(nullable = false)
   private String recipientPhone;
+
+  @Column(nullable = false)
+  private String relationship;
 
 
 // Sender Details
